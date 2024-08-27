@@ -357,13 +357,7 @@ paths:
         - Sales/Requests
       parameters:
         - $ref: "#/components/parameters/domainParameter"
-        - in: header
-          name: TimeZone  
-          description: The timezone of the client of the request
-          required: false
-          schema:
-            type: string
-            example: Europe/Berlin
+        - $ref: "#/components/parameters/timezoneParameter"
       requestBody:
         description: Request data
         required: true
@@ -400,19 +394,13 @@ paths:
         - Sales/Requests
       parameters:
         - $ref: "#/components/parameters/domainParameter"
+        - $ref: "#/components/parameters/timezoneParameter"
         - name: customerId
           in: path
           description: existing customer Id
           required: true
           schema:
             type: integer
-        - in: header
-          name: TimeZone  
-          description: The timezone of the client of the request
-          required: false
-          schema:
-            type: string
-            example: Europe/Berlin
       requestBody:
         description: Request data
         required: true
@@ -643,19 +631,13 @@ paths:
         - Sales/Orders
       parameters:
         - $ref: "#/components/parameters/domainParameter"
+        - $ref: "#/components/parameters/timezoneParameter"
         - name: customerId
           in: path
           description: existing customer Id
           required: true
           schema:
             type: integer
-        - in: header
-          name: TimeZone  
-          description: The timezone of the client of the request
-          required: false
-          schema:
-            type: string
-            example: Europe/Berlin
       requestBody:
         description: Request data
         required: true
@@ -1007,6 +989,14 @@ components:
       schema:
         type: string
         example: "ferdia"
+    timezoneParameter:
+      in: header
+      name: TimeZone  
+      description: The timezone of the client of the request
+      required: false
+      schema:
+        type: string
+        example: Europe/Berlin
 
   examples:
     customerCategory_get:
