@@ -4,7 +4,7 @@ info:
   title: TEQ Public API
   description: "Public API for TEQ-Platform"
   x-logo:
-    url: 'https://redocly.github.io/redoc/example-logo.png'
+    url: 'https://raw.githubusercontent.com/busgroup/Ferdia-Public-API-documentation/main/Ferdia-logo.png'
     backgroundColor: '#FFFFFF'
     altText: 'TEQ Logo'
 
