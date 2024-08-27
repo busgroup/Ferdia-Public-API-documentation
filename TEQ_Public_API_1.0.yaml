@@ -14,7 +14,7 @@ paths:
       summary: Returns a list of trips
       description: Returns a list of trips based on the filters provided
       tags:
-        - 'Trips'
+        - Trips
       responses:
         "200":
           description: Successfully returned a list of trips
