@@ -14,9 +14,7 @@ paths:
       summary: Returns a list of trips
       description: Returns a list of trips based on the filters provided
       tags:
-        - name: 'Trips'
-          description: 'Information about trips'
-          x-displayName: 'Endpoints to get and alter trips'
+        - 'Trips'
       responses:
         "200":
           description: Successfully returned a list of trips
