@@ -3,6 +3,10 @@ info:
   version: "1.0"
   title: TEQ Public API
   description: "Public API for TEQ-Platform"
+  x-logo:
+    url: 'https://redocly.github.io/redoc/example-logo.png'
+    backgroundColor: '#FFFFFF'
+    altText: 'TEQ Logo'
 
 paths:
   /trips/trips:
