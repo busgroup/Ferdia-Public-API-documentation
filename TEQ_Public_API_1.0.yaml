@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   version: "1.0"
   title: TEQ Public API
-  description: "Public API for TEQ-Platform"
+  description: "Public API for TEQ-Platform. With this API you can access the TEQ platform to create, update and retrieve data about customers, trips, requests, quotations, orders, vehicles and drivers."
   x-logo:
     url: 'https://raw.githubusercontent.com/busgroup/Ferdia-Public-API-documentation/main/Ferdia-logo.png'
     backgroundColor: '#FFFFFF'
