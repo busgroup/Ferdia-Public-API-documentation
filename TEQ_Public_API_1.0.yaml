@@ -36,6 +36,7 @@ paths:
       tags:
         - Trips/Trip
       parameters:
+        - $ref: "#/components/parameters/domainParameter"
         - name: id
           in: path
           description: Trip Id
@@ -63,6 +64,7 @@ paths:
       tags:
         - Trips/Trip
       parameters:
+        - $ref: "#/components/parameters/domainParameter"
         - name: id
           in: path
           description: Trip Id
@@ -94,6 +96,8 @@ paths:
       description: Creates a new customer category
       tags:
         - Sales/Customers
+      parameters:
+        - $ref: "#/components/parameters/domainParameter"
       requestBody:
         description: Customer category data
         required: true
@@ -120,6 +124,7 @@ paths:
       tags:
         - Sales/Customers
       parameters:
+        - $ref: "#/components/parameters/domainParameter"
         - in: query
           name: name
           schema:
@@ -150,6 +155,7 @@ paths:
       tags:
         - Sales/Customers
       parameters:
+        - $ref: "#/components/parameters/domainParameter"
         - name: id
           in: path
           description: Customer category ID
@@ -176,6 +182,7 @@ paths:
       tags:
         - Sales/Customers
       parameters:
+        - $ref: "#/components/parameters/domainParameter"
         - name: id
           in: path
           description: Customer category ID
@@ -200,6 +207,8 @@ paths:
       description: Creates a new customer
       tags:
         - Sales/Customers
+      parameters:
+        - $ref: "#/components/parameters/domainParameter"
       requestBody:
         description: Customer data
         required: true
@@ -232,6 +241,7 @@ paths:
       tags:
         - Sales/Customers
       parameters:
+        - $ref: "#/components/parameters/domainParameter"
         - in: query
           name: type
           schema:
@@ -270,6 +280,7 @@ paths:
       tags:
         - Sales/Customers
       parameters:
+        - $ref: "#/components/parameters/domainParameter"
         - name: id
           in: path
           description: Customer ID
@@ -289,6 +300,7 @@ paths:
       tags:
         - Sales/Customers
       parameters:
+        - $ref: "#/components/parameters/domainParameter"
         - name: id
           in: path
           description: Customer ID
@@ -317,6 +329,7 @@ paths:
       tags:
         - Sales/Requests
       parameters:
+        - $ref: "#/components/parameters/domainParameter"
         - in: query
           name: source
           schema:
@@ -343,6 +356,7 @@ paths:
       tags:
         - Sales/Requests
       parameters:
+        - $ref: "#/components/parameters/domainParameter"
         - in: header
           name: TimeZone  
           description: The timezone of the client of the request
@@ -385,6 +399,7 @@ paths:
       tags:
         - Sales/Requests
       parameters:
+        - $ref: "#/components/parameters/domainParameter"
         - name: customerId
           in: path
           description: existing customer Id
@@ -432,6 +447,7 @@ paths:
       tags:
         - Sales/Requests
       parameters:
+        - $ref: "#/components/parameters/domainParameter"
         - name: id
           in: path
           description: Request ID
@@ -460,6 +476,7 @@ paths:
       tags:
         - Sales/Requests
       parameters:
+        - $ref: "#/components/parameters/domainParameter"
         - in: path
           required: true
           name: id
@@ -480,6 +497,7 @@ paths:
       tags:
         - Sales/Requests
       parameters:
+        - $ref: "#/components/parameters/domainParameter"
         - in: path
           required: true
           name: id
@@ -508,6 +526,7 @@ paths:
       tags:
         - Sales/Quotations
       parameters:
+        - $ref: "#/components/parameters/domainParameter"
         - in: query
           name: customer
           schema:
@@ -529,6 +548,8 @@ paths:
       description: Creats a new quotation in the system
       tags:
         - Sales/Quotations
+      parameters:
+        - $ref: "#/components/parameters/domainParameter"
       requestBody:
         description: Quotation data
         required: true
@@ -555,6 +576,7 @@ paths:
       tags:
         - Sales/Quotations
       parameters:
+        - $ref: "#/components/parameters/domainParameter"
         - name: id
           in: path
           description: Quotation ID
@@ -580,6 +602,7 @@ paths:
       tags:
         - Sales/Orders
       parameters:
+        - $ref: "#/components/parameters/domainParameter"
         - in: query
           name: customer
           schema:
@@ -619,6 +642,7 @@ paths:
       tags:
         - Sales/Orders
       parameters:
+        - $ref: "#/components/parameters/domainParameter"
         - name: customerId
           in: path
           description: existing customer Id
@@ -667,6 +691,7 @@ paths:
       tags:
         - Sales/Orders
       parameters:
+        - $ref: "#/components/parameters/domainParameter"
         - name: id
           in: path
           description: Order ID
@@ -691,6 +716,7 @@ paths:
       tags:
         - Core/Vehicles
       parameters:
+        - $ref: "#/components/parameters/domainParameter"
         - in: query
           name: name
           schema:
@@ -719,6 +745,8 @@ paths:
       description: Creates a new vehicle
       tags:
         - Core/Vehicles
+      parameters:
+        - $ref: "#/components/parameters/domainParameter"
       requestBody:
         description: Vehicle data
         required: true
@@ -745,6 +773,7 @@ paths:
       tags:
         - Core/Vehicles
       parameters:
+        - $ref: "#/components/parameters/domainParameter"
         - in: path
           required: true
           name: id
@@ -766,6 +795,7 @@ paths:
       tags:
         - Core/Vehicles
       parameters:
+        - $ref: "#/components/parameters/domainParameter"
         - in: path
           required: true
           name: id
@@ -785,6 +815,7 @@ paths:
       tags:
         - Core/Drivers
       parameters:
+        - $ref: "#/components/parameters/domainParameter"
         - in: query
           name: name
           schema:
@@ -813,6 +844,8 @@ paths:
       description: Creates a new driver
       tags:
         - Core/Drivers
+      parameters:
+        - $ref: "#/components/parameters/domainParameter"
       requestBody:
         description: Driver data
         required: true
@@ -839,6 +872,7 @@ paths:
       tags:
         - Core/Drivers
       parameters:
+        - $ref: "#/components/parameters/domainParameter"
         - in: path
           required: true
           name: id
@@ -860,6 +894,7 @@ paths:
       tags:
         - Core/Drivers
       parameters:
+        - $ref: "#/components/parameters/domainParameter"
         - in: path
           required: true
           name: id
@@ -878,6 +913,8 @@ paths:
       description: Calculate the price for a trip specified in the request
       tags:
         - Price/Calulate
+      parameters:
+        - $ref: "#/components/parameters/domainParameter"
       requestBody:
         description: Request data
         required: true
