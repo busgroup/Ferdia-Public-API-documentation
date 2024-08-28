@@ -116,200 +116,201 @@ info:
     the rate limit resets.
 
 paths:
-  /trips/trips:
-    get:
-      summary: Returns a list of trips
-      description: Returns a list of trips based on the filters provided
-      tags:
-        - Trips
-      parameters:
-        - $ref: "#/components/parameters/domainParameter"
-      responses:
-        "200":
-          description: Successfully returned a list of trips
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Trip"
-        "400":
-          $ref: "#/components/responses/400_requestError"
+  # /trips/trips:
+  #   get:
+  #     summary: Returns a list of trips
+  #     description: Returns a list of trips based on the filters provided
+  #     tags:
+  #       - Trips
+  #     parameters:
+  #       - $ref: "#/components/parameters/domainParameter"
+  #     responses:
+  #       "200":
+  #         description: Successfully returned a list of trips
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: array
+  #               items:
+  #                 $ref: "#/components/schemas/Trip"
+  #       "400":
+  #         $ref: "#/components/responses/400_requestError"
         
-  /trips/trips/{id}:
-    get:
-      summary: Returns a single trip
-      description: Returns a single trip
-      tags:
-        - Trips/Trip
-      parameters:
-        - $ref: "#/components/parameters/domainParameter"
-        - name: id
-          in: path
-          description: Trip Id
-          required: true
-          schema:
-            type: string
-      responses:
-        "200":
-          description: Successfully returned a trip
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Trip"
-              example:
+  # /trips/trips/{id}:
+  #   get:
+  #     summary: Returns a single trip
+  #     description: Returns a single trip
+  #     tags:
+  #       - Trips/Trip
+  #     parameters:
+  #       - $ref: "#/components/parameters/domainParameter"
+  #       - name: id
+  #         in: path
+  #         description: Trip Id
+  #         required: true
+  #         schema:
+  #           type: string
+  #     responses:
+  #       "200":
+  #         description: Successfully returned a trip
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/Trip"
+  #             example:
                 
-        "400":
-          $ref: "#/components/responses/400_requestError"
-        "404":
-          $ref: "#/components/responses/404_notFound"
+  #       "400":
+  #         $ref: "#/components/responses/400_requestError"
+  #       "404":
+  #         $ref: "#/components/responses/404_notFound"
           
-  /trips/tripstatus/{id}:
-    get:
-      summary: Gets the current status of a trip
-      description: Gets the current status of a trip
-      tags:
-        - Trips/Trip
-      parameters:
-        - $ref: "#/components/parameters/domainParameter"
-        - name: id
-          in: path
-          description: Trip Id
-          required: true
-          schema:
-            type: string
-        - name: includelocation
-          description: Include the current location of the bus in the response
-          in: query
-          schema:
-            type: boolean
-      responses:
-        "200":
-          description: Successfully returned trip status
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/TripStatus"
-              example:
-                id: TE-001-001
-        "400":
-          $ref: "#/components/responses/400_requestError"
-        "404":
-          $ref: "#/components/responses/404_notFound"
+  # /trips/tripstatus/{id}:
+  #   get:
+  #     summary: Gets the current status of a trip
+  #     description: Gets the current status of a trip
+  #     tags:
+  #       - Trips/Trip
+  #     parameters:
+  #       - $ref: "#/components/parameters/domainParameter"
+  #       - name: id
+  #         in: path
+  #         description: Trip Id
+  #         required: true
+  #         schema:
+  #           type: string
+  #       - name: includelocation
+  #         description: Include the current location of the bus in the response
+  #         in: query
+  #         schema:
+  #           type: boolean
+  #     responses:
+  #       "200":
+  #         description: Successfully returned trip status
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/TripStatus"
+  #             example:
+  #               id: TE-001-001
+  #       "400":
+  #         $ref: "#/components/responses/400_requestError"
+  #       "404":
+  #         $ref: "#/components/responses/404_notFound"
         
-  /sales/customercategories:
-    post:
-      summary: Creates a new customer category
-      description: Creates a new customer category
-      tags:
-        - Sales/Customers
-      parameters:
-        - $ref: "#/components/parameters/domainParameter"
-      requestBody:
-        description: Customer category data
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/CustomerCategory"
-      responses:
-        "201":
-          description: Successfully created customer category
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  customerId:
-                    type: string
-        "400":
-          $ref: "#/components/responses/400_requestError"
+  # /sales/customercategories:
+  #   post:
+  #     summary: Creates a new customer category
+  #     description: Creates a new customer category
+  #     tags:
+  #       - Sales/Customers
+  #     parameters:
+  #       - $ref: "#/components/parameters/domainParameter"
+  #     requestBody:
+  #       description: Customer category data
+  #       required: true
+  #       content:
+  #         application/json:
+  #           schema:
+  #             $ref: "#/components/schemas/CustomerCategory"
+  #     responses:
+  #       "201":
+  #         description: Successfully created customer category
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: object
+  #               properties:
+  #                 customerId:
+  #                   type: string
+  #       "400":
+  #         $ref: "#/components/responses/400_requestError"
         
-    get:
-      summary: Returns a list of customer categories
-      description: Returns a list of customer categories based on the filters provided
-      tags:
-        - Sales/Customers
-      parameters:
-        - $ref: "#/components/parameters/domainParameter"
-        - in: query
-          name: name
-          schema:
-            type: string
-        - in: query
-          name: active
-          schema:
-            type: boolean
-        - in: query
-          name: default
-          schema:
-            type: boolean
-      responses:
-        "200":
-          description: Successfully returned a list of customer categories
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/CustomerCategory"
-        "400":
-          $ref: "#/components/responses/400_requestError"
+  #   get:
+  #     summary: Returns a list of customer categories
+  #     description: Returns a list of customer categories based on the filters provided
+  #     tags:
+  #       - Sales/Customers
+  #     parameters:
+  #       - $ref: "#/components/parameters/domainParameter"
+  #       - in: query
+  #         name: name
+  #         schema:
+  #           type: string
+  #       - in: query
+  #         name: active
+  #         schema:
+  #           type: boolean
+  #       - in: query
+  #         name: default
+  #         schema:
+  #           type: boolean
+  #     responses:
+  #       "200":
+  #         description: Successfully returned a list of customer categories
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: array
+  #               items:
+  #                 $ref: "#/components/schemas/CustomerCategory"
+  #       "400":
+  #         $ref: "#/components/responses/400_requestError"
         
-  /sales/customercategories/{id}:
-    patch:
-      description: Update a customer category
-      tags:
-        - Sales/Customers
-      parameters:
-        - $ref: "#/components/parameters/domainParameter"
-        - name: id
-          in: path
-          description: Customer category ID
-          required: true
-          schema:
-            type: integer
-      requestBody:
-        description: Customer category data
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/CustomerCategory"
-      responses:
-        "200":
-          description: Successfully updated customer category
-        "400":
-          $ref: "#/components/responses/400_requestError"
-        "404":
-          $ref: "#/components/responses/404_notFound"
+  # /sales/customercategories/{id}:
+  #   patch:
+  #     description: Update a customer category
+  #     tags:
+  #       - Sales/Customers
+  #     parameters:
+  #       - $ref: "#/components/parameters/domainParameter"
+  #       - name: id
+  #         in: path
+  #         description: Customer category ID
+  #         required: true
+  #         schema:
+  #           type: integer
+  #     requestBody:
+  #       description: Customer category data
+  #       required: true
+  #       content:
+  #         application/json:
+  #           schema:
+  #             $ref: "#/components/schemas/CustomerCategory"
+  #     responses:
+  #       "200":
+  #         description: Successfully updated customer category
+  #       "400":
+  #         $ref: "#/components/responses/400_requestError"
+  #       "404":
+  #         $ref: "#/components/responses/404_notFound"
         
-    get:
-      description: Returns a single customer category
-      tags:
-        - Sales/Customers
-      parameters:
-        - $ref: "#/components/parameters/domainParameter"
-        - name: id
-          in: path
-          description: Customer category ID
-          required: true
-          schema:
-            type: integer
-      responses:
-        "200":
-          description: Successfully returned a customer category
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/CustomerCategory"
-        "400":
-          $ref: "#/components/responses/400_requestError"
-        "404":
-          $ref: "#/components/responses/404_notFound"
+  #   get:
+  #     description: Returns a single customer category
+  #     tags:
+  #       - Sales/Customers
+  #     parameters:
+  #       - $ref: "#/components/parameters/domainParameter"
+  #       - name: id
+  #         in: path
+  #         description: Customer category ID
+  #         required: true
+  #         schema:
+  #           type: integer
+  #     responses:
+  #       "200":
+  #         description: Successfully returned a customer category
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/CustomerCategory"
+  #       "400":
+  #         $ref: "#/components/responses/400_requestError"
+  #       "404":
+  #         $ref: "#/components/responses/404_notFound"
         
   /sales/customers:
     post:
+      x-internal: true
       summary: Creates a new customer
       description: Creates a new customer
       tags:
@@ -799,230 +800,231 @@ paths:
         "404":
           $ref: "#/components/responses/404_notFound"
 
-  /core/vehicles:
-    get:
-      description: Returns a list of vehicles
-      tags:
-        - Core/Vehicles
-      parameters:
-        - $ref: "#/components/parameters/domainParameter"
-        - in: query
-          name: name
-          schema:
-            type: string
-        - in: query
-          name: active
-          schema:
-            type: boolean
-        - in: query
-          name: departmentId
-          schema:
-            type: integer
-      responses:
-        "200":
-          description: Successfully returned a list of vehicles
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Vehicle"
-        "400":
-          $ref: "#/components/responses/400_requestError"
+  # /core/vehicles:
+  #   get:
+  #     description: Returns a list of vehicles
+  #     tags:
+  #       - Core/Vehicles
+  #     parameters:
+  #       - $ref: "#/components/parameters/domainParameter"
+  #       - in: query
+  #         name: name
+  #         schema:
+  #           type: string
+  #       - in: query
+  #         name: active
+  #         schema:
+  #           type: boolean
+  #       - in: query
+  #         name: departmentId
+  #         schema:
+  #           type: integer
+  #     responses:
+  #       "200":
+  #         description: Successfully returned a list of vehicles
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: array
+  #               items:
+  #                 $ref: "#/components/schemas/Vehicle"
+  #       "400":
+  #         $ref: "#/components/responses/400_requestError"
   
-    post:
-      description: Creates a new vehicle
-      tags:
-        - Core/Vehicles
-      parameters:
-        - $ref: "#/components/parameters/domainParameter"
-      requestBody:
-        description: Vehicle data
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Vehicle"
-      responses:  
-        "201":
-          description: Successfully created vehicle
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  vehicleId:
-                    type: string
-        "400":
-          $ref: "#/components/responses/400_requestError"
+  #   post:
+  #     description: Creates a new vehicle
+  #     tags:
+  #       - Core/Vehicles
+  #     parameters:
+  #       - $ref: "#/components/parameters/domainParameter"
+  #     requestBody:
+  #       description: Vehicle data
+  #       required: true
+  #       content:
+  #         application/json:
+  #           schema:
+  #             $ref: "#/components/schemas/Vehicle"
+  #     responses:  
+  #       "201":
+  #         description: Successfully created vehicle
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: object
+  #               properties:
+  #                 vehicleId:
+  #                   type: string
+  #       "400":
+  #         $ref: "#/components/responses/400_requestError"
 
-  /core/vehicles/{id}:
-    get:
-      description: Returns info about a single vehicle
-      tags:
-        - Core/Vehicles
-      parameters:
-        - $ref: "#/components/parameters/domainParameter"
-        - in: path
-          required: true
-          name: id
-          schema:
-            type: integer
-      responses:
-        "200":
-          description: Successfully returned a vehicle
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Vehicle"
-        "400":
-          $ref: "#/components/responses/400_requestError"
-        "404":
-          $ref: "#/components/responses/404_notFound"
-    patch:
-      description: Update a vehicle
-      tags:
-        - Core/Vehicles
-      parameters:
-        - $ref: "#/components/parameters/domainParameter"
-        - in: path
-          required: true
-          name: id
-          schema:
-            type: integer
-      responses:
-        "201":
-          description: Successfully updated vehicle"
-        "400": 
-          $ref: "#/components/responses/400_requestError"
-        "404":  
-          $ref: "#/components/responses/404_notFound"
+  # /core/vehicles/{id}:
+  #   get:
+  #     description: Returns info about a single vehicle
+  #     tags:
+  #       - Core/Vehicles
+  #     parameters:
+  #       - $ref: "#/components/parameters/domainParameter"
+  #       - in: path
+  #         required: true
+  #         name: id
+  #         schema:
+  #           type: integer
+  #     responses:
+  #       "200":
+  #         description: Successfully returned a vehicle
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/Vehicle"
+  #       "400":
+  #         $ref: "#/components/responses/400_requestError"
+  #       "404":
+  #         $ref: "#/components/responses/404_notFound"
+  #   patch:
+  #     description: Update a vehicle
+  #     tags:
+  #       - Core/Vehicles
+  #     parameters:
+  #       - $ref: "#/components/parameters/domainParameter"
+  #       - in: path
+  #         required: true
+  #         name: id
+  #         schema:
+  #           type: integer
+  #     responses:
+  #       "201":
+  #         description: Successfully updated vehicle"
+  #       "400": 
+  #         $ref: "#/components/responses/400_requestError"
+  #       "404":  
+  #         $ref: "#/components/responses/404_notFound"
   
-  /core/drivers:
-    get:
-      description: Returns a list of drivers
-      tags:
-        - Core/Drivers
-      parameters:
-        - $ref: "#/components/parameters/domainParameter"
-        - in: query
-          name: name
-          schema:
-            type: string
-        - in: query
-          name: active
-          schema:
-            type: boolean
-        - in: query
-          name: departmentId
-          schema:
-            type: integer
-      responses:
-        "200":
-          description: Successfully returned a list of drivers
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Driver"
-        "400":
-          $ref: "#/components/responses/400_requestError"
+  # /core/drivers:
+  #   get:
+  #     description: Returns a list of drivers
+  #     tags:
+  #       - Core/Drivers
+  #     parameters:
+  #       - $ref: "#/components/parameters/domainParameter"
+  #       - in: query
+  #         name: name
+  #         schema:
+  #           type: string
+  #       - in: query
+  #         name: active
+  #         schema:
+  #           type: boolean
+  #       - in: query
+  #         name: departmentId
+  #         schema:
+  #           type: integer
+  #     responses:
+  #       "200":
+  #         description: Successfully returned a list of drivers
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: array
+  #               items:
+  #                 $ref: "#/components/schemas/Driver"
+  #       "400":
+  #         $ref: "#/components/responses/400_requestError"
   
-    post:
-      description: Creates a new driver
-      tags:
-        - Core/Drivers
-      parameters:
-        - $ref: "#/components/parameters/domainParameter"
-      requestBody:
-        description: Driver data
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Driver"
-      responses:  
-        "201":
-          description: Successfully created driver
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  vehicleId:
-                    type: string
-        "400":
-          $ref: "#/components/responses/400_requestError"
+  #   post:
+  #     description: Creates a new driver
+  #     tags:
+  #       - Core/Drivers
+  #     parameters:
+  #       - $ref: "#/components/parameters/domainParameter"
+  #     requestBody:
+  #       description: Driver data
+  #       required: true
+  #       content:
+  #         application/json:
+  #           schema:
+  #             $ref: "#/components/schemas/Driver"
+  #     responses:  
+  #       "201":
+  #         description: Successfully created driver
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: object
+  #               properties:
+  #                 vehicleId:
+  #                   type: string
+  #       "400":
+  #         $ref: "#/components/responses/400_requestError"
 
-  /core/drivers/{id}:
-    get:
-      description: Returns info about a single driver
-      tags:
-        - Core/Drivers
-      parameters:
-        - $ref: "#/components/parameters/domainParameter"
-        - in: path
-          required: true
-          name: id
-          schema:
-            type: integer
-      responses:
-        "200":
-          description: Successfully returned a driver
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Driver"
-        "400":
-          $ref: "#/components/responses/400_requestError"
-        "404":
-          $ref: "#/components/responses/404_notFound"
-    patch:
-      description: Update a driver
-      tags:
-        - Core/Drivers
-      parameters:
-        - $ref: "#/components/parameters/domainParameter"
-        - in: path
-          required: true
-          name: id
-          schema:
-            type: integer
-      responses:
-        "201":
-          description: Successfully updated driver"
-        "400": 
-          $ref: "#/components/responses/400_requestError"
-        "404":  
-          $ref: "#/components/responses/404_notFound"
-  /price/calculate:
-    post:
-      summary: Calculate Price
-      description: Calculate the price for a trip specified in the request
-      tags:
-        - Price/Calulate
-      parameters:
-        - $ref: "#/components/parameters/domainParameter"
-      requestBody:
-        description: Request data
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/PostPriceCalculate"
-      responses:
-        "200":
-          description: Price calculated
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  requestId:
-                    type: string
-        "400":
-          $ref: "#/components/responses/400_requestError"
+  # /core/drivers/{id}:
+  #   get:
+  #     description: Returns info about a single driver
+  #     tags:
+  #       - Core/Drivers
+  #     parameters:
+  #       - $ref: "#/components/parameters/domainParameter"
+  #       - in: path
+  #         required: true
+  #         name: id
+  #         schema:
+  #           type: integer
+  #     responses:
+  #       "200":
+  #         description: Successfully returned a driver
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/Driver"
+  #       "400":
+  #         $ref: "#/components/responses/400_requestError"
+  #       "404":
+  #         $ref: "#/components/responses/404_notFound"
+  #   patch:
+  #     description: Update a driver
+  #     tags:
+  #       - Core/Drivers
+  #     parameters:
+  #       - $ref: "#/components/parameters/domainParameter"
+  #       - in: path
+  #         required: true
+  #         name: id
+  #         schema:
+  #           type: integer
+  #     responses:
+  #       "201":
+  #         description: Successfully updated driver"
+  #       "400": 
+  #         $ref: "#/components/responses/400_requestError"
+  #       "404":  
+  #         $ref: "#/components/responses/404_notFound"
+
+  # /price/calculate:
+  #   post:
+  #     summary: Calculate Price
+  #     description: Calculate the price for a trip specified in the request
+  #     tags:
+  #       - Price/Calulate
+  #     parameters:
+  #       - $ref: "#/components/parameters/domainParameter"
+  #     requestBody:
+  #       description: Request data
+  #       required: true
+  #       content:
+  #         application/json:
+  #           schema:
+  #             $ref: "#/components/schemas/PostPriceCalculate"
+  #     responses:
+  #       "200":
+  #         description: Price calculated
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: object
+  #               properties:
+  #                 requestId:
+  #                   type: string
+  #       "400":
+  #         $ref: "#/components/responses/400_requestError"
 
   
 # components:
