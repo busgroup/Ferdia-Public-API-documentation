@@ -310,7 +310,7 @@ paths:
         
   /sales/customers:
     post:
-      x-internal: true
+      deprecated: true
       summary: Creates a new customer
       description: Creates a new customer
       tags:
