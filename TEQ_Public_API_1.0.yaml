@@ -11,6 +11,9 @@ info:
 
     [comment]: <> (x-product-description-placeholder)
 
+    With the TEQ API you can integrate your system with the TEQ platform. The API is designed to be easy to use and to provide a seamless integration experience.
+
+
     The TEQ API is built on HTTP and is RESTful.
 
     It has predictable resource URLs and returns HTTP response codes to indicate
