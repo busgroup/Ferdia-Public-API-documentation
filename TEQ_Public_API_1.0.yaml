@@ -83,59 +83,6 @@ info:
     prepared to gracefully handle additional members of the response.
 
 
-    # SDKs
-
-
-    Rebilly provides a JavaScript SDK and a PHP SDK to help interact with the
-    Rebilly API.
-
-    However, no SDK is required to use the API.
-
-
-    Rebilly also provides
-    [FramePay](https://www.rebilly.com/docs/developer-docs/framepay/),
-
-    a client-side iFrame-based solution, to help create payment tokens while
-    minimizing PCI DSS compliance burdens
-
-    and maximizing your customization ability.
-
-    [FramePay](https://www.rebilly.com/docs/developer-docs/framepay/) interacts
-    with the [payment tokens creation
-    operation](https://www.rebilly.com/catalog/all/payment-tokens/posttoken).
-
-
-    ## JavaScript SDK
-
-
-    For installation and usage instructions, see
-    [SDKs](https://www.rebilly.com/docs/dev-docs/sdks/).
-
-    All JavaScript SDK code examples are included in the API reference
-    documentation.
-
-
-    ## PHP SDK
-
-
-    For installation and usage instructions, see
-    [SDKs](https://www.rebilly.com/docs/dev-docs/sdks/).
-
-    All SDK code examples are included in the API reference documentation.
-
-    To use them, you must configure the `$client` as follows:
-
-
-    ```php
-
-    $client = new Rebilly\Client([
-        'apiKey' => 'YourApiKeyHere',
-        'baseUrl' => 'https://api.rebilly.com',
-    ]);
-
-    ```
-
-
     # Get started
 
 
