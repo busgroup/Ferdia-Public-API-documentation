@@ -1,0 +1,36 @@
+name: Ferdia Public API documentation CI/CD
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Required for pushing to gh-pages branch
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4.0.0
+        with:
+          version: 9
+          run_install: false
+          
+      - name: Install dependencies
+        run: pnpm install @redocly/cli -g
+        
+      - name: Generate documentation
+        run: redocly build-docs swagger.yaml --template custom.hbs -o index.html
+        
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+        
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: .
+          keep_files: true
