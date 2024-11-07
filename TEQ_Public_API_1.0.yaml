@@ -1,0 +1,1682 @@
+openapi: 3.0.0
+info:
+  version: "1.0"
+  title: TEQ Public API
+  x-logo:
+    url: 'https://raw.githubusercontent.com/busgroup/Ferdia-Public-API-documentation/main/Ferdia-logo.png'
+    backgroundColor: '#FFFFFF'
+    altText: 'TEQ Logo'
+  description: >
+    # Introduction
+
+    [comment]: <> (x-product-description-placeholder)
+
+    With the TEQ API you can integrate your system with the TEQ platform. The API is designed to be easy to use and to provide a seamless integration experience.
+
+
+    The TEQ API is built on HTTP and is RESTful.
+
+    It has predictable resource URLs and returns HTTP response codes to indicate
+    errors.
+
+    It also accepts and returns JSON in the HTTP body.
+
+    Use your favorite HTTP/REST library in your programming language when using
+    this API.
+
+    This API reference documentation contains the most commonly integrated
+    resources.
+
+
+    # Authentication
+
+
+    This topic describes the different forms of authentication that are
+    available in the Rebilly API, and how to use them.
+
+
+    Rebilly offers four forms of authentication: secret key, publishable key,
+    JSON Web Tokens, and public signature key.
+
+
+    - Secret API key: Use to make requests from the server side. Never share
+    these keys. Keep them guarded and secure.
+
+    - Publishable API key: Use in your client-side code to tokenize payment
+    information.
+
+    - JWT: Use to make short-life tokens that expire after a set period of time.
+
+
+    <!-- ReDoc-Inject: <security-definitions> -->
+
+
+    ## Manage API keys
+
+
+    To create or manage API keys, select one of the following:
+
+
+    - Use the Rebilly UI: see [Manage API
+    keys](https://www.rebilly.com/docs/dev-docs/api-keys/#manage-api-keys)
+
+    - Use the Rebilly API: see the [API key
+    operations](https://www.rebilly.com/catalog/all/api-keys).
+
+
+    For more information on API keys, see [API
+    keys](https://www.rebilly.com/docs/concepts-and-features/concept/api-keys).
+
+
+    # Errors
+
+    Rebilly follows the error response format proposed in [RFC
+    9457](https://tools.ietf.org/html/rfc9457), which is also known as Problem
+    Details for HTTP APIs. As with any API responses, your client must be
+    prepared to gracefully handle additional members of the response.
+
+
+    # Get started
+
+
+    The full [Rebilly API](https://www.rebilly.com/catalog/all/) has over 500
+    operations.
+
+    This is likely more than you may need to implement your use cases.
+
+    If you would like to implement a particular use case,
+
+    [contact Rebilly](https://www.rebilly.com/support/) for guidance and
+    feedback on the best API operations to use for the task.
+
+
+    To integrate Rebilly, and learn about related resources and concepts,
+
+    see [Get started](https://www.rebilly.com/docs/dev-docs/get-started/).
+
+
+    # Rate limits
+
+
+    Rebilly enforces rate limits on the API to ensure that no single
+    organization consumes too many resources.
+
+    Rate limits are applied to the organization, and not to the API key.
+
+    In sandbox environment, rate limits are enforced for non-GET endpoints and
+    are set at 3000 requests per 10 minutes.
+
+    You can find the exact number of consumed requests in the
+    `X-RateLimit-Limit` and `X-RateLimit-Remaining` headers in the response.
+
+    If the rate limit is exceeded, the API returns a `429 Too Many Requests`
+    response
+
+    and a `X-RateLimit-Retry-After` header that includes a UTC timestamp of when
+    the rate limit resets.
+
+paths:
+  # /trips/trips:
+  #   get:
+  #     summary: Returns a list of trips
+  #     description: Returns a list of trips based on the filters provided
+  #     tags:
+  #       - Trips
+  #     parameters:
+  #       - $ref: "#/components/parameters/domainParameter"
+  #     responses:
+  #       "200":
+  #         description: Successfully returned a list of trips
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: array
+  #               items:
+  #                 $ref: "#/components/schemas/Trip"
+  #       "400":
+  #         $ref: "#/components/responses/400_requestError"
+        
+  # /trips/trips/{id}:
+  #   get:
+  #     summary: Returns a single trip
+  #     description: Returns a single trip
+  #     tags:
+  #       - Trips/Trip
+  #     parameters:
+  #       - $ref: "#/components/parameters/domainParameter"
+  #       - name: id
+  #         in: path
+  #         description: Trip Id
+  #         required: true
+  #         schema:
+  #           type: string
+  #     responses:
+  #       "200":
+  #         description: Successfully returned a trip
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/Trip"
+  #             example:
+                
+  #       "400":
+  #         $ref: "#/components/responses/400_requestError"
+  #       "404":
+  #         $ref: "#/components/responses/404_notFound"
+          
+  # /trips/tripstatus/{id}:
+  #   get:
+  #     summary: Gets the current status of a trip
+  #     description: Gets the current status of a trip
+  #     tags:
+  #       - Trips/Trip
+  #     parameters:
+  #       - $ref: "#/components/parameters/domainParameter"
+  #       - name: id
+  #         in: path
+  #         description: Trip Id
+  #         required: true
+  #         schema:
+  #           type: string
+  #       - name: includelocation
+  #         description: Include the current location of the bus in the response
+  #         in: query
+  #         schema:
+  #           type: boolean
+  #     responses:
+  #       "200":
+  #         description: Successfully returned trip status
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/TripStatus"
+  #             example:
+  #               id: TE-001-001
+  #       "400":
+  #         $ref: "#/components/responses/400_requestError"
+  #       "404":
+  #         $ref: "#/components/responses/404_notFound"
+        
+  # /sales/customercategories:
+  #   post:
+  #     summary: Creates a new customer category
+  #     description: Creates a new customer category
+  #     tags:
+  #       - Sales/Customers
+  #     parameters:
+  #       - $ref: "#/components/parameters/domainParameter"
+  #     requestBody:
+  #       description: Customer category data
+  #       required: true
+  #       content:
+  #         application/json:
+  #           schema:
+  #             $ref: "#/components/schemas/CustomerCategory"
+  #     responses:
+  #       "201":
+  #         description: Successfully created customer category
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: object
+  #               properties:
+  #                 customerId:
+  #                   type: string
+  #       "400":
+  #         $ref: "#/components/responses/400_requestError"
+        
+  #   get:
+  #     summary: Returns a list of customer categories
+  #     description: Returns a list of customer categories based on the filters provided
+  #     tags:
+  #       - Sales/Customers
+  #     parameters:
+  #       - $ref: "#/components/parameters/domainParameter"
+  #       - in: query
+  #         name: name
+  #         schema:
+  #           type: string
+  #       - in: query
+  #         name: active
+  #         schema:
+  #           type: boolean
+  #       - in: query
+  #         name: default
+  #         schema:
+  #           type: boolean
+  #     responses:
+  #       "200":
+  #         description: Successfully returned a list of customer categories
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: array
+  #               items:
+  #                 $ref: "#/components/schemas/CustomerCategory"
+  #       "400":
+  #         $ref: "#/components/responses/400_requestError"
+        
+  # /sales/customercategories/{id}:
+  #   patch:
+  #     description: Update a customer category
+  #     tags:
+  #       - Sales/Customers
+  #     parameters:
+  #       - $ref: "#/components/parameters/domainParameter"
+  #       - name: id
+  #         in: path
+  #         description: Customer category ID
+  #         required: true
+  #         schema:
+  #           type: integer
+  #     requestBody:
+  #       description: Customer category data
+  #       required: true
+  #       content:
+  #         application/json:
+  #           schema:
+  #             $ref: "#/components/schemas/CustomerCategory"
+  #     responses:
+  #       "200":
+  #         description: Successfully updated customer category
+  #       "400":
+  #         $ref: "#/components/responses/400_requestError"
+  #       "404":
+  #         $ref: "#/components/responses/404_notFound"
+        
+  #   get:
+  #     description: Returns a single customer category
+  #     tags:
+  #       - Sales/Customers
+  #     parameters:
+  #       - $ref: "#/components/parameters/domainParameter"
+  #       - name: id
+  #         in: path
+  #         description: Customer category ID
+  #         required: true
+  #         schema:
+  #           type: integer
+  #     responses:
+  #       "200":
+  #         description: Successfully returned a customer category
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/CustomerCategory"
+  #       "400":
+  #         $ref: "#/components/responses/400_requestError"
+  #       "404":
+  #         $ref: "#/components/responses/404_notFound"
+        
+  /sales/customers:
+    post:
+      deprecated: true
+      summary: Creates a new customer
+      description: Creates a new customer
+      tags:
+        - Sales/Customers
+      parameters:
+        - $ref: "#/components/parameters/domainParameter"
+      requestBody:
+        description: Customer data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PostCustomer"
+      responses:
+        "201":
+          description: Successfully created customer
+          headers:
+            Location:
+              description: Returns the Location to get the created Customer in TEQ UI. 
+              schema:
+                type: string
+                example: /sales/customers/details/0001
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  customerId:
+                    type: string
+        "400":
+          $ref: "#/components/responses/400_requestError"
+        
+    get:
+      summary: Returns a list of customers
+      description: Returns a list of customers based on the filters provided
+      tags:
+        - Sales/Customers
+      parameters:
+        - $ref: "#/components/parameters/domainParameter"
+        - in: query
+          name: type
+          schema:
+            $ref: "#/components/schemas/CustomerType"
+        - in: query
+          name: name
+          schema:
+            type: string
+        - in: query
+          name: email
+          schema:
+            type: string
+        - in: query
+          name: orgno
+          schema:
+            type: string
+        - in: query
+          name: freetext
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successfully returned a list of customers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Customer"
+        "400":
+          $ref: "#/components/responses/400_requestError"
+        
+  /sales/customers/{id}:
+    patch:
+      description: Update a customer
+      tags:
+        - Sales/Customers
+      parameters:
+        - $ref: "#/components/parameters/domainParameter"
+        - name: id
+          in: path
+          description: Customer ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successfully updated customer
+        "400":
+          $ref: "#/components/responses/400_requestError"
+        "404":
+          $ref: "#/components/responses/404_notFound"
+        
+    get:
+      description: Returns a single customer
+      tags:
+        - Sales/Customers
+      parameters:
+        - $ref: "#/components/parameters/domainParameter"
+        - name: id
+          in: path
+          description: Customer ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successfully returned a customer
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Customer"
+              example:
+                number: 1
+                name: John Doe
+        "400":
+          $ref: "#/components/responses/400_requestError"
+        "404":
+          $ref: "#/components/responses/404_notFound"
+        
+  /sales/requests:
+    get:
+      summary: Returns a list of requests
+      description: Returns a list of requests based on the filters provided
+      tags:
+        - Sales/Requests
+      parameters:
+        - $ref: "#/components/parameters/domainParameter"
+        - in: query
+          name: source
+          schema:
+            $ref: "#/components/schemas/RequestSource"
+        - in: query
+          name: customer
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successfully returned a list of requests
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Request"
+        "400":
+          $ref: "#/components/responses/400_requestError"
+        
+    post:
+      summary: Create a new Request
+      description: Creats a new Request in the system
+      tags:
+        - Sales/Requests
+      parameters:
+        - $ref: "#/components/parameters/domainParameter"
+        - $ref: "#/components/parameters/timezoneParameter"
+      requestBody:
+        description: Request data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PostRequest"
+      responses:
+        "201":
+          description: Request created
+          headers:
+            Location:
+              description: Returns the Location to get the created Request in TEQ UI. 
+              schema:
+                type: string
+                example: /sales/request/new/TT-000001
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  requestId:
+                    type: string
+                  customerId:
+                    type: string
+        "400":
+          $ref: "#/components/responses/400_requestError"
+
+  /sales/requests/{customerId}:
+    post:
+      summary: Create a new Request for a given customer
+      description: Create a new Request for a given customer
+      tags:
+        - Sales/Requests
+      parameters:
+        - $ref: "#/components/parameters/domainParameter"
+        - $ref: "#/components/parameters/timezoneParameter"
+        - name: customerId
+          in: path
+          description: existing customer Id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Request data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PostRequestGivenCustomer"
+      responses:
+        "201":
+          description: Request created
+          headers:
+            Location:
+              description: Returns the Location to get the created Request in TEQ UI. 
+              schema:
+                type: string
+                example: /sales/request/new/TT-000001
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  requestId:
+                    type: string                  
+        "400":
+          $ref: "#/components/responses/400_requestError"
+        "404":
+          $ref: "#/components/responses/404_notFound"
+        
+  /sales/requests/{id}:
+    get:
+      description: Returns a single request
+      tags:
+        - Sales/Requests
+      parameters:
+        - $ref: "#/components/parameters/domainParameter"
+        - name: id
+          in: path
+          description: Request ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successfully returned a request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Request"
+              example:
+                number: 1
+                name: John Doe
+        "400":
+          $ref: "#/components/responses/400_requestError"
+        "404":
+          $ref: "#/components/responses/404_notFound"
+        
+  /sales/requests/{id}/action/deny:
+    post:
+      summary: Denies the current request
+      description: Returns a list of requests based on the filters provided
+      tags:
+        - Sales/Requests
+      parameters:
+        - $ref: "#/components/parameters/domainParameter"
+        - in: path
+          required: true
+          name: id
+          description: The id of the request to deny
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: The request has been denied Successfully
+        "400":
+          $ref: "#/components/responses/400_requestError"
+        "404":
+          $ref: "#/components/responses/404_notFound"
+            
+  /sales/requests/{id}/action/createquotation:
+    post:
+      summary: Creates a quotation for the request
+      tags:
+        - Sales/Requests
+      parameters:
+        - $ref: "#/components/parameters/domainParameter"
+        - in: path
+          required: true
+          name: id
+          description: The id of the request to deny
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Quotation created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  quotationId: 
+                    type: string
+        "400":
+          $ref: "#/components/responses/400_requestError"
+        "404":
+          $ref: "#/components/responses/404_notFound"
+        
+  /sales/quotations:
+    get:
+      summary: Returns a list of quotations
+      description: Returns a list of quotations based on the filters provided
+      tags:
+        - Sales/Quotations
+      parameters:
+        - $ref: "#/components/parameters/domainParameter"
+        - in: query
+          name: customer
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successfully returned a list of quotations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Quotation"
+        "400":
+          $ref: "#/components/responses/400_requestError"
+        
+    post:
+      summary: Create a new quotation
+      description: Creats a new quotation in the system
+      tags:
+        - Sales/Quotations
+      parameters:
+        - $ref: "#/components/parameters/domainParameter"
+      requestBody:
+        description: Quotation data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Quotation"
+      responses:
+        "201":
+          description: Request created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  requestId:
+                    type: string
+        "400":
+          $ref: "#/components/responses/400_requestError"
+        
+  /sales/quotations/{id}:
+    get:
+      description: Returns a single quotation
+      tags:
+        - Sales/Quotations
+      parameters:
+        - $ref: "#/components/parameters/domainParameter"
+        - name: id
+          in: path
+          description: Quotation ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successfully returned a quotation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Quotation"
+        "400":
+          $ref: "#/components/responses/400_requestError"
+        "404":
+          $ref: "#/components/responses/404_notFound"
+        
+  /sales/orders:
+    get:
+      summary: Returns a list of orders
+      description: Returns a list of orders based on the filters provided
+      tags:
+        - Sales/Orders
+      parameters:
+        - $ref: "#/components/parameters/domainParameter"
+        - in: query
+          name: customer
+          schema:
+            type: string
+        - in: query
+          name: fromDate
+          schema:
+            type: string
+        - in: query
+          name: toDate
+          schema:
+            type: string
+        - in: query
+          name: responsible
+          schema:
+            type: string
+        - in: query
+          name: departmentId
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successfully returned a list of orders
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Order"
+        "400":
+          $ref: "#/components/responses/400_requestError"
+
+  /sales/orders/{customerId}:
+    post:
+      summary: Create a new Order for a given customer
+      description: Creats a new Order in the system
+      tags:
+        - Sales/Orders
+      parameters:
+        - $ref: "#/components/parameters/domainParameter"
+        - $ref: "#/components/parameters/timezoneParameter"
+        - name: customerId
+          in: path
+          description: existing customer Id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Request data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PostOrder"
+      responses:
+        "201":
+          description: Order created
+          headers:
+            Location:
+              description: Returns the Location to get the created Order in TEQ UI. 
+              schema:
+                type: string
+                example: /sales/quotations/0001
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  orderId:
+                    type: string
+        "400":
+          $ref: "#/components/responses/400_requestError"
+        "404":
+          description: "The given customer does not exist"
+
+
+  /sales/orders/{id}:
+    get:
+      description: Returns a single order
+      tags:
+        - Sales/Orders
+      parameters:
+        - $ref: "#/components/parameters/domainParameter"
+        - name: id
+          in: path
+          description: Order ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successfully returned a order
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+        "400":
+          $ref: "#/components/responses/400_requestError"
+        "404":
+          $ref: "#/components/responses/404_notFound"
+
+  # /core/vehicles:
+  #   get:
+  #     description: Returns a list of vehicles
+  #     tags:
+  #       - Core/Vehicles
+  #     parameters:
+  #       - $ref: "#/components/parameters/domainParameter"
+  #       - in: query
+  #         name: name
+  #         schema:
+  #           type: string
+  #       - in: query
+  #         name: active
+  #         schema:
+  #           type: boolean
+  #       - in: query
+  #         name: departmentId
+  #         schema:
+  #           type: integer
+  #     responses:
+  #       "200":
+  #         description: Successfully returned a list of vehicles
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: array
+  #               items:
+  #                 $ref: "#/components/schemas/Vehicle"
+  #       "400":
+  #         $ref: "#/components/responses/400_requestError"
+  
+  #   post:
+  #     description: Creates a new vehicle
+  #     tags:
+  #       - Core/Vehicles
+  #     parameters:
+  #       - $ref: "#/components/parameters/domainParameter"
+  #     requestBody:
+  #       description: Vehicle data
+  #       required: true
+  #       content:
+  #         application/json:
+  #           schema:
+  #             $ref: "#/components/schemas/Vehicle"
+  #     responses:  
+  #       "201":
+  #         description: Successfully created vehicle
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: object
+  #               properties:
+  #                 vehicleId:
+  #                   type: string
+  #       "400":
+  #         $ref: "#/components/responses/400_requestError"
+
+  # /core/vehicles/{id}:
+  #   get:
+  #     description: Returns info about a single vehicle
+  #     tags:
+  #       - Core/Vehicles
+  #     parameters:
+  #       - $ref: "#/components/parameters/domainParameter"
+  #       - in: path
+  #         required: true
+  #         name: id
+  #         schema:
+  #           type: integer
+  #     responses:
+  #       "200":
+  #         description: Successfully returned a vehicle
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/Vehicle"
+  #       "400":
+  #         $ref: "#/components/responses/400_requestError"
+  #       "404":
+  #         $ref: "#/components/responses/404_notFound"
+  #   patch:
+  #     description: Update a vehicle
+  #     tags:
+  #       - Core/Vehicles
+  #     parameters:
+  #       - $ref: "#/components/parameters/domainParameter"
+  #       - in: path
+  #         required: true
+  #         name: id
+  #         schema:
+  #           type: integer
+  #     responses:
+  #       "201":
+  #         description: Successfully updated vehicle"
+  #       "400": 
+  #         $ref: "#/components/responses/400_requestError"
+  #       "404":  
+  #         $ref: "#/components/responses/404_notFound"
+  
+  # /core/drivers:
+  #   get:
+  #     description: Returns a list of drivers
+  #     tags:
+  #       - Core/Drivers
+  #     parameters:
+  #       - $ref: "#/components/parameters/domainParameter"
+  #       - in: query
+  #         name: name
+  #         schema:
+  #           type: string
+  #       - in: query
+  #         name: active
+  #         schema:
+  #           type: boolean
+  #       - in: query
+  #         name: departmentId
+  #         schema:
+  #           type: integer
+  #     responses:
+  #       "200":
+  #         description: Successfully returned a list of drivers
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: array
+  #               items:
+  #                 $ref: "#/components/schemas/Driver"
+  #       "400":
+  #         $ref: "#/components/responses/400_requestError"
+  
+  #   post:
+  #     description: Creates a new driver
+  #     tags:
+  #       - Core/Drivers
+  #     parameters:
+  #       - $ref: "#/components/parameters/domainParameter"
+  #     requestBody:
+  #       description: Driver data
+  #       required: true
+  #       content:
+  #         application/json:
+  #           schema:
+  #             $ref: "#/components/schemas/Driver"
+  #     responses:  
+  #       "201":
+  #         description: Successfully created driver
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: object
+  #               properties:
+  #                 vehicleId:
+  #                   type: string
+  #       "400":
+  #         $ref: "#/components/responses/400_requestError"
+
+  # /core/drivers/{id}:
+  #   get:
+  #     description: Returns info about a single driver
+  #     tags:
+  #       - Core/Drivers
+  #     parameters:
+  #       - $ref: "#/components/parameters/domainParameter"
+  #       - in: path
+  #         required: true
+  #         name: id
+  #         schema:
+  #           type: integer
+  #     responses:
+  #       "200":
+  #         description: Successfully returned a driver
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/Driver"
+  #       "400":
+  #         $ref: "#/components/responses/400_requestError"
+  #       "404":
+  #         $ref: "#/components/responses/404_notFound"
+  #   patch:
+  #     description: Update a driver
+  #     tags:
+  #       - Core/Drivers
+  #     parameters:
+  #       - $ref: "#/components/parameters/domainParameter"
+  #       - in: path
+  #         required: true
+  #         name: id
+  #         schema:
+  #           type: integer
+  #     responses:
+  #       "201":
+  #         description: Successfully updated driver"
+  #       "400": 
+  #         $ref: "#/components/responses/400_requestError"
+  #       "404":  
+  #         $ref: "#/components/responses/404_notFound"
+
+  # /price/calculate:
+  #   post:
+  #     summary: Calculate Price
+  #     description: Calculate the price for a trip specified in the request
+  #     tags:
+  #       - Price/Calulate
+  #     parameters:
+  #       - $ref: "#/components/parameters/domainParameter"
+  #     requestBody:
+  #       description: Request data
+  #       required: true
+  #       content:
+  #         application/json:
+  #           schema:
+  #             $ref: "#/components/schemas/PostPriceCalculate"
+  #     responses:
+  #       "200":
+  #         description: Price calculated
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: object
+  #               properties:
+  #                 requestId:
+  #                   type: string
+  #       "400":
+  #         $ref: "#/components/responses/400_requestError"
+
+  
+# components:
+#   # Reusable schemas (data models)
+#   schemas:
+#     ...
+#   # Reusable path, query, header and cookie parameters
+#   parameters:
+#     ...
+#   # Security scheme definitions (see Authentication)
+#   securitySchemes:
+#     ...
+#   # Reusable request bodies
+#   requestBodies:
+#     ...
+#   # Reusable responses, such as 401 Unauthorized or 400 Bad Request
+#   responses:
+#     ...
+#   # Reusable response headers
+#   headers:
+#     ...
+#   # Reusable examples
+#   examples:
+#     ...
+#   # Reusable links
+#   links:
+#     ...
+#   # Reusable callbacks
+#   callbacks:
+#     ...
+
+
+
+
+components:
+  responses:    
+    404_notFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+            example:
+              message: The requested object does not exist  
+    400_requestError:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                items:
+                  properties:
+                    error:
+                      type: string
+            example:
+              message: Invalid request, please review the errors and retry the request
+  parameters:
+    domainParameter:
+      name: domain
+      in: header
+      description: The domain/company to direct the API-call to
+      required: true
+      schema:
+        type: string
+        example: "ferdia"
+    timezoneParameter:
+      in: header
+      name: TimeZone  
+      description: The timezone of the client of the request
+      required: false
+      schema:
+        type: string
+        example: Europe/Berlin
+
+  examples:
+    customerCategory_get:
+      summary: Customer Category
+      description: Customer Category
+      value:
+        id: 1
+        name: VIP Customer
+        description: Very important customers
+        active: true
+        default: false
+    trip_get:
+      summary: A standard Trip
+      description: Trip
+      value:
+        id: TE-001-001
+
+  schemas:
+    CustomerType:
+      type: string
+      enum:
+        - person
+        - organization
+    Address:
+      properties:
+        address1:
+          type: string
+        postcode:
+          type: string
+        city:
+          type: string
+        country:
+          type: string
+    Customer:
+      properties:
+        id:
+          type: integer
+        customerNumber:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        type:
+          $ref: "#/components/schemas/CustomerType"
+        orgno:
+          type: string
+        category:
+          $ref: "#/components/schemas/CustomerCategory"
+        addresses:
+          type: array
+          items:
+            $ref: "#/components/schemas/Address"
+        contactPersons:
+          type: array
+          items:
+            $ref: "#/components/schemas/ContactPerson"
+    PostCustomer:
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        type:
+          $ref: "#/components/schemas/CustomerType"
+        orgno:
+          type: string
+        category:
+          $ref: "#/components/schemas/CustomerCategory"
+        customerNumber: 
+          type: string
+        parentCustomerId:
+          type: integer
+        orgNumber:
+          type: string
+        address1:
+          $ref: "#/components/schemas/Address"
+        address2:
+          $ref: "#/components/schemas/Address"
+        notes:
+          type: string
+        paymentType:
+          type: string
+          enum:
+            - Invoice
+            - Vipps
+            - Cash
+            - Card
+        Deadline:
+          type: integer
+        creditLimit:
+          type: integer
+        invoiceMethod:
+          type: string
+          enum:
+            - Email
+            - Post
+        purchaseOrder:
+          type: string
+        language:
+          type: string
+          enum:
+            - Norwegian
+            - English 
+            - Swedish
+            - Danish
+        currency:
+          type: string
+          enum:
+            - NOK
+            - SEK
+            - DKK
+            - EUR
+            - USD
+            - GBP
+            - BDT
+        EAN:
+          type: string
+        VATNumber:
+          type: string
+        includeVAT:
+          type: boolean   
+        fixedDiscountPercentage:
+          type: number
+        contactPersons:
+          type: array
+          items:
+            $ref: "#/components/schemas/ContactPerson"
+    ContactPerson:
+      properties:
+        id:
+          type: integer
+        firstname:
+          type: string
+        lastname:
+          type: string
+        email: 
+          type: string
+          format: email
+        mobilePhone:
+          type: string
+        fixedPhone:
+          type: string
+        primaryContact:
+          type: boolean
+        roleInCompany:
+          type: string
+    CustomerCategory:
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description: 
+          type: string
+        active:
+          type: boolean
+        default:
+          type: boolean
+      # examples:
+      #   $ref: "#/components/examples/customerCategory_get"
+    Trip:
+      properties:
+        tripID:
+          type: string
+        status:
+          type: string
+        vehicleID:
+          type: string
+        driverID:
+          type: string
+        customerId:
+          type: string
+        contactPerson:
+          type: string
+        travelFrom:
+          $ref: "#/components/schemas/Location"
+        travelTo:
+          $ref: "#/components/schemas/Location"
+        garage: 
+          $ref: "#/components/schemas/Garage"
+        withdrawal:
+          $ref: "#/components/schemas/Location"
+        deliver:
+          $ref: "#/components/schemas/Location"
+        commentsFromHQ:
+          type: string
+        commentsFromCustomer:
+          type: string
+        commentsToDriver:
+          type: string
+    TripStatus:
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+        location:
+          $ref: "#/components/schemas/Location"
+    GeoLocation:
+      properties:
+        lat:
+          type: number
+        long:
+          type: number
+    RequestSource:
+      type: string
+      enum:
+        - Direct
+        - Shared    
+    PostTrip:
+      type: object
+      required:          
+        - departureDate
+        - departureTime
+        - travelFrom
+        - travelTo
+        - pax        
+        - acceptTerms  
+      properties:
+        tripType:
+          type: string
+          enum:
+            - OneWay
+            - Return 
+          default: OneWay
+        departureDate:
+          type: string
+          format: date            
+        departureTime:
+          type: string
+          pattern: '^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$'
+        returnDate:
+          type: string
+          format: date
+        returnTime:
+          type: string
+          pattern: '^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$'
+        travelFrom:
+          $ref: "#/components/schemas/Location"
+        travelTo:
+          $ref: "#/components/schemas/Location"
+        viaPoints:
+          type: array
+          items:
+            $ref: "#/components/schemas/ViaPoint"
+        pax:
+          type: integer
+          format: int32                         
+        busAvailableDuringStay:
+          type: boolean
+          default: false     
+        acceptTerms:
+          type: boolean
+        externalReference:
+          type: string
+        vehicleLicensePlate:
+          type: string
+          description: "The license plate of the vehicle to use for the trip, only relevant if a specific vehicle is requested"
+        pointOfContact:
+          type: integer
+          description: "Use an exsiting point of contact for the customer for this trip"
+        newPointOfContact:
+          type: object
+          description: "Add a new point of contact to the customer for this trip"          
+          $ref: "#/components/schemas/ContactPerson"
+        comments:
+          type: object
+          properties:
+            toInvoice:
+              type: string
+            toPlanning:
+              type: string
+            toDriver:
+              type: string
+            fromCustomer:
+              type: string     
+            toCustomer:  
+              type: string
+        details:
+          type: object  
+          properties:
+            flag:
+              type: string
+            sign:
+              type: string
+            alternativeTripName:
+              type: string
+            purchaseOrder:
+              type: string
+        price:
+          type: number
+          format: decimal
+          example: 1000.00
+          description: "The price of the trip, only relevant if the trip is already priced"
+        prepaid:
+          type: boolean
+          default: false
+          description: "If the trip is prepayed"
+        addToPlanning:
+          type: boolean
+          default: false
+          description: "If true, the trip will be automatically planned to the chosen vehicle (requires vehicleLicensePlate: to be set)"
+        plannedDuration:
+          type: object
+          description: "The planned duration of the trip, only relevant if the trip is set to addToPlanning"
+          properties:
+            start:
+              type: string
+              format: date-time
+            end:
+              type: string
+              format: date-time
+            
+    PostRequestGivenCustomer:
+        type: object
+        required:          
+          - departureDate
+          - departureTime
+          - travelFrom
+          - travelTo
+          - pax        
+          - acceptTerms  
+        properties:
+          tripType:
+            type: string
+            enum:
+              - OneWay
+              - Return 
+            default: OneWay
+          departureDate:
+            type: string
+            format: date            
+          departureTime:
+            type: string
+            pattern: '^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$'
+          returnDate:
+            type: string
+            format: date
+          returnTime:
+            type: string
+            pattern: '^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$'
+          travelFrom:
+            $ref: "#/components/schemas/Location"
+          travelTo:
+            $ref: "#/components/schemas/Location"
+          pax:
+            type: integer
+            format: int32                         
+          busAvailableDuringStay:
+            type: boolean
+            default: false
+          comments:
+            type: string          
+          acceptTerms:
+            type: boolean
+          externalReference:
+            type: string
+    PostRequest:
+      allOf:
+        - $ref: "#/components/schemas/PostRequestGivenCustomer"
+        - type: object  
+          required:                      
+            - customerType
+            - firstName
+            - lastName
+            - email
+            - phoneNo
+            - acceptTerms
+          properties:                        
+            customerType:
+              type: string
+              enum:
+                - person
+                - organization
+              default: person
+            companyName:
+              type: string
+            companyOrgNumber:
+              type: string
+            firstName:
+              type: string
+            lastName:
+              type: string
+            email:
+              type: string
+              format: email
+            phoneNo:
+              type: string            
+    Request:
+      properties:
+        id:
+          type: string
+        orderDate:
+          type: string
+        date:
+          type: string
+        travelFrom:
+          $ref: "#/components/schemas/Address"
+        travelTo:
+          $ref: "#/components/schemas/Address"
+        pax:
+          type: integer
+        customerId:
+          type: integer
+        contactPerson:
+          type: integer
+    Quotation:
+      properties:
+        id: 
+          type: string
+        customerId:
+          type: string 
+    Order:
+      properties:
+        id: 
+          type: string
+        customerId:
+          type: string
+    PostOrder:
+      properties:
+        Trips:
+          type: array
+          items:
+            $ref: "#/components/schemas/PostTrip"
+    Location:
+      properties:
+        geoLocation: 
+          $ref: "#/components/schemas/GeoLocation"
+        address:
+          $ref: "#/components/schemas/Address"
+        googleFormattedAddress:
+          type: string
+    ViaPoint:
+      properties:
+        location:
+          $ref: "#/components/schemas/Location"
+        pauseTimeInMinutes:
+          type: integer
+    Garage:
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        location:
+          $ref: "#/components/schemas/Location"  
+    Vehicle:
+      properties:
+        id:
+          type: string
+        vehicleName:
+          type: string
+        manufacturer:
+          type: string
+        model:  
+          type: string
+        numberOfSeats:
+          type: integer
+        numberOfStanding:
+          type: integer
+        numberOfGuideSeats:
+          type: integer
+        numberOfHandicapSeats:
+          type: integer
+        licenseplate:
+          type: string
+        euroClass:
+          type: string
+        vehicleCategory:
+          type: string
+        deadlineForRoadWorthinessTest:
+          type: string
+          format: date
+        departmentId:
+          type: integer
+        fuelType:
+          type: string
+          enum:
+            - Diesel
+            - Electric
+            - Hybrid
+            - Petrol
+        length:
+          type: number
+        width:
+          type: number
+        height: 
+          type: number
+        weight: 
+          type: number 
+        availableInBookabus:
+          type: boolean
+        active:
+          type: boolean
+    
+    Driver:
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        language:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+        note:
+          type: string
+        active:
+          type: boolean
+      
+    PostPriceCalculate:
+      type: object
+      required:
+        - travelFrom
+        - travelTo
+        - departureDate
+      properties:
+        tripType:
+            type: string
+            enum:
+              - OneWay
+              - Return 
+            default: OneWay
+        departureDate:
+          type: string
+          format: date            
+        departureTime:
+          type: string
+          pattern: '^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$'
+          description: 'The time the trip should depart from the pickup point. Supply either departureTime or arrivalTime.'
+        arrivalTime:
+          type: string
+          pattern: '^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$'
+          description: 'The time the trip should arrive at the destination. Supply either departureTime or arrivalTime.'
+        returnDate:
+          type: string
+          format: date
+        returnTime:
+          type: string
+          pattern: '^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$'
+        travelFrom:
+          $ref: "#/components/schemas/Location"
+        travelTo:
+          $ref: "#/components/schemas/Location"
+        pax:
+          type: integer
+          format: int32                         
+        busAvailableDuringStay:
+          type: boolean
+          default: false
+        vehicleCategory:
+          type: string
+          description: "The category of vehicle to use for the trip"
+        vehicleId:
+          type: integer
+          description: "The vehicle to use for the trip"
+        
+
+          
+        
+                
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/ferdia-thomas/TEQPublic/1.0
