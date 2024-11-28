@@ -712,36 +712,24 @@ paths:
         "404":
           $ref: "#/components/responses/404_notFound"
 
-  # /core/vehicles:
-  #   get:
-  #     description: Returns a list of vehicles
-  #     tags:
-  #       - Core/Vehicles
-  #     parameters:
-  #       - $ref: "#/components/parameters/domainParameter"
-  #       - in: query
-  #         name: name
-  #         schema:
-  #           type: string
-  #       - in: query
-  #         name: active
-  #         schema:
-  #           type: boolean
-  #       - in: query
-  #         name: departmentId
-  #         schema:
-  #           type: integer
-  #     responses:
-  #       "200":
-  #         description: Successfully returned a list of vehicles
-  #         content:
-  #           application/json:
-  #             schema:
-  #               type: array
-  #               items:
-  #                 $ref: "#/components/schemas/Vehicle"
-  #       "400":
-  #         $ref: "#/components/responses/400_requestError"
+  /core/vehicles:
+    get:
+      description: Returns a list of vehicles
+      tags:
+        - Core/Vehicles
+      parameters:
+        - $ref: "#/components/parameters/domainParameter"        
+      responses:
+        "200":
+          description: Successfully returned a list of vehicles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Vehicle"
+        "400":
+          $ref: "#/components/responses/400_requestError"
   
   #   post:
   #     description: Creates a new vehicle
@@ -1493,9 +1481,7 @@ components:
           type: string
         deadlineForRoadWorthinessTest:
           type: string
-          format: date
-        departmentId:
-          type: integer
+          format: date        
         fuelType:
           type: string
           enum:
