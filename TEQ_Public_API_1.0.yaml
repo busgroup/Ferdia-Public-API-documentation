@@ -343,32 +343,32 @@ paths:
   #         $ref: "#/components/responses/404_notFound"
         
   /sales/requests:
-    get:
-      summary: Returns a list of requests
-      description: Returns a list of requests based on the filters provided
-      tags:
-        - Sales/Requests
-      parameters:
-        - $ref: "#/components/parameters/domainParameter"
-        - in: query
-          name: source
-          schema:
-            $ref: "#/components/schemas/RequestSource"
-        - in: query
-          name: customer
-          schema:
-            type: string
-      responses:
-        "200":
-          description: Successfully returned a list of requests
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Request"
-        "400":
-          $ref: "#/components/responses/400_requestError"
+    # get:
+    #   summary: Returns a list of requests
+    #   description: Returns a list of requests based on the filters provided
+    #   tags:
+    #     - Sales/Requests
+    #   parameters:
+    #     - $ref: "#/components/parameters/domainParameter"
+    #     - in: query
+    #       name: source
+    #       schema:
+    #         $ref: "#/components/schemas/RequestSource"
+    #     - in: query
+    #       name: customer
+    #       schema:
+    #         type: string
+    #   responses:
+    #     "200":
+    #       description: Successfully returned a list of requests
+    #       content:
+    #         application/json:
+    #           schema:
+    #             type: array
+    #             items:
+    #               $ref: "#/components/schemas/Request"
+    #     "400":
+    #       $ref: "#/components/responses/400_requestError"
         
     post:
       summary: Create a new Request
@@ -449,59 +449,59 @@ paths:
         "404":
           $ref: "#/components/responses/404_notFound"
         
-  /sales/requests/{id}:
-    # get:
-    #   description: Returns a single request
-    #   tags:
-    #     - Sales/Requests
-    #   parameters:
-    #     - $ref: "#/components/parameters/domainParameter"
-    #     - name: id
-    #       in: path
-    #       description: Request ID
-    #       required: true
-    #       schema:
-    #         type: integer
-    #   responses:
-    #     "200":
-    #       description: Successfully returned a request
-    #       content:
-    #         application/json:
-    #           schema:
-    #             $ref: "#/components/schemas/Request"
-    #           example:
-    #             number: 1
-    #             name: John Doe
-    #     "400":
-    #       $ref: "#/components/responses/400_requestError"
-    #     "404":
-    #       $ref: "#/components/responses/404_notFound"
-    post:
-      summary: Creates a request for the given customer
-      tags:
-        - Sales/Requests
-      parameters:
-        - $ref: "#/components/parameters/domainParameter"
-        - in: path
-          required: true
-          name: id
-          description: The id of the request to deny
-          schema:
-            type: integer
-      responses:
-        "200":
-          description: Quotation created
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  quotationId: 
-                    type: string
-        "400":
-          $ref: "#/components/responses/400_requestError"
-        "404":
-          $ref: "#/components/responses/404_notFound"
+  # /sales/requests/{id}:
+  #   # get:
+  #   #   description: Returns a single request
+  #   #   tags:
+  #   #     - Sales/Requests
+  #   #   parameters:
+  #   #     - $ref: "#/components/parameters/domainParameter"
+  #   #     - name: id
+  #   #       in: path
+  #   #       description: Request ID
+  #   #       required: true
+  #   #       schema:
+  #   #         type: integer
+  #   #   responses:
+  #   #     "200":
+  #   #       description: Successfully returned a request
+  #   #       content:
+  #   #         application/json:
+  #   #           schema:
+  #   #             $ref: "#/components/schemas/Request"
+  #   #           example:
+  #   #             number: 1
+  #   #             name: John Doe
+  #   #     "400":
+  #   #       $ref: "#/components/responses/400_requestError"
+  #   #     "404":
+  #   #       $ref: "#/components/responses/404_notFound"
+  #   post:
+  #     summary: Creates a request for the given customer
+  #     tags:
+  #       - Sales/Requests
+  #     parameters:
+  #       - $ref: "#/components/parameters/domainParameter"
+  #       - in: path
+  #         required: true
+  #         name: id
+  #         description: The id of the request to deny
+  #         schema:
+  #           type: integer
+  #     responses:
+  #       "200":
+  #         description: Quotation created
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: object
+  #               properties:
+  #                 quotationId: 
+  #                   type: string
+  #       "400":
+  #         $ref: "#/components/responses/400_requestError"
+  #       "404":
+  #         $ref: "#/components/responses/404_notFound"
         
   # /sales/requests/{id}/action/deny:
   #   post:
