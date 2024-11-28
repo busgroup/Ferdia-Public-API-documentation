@@ -221,39 +221,39 @@ paths:
   #         $ref: "#/components/responses/404_notFound"
         
   /sales/customers:
-    post:
-      deprecated: true
-      summary: Creates a new customer
-      description: Creates a new customer
-      tags:
-        - Sales/Customers
-      parameters:
-        - $ref: "#/components/parameters/domainParameter"
-      requestBody:
-        description: Customer data
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/PostCustomer"
-      responses:
-        "201":
-          description: Successfully created customer
-          headers:
-            Location:
-              description: Returns the Location to get the created Customer in TEQ UI. 
-              schema:
-                type: string
-                example: /sales/customers/details/0001
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  customerId:
-                    type: string
-        "400":
-          $ref: "#/components/responses/400_requestError"
+    # post:
+    #   deprecated: true
+    #   summary: Creates a new customer
+    #   description: Creates a new customer
+    #   tags:
+    #     - Sales/Customers
+    #   parameters:
+    #     - $ref: "#/components/parameters/domainParameter"
+    #   requestBody:
+    #     description: Customer data
+    #     required: true
+    #     content:
+    #       application/json:
+    #         schema:
+    #           $ref: "#/components/schemas/PostCustomer"
+    #   responses:
+    #     "201":
+    #       description: Successfully created customer
+    #       headers:
+    #         Location:
+    #           description: Returns the Location to get the created Customer in TEQ UI. 
+    #           schema:
+    #             type: string
+    #             example: /sales/customers/details/0001
+    #       content:
+    #         application/json:
+    #           schema:
+    #             type: object
+    #             properties:
+    #               customerId:
+    #                 type: string
+    #     "400":
+    #       $ref: "#/components/responses/400_requestError"
         
     get:
       summary: Returns a list of customers
@@ -294,53 +294,53 @@ paths:
         "400":
           $ref: "#/components/responses/400_requestError"
         
-  /sales/customers/{id}:
-    patch:
-      description: Update a customer
-      tags:
-        - Sales/Customers
-      parameters:
-        - $ref: "#/components/parameters/domainParameter"
-        - name: id
-          in: path
-          description: Customer ID
-          required: true
-          schema:
-            type: integer
-      responses:
-        "200":
-          description: Successfully updated customer
-        "400":
-          $ref: "#/components/responses/400_requestError"
-        "404":
-          $ref: "#/components/responses/404_notFound"
+  # /sales/customers/{id}:
+  #   patch:
+  #     description: Update a customer
+  #     tags:
+  #       - Sales/Customers
+  #     parameters:
+  #       - $ref: "#/components/parameters/domainParameter"
+  #       - name: id
+  #         in: path
+  #         description: Customer ID
+  #         required: true
+  #         schema:
+  #           type: integer
+  #     responses:
+  #       "200":
+  #         description: Successfully updated customer
+  #       "400":
+  #         $ref: "#/components/responses/400_requestError"
+  #       "404":
+  #         $ref: "#/components/responses/404_notFound"
         
-    get:
-      description: Returns a single customer
-      tags:
-        - Sales/Customers
-      parameters:
-        - $ref: "#/components/parameters/domainParameter"
-        - name: id
-          in: path
-          description: Customer ID
-          required: true
-          schema:
-            type: integer
-      responses:
-        "200":
-          description: Successfully returned a customer
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Customer"
-              example:
-                number: 1
-                name: John Doe
-        "400":
-          $ref: "#/components/responses/400_requestError"
-        "404":
-          $ref: "#/components/responses/404_notFound"
+  #   get:
+  #     description: Returns a single customer
+  #     tags:
+  #       - Sales/Customers
+  #     parameters:
+  #       - $ref: "#/components/parameters/domainParameter"
+  #       - name: id
+  #         in: path
+  #         description: Customer ID
+  #         required: true
+  #         schema:
+  #           type: integer
+  #     responses:
+  #       "200":
+  #         description: Successfully returned a customer
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/Customer"
+  #             example:
+  #               number: 1
+  #               name: John Doe
+  #       "400":
+  #         $ref: "#/components/responses/400_requestError"
+  #       "404":
+  #         $ref: "#/components/responses/404_notFound"
         
   /sales/requests:
     get:
@@ -450,58 +450,34 @@ paths:
           $ref: "#/components/responses/404_notFound"
         
   /sales/requests/{id}:
-    get:
-      description: Returns a single request
-      tags:
-        - Sales/Requests
-      parameters:
-        - $ref: "#/components/parameters/domainParameter"
-        - name: id
-          in: path
-          description: Request ID
-          required: true
-          schema:
-            type: integer
-      responses:
-        "200":
-          description: Successfully returned a request
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Request"
-              example:
-                number: 1
-                name: John Doe
-        "400":
-          $ref: "#/components/responses/400_requestError"
-        "404":
-          $ref: "#/components/responses/404_notFound"
-        
-  /sales/requests/{id}/action/deny:
+    # get:
+    #   description: Returns a single request
+    #   tags:
+    #     - Sales/Requests
+    #   parameters:
+    #     - $ref: "#/components/parameters/domainParameter"
+    #     - name: id
+    #       in: path
+    #       description: Request ID
+    #       required: true
+    #       schema:
+    #         type: integer
+    #   responses:
+    #     "200":
+    #       description: Successfully returned a request
+    #       content:
+    #         application/json:
+    #           schema:
+    #             $ref: "#/components/schemas/Request"
+    #           example:
+    #             number: 1
+    #             name: John Doe
+    #     "400":
+    #       $ref: "#/components/responses/400_requestError"
+    #     "404":
+    #       $ref: "#/components/responses/404_notFound"
     post:
-      summary: Denies the current request
-      description: Returns a list of requests based on the filters provided
-      tags:
-        - Sales/Requests
-      parameters:
-        - $ref: "#/components/parameters/domainParameter"
-        - in: path
-          required: true
-          name: id
-          description: The id of the request to deny
-          schema:
-            type: integer
-      responses:
-        "200":
-          description: The request has been denied Successfully
-        "400":
-          $ref: "#/components/responses/400_requestError"
-        "404":
-          $ref: "#/components/responses/404_notFound"
-            
-  /sales/requests/{id}/action/createquotation:
-    post:
-      summary: Creates a quotation for the request
+      summary: Creates a request for the given customer
       tags:
         - Sales/Requests
       parameters:
@@ -527,121 +503,171 @@ paths:
         "404":
           $ref: "#/components/responses/404_notFound"
         
-  /sales/quotations:
-    get:
-      summary: Returns a list of quotations
-      description: Returns a list of quotations based on the filters provided
-      tags:
-        - Sales/Quotations
-      parameters:
-        - $ref: "#/components/parameters/domainParameter"
-        - in: query
-          name: customer
-          schema:
-            type: string
-      responses:
-        "200":
-          description: Successfully returned a list of quotations
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Quotation"
-        "400":
-          $ref: "#/components/responses/400_requestError"
+  # /sales/requests/{id}/action/deny:
+  #   post:
+  #     summary: Denies the current request
+  #     description: Returns a list of requests based on the filters provided
+  #     tags:
+  #       - Sales/Requests
+  #     parameters:
+  #       - $ref: "#/components/parameters/domainParameter"
+  #       - in: path
+  #         required: true
+  #         name: id
+  #         description: The id of the request to deny
+  #         schema:
+  #           type: integer
+  #     responses:
+  #       "200":
+  #         description: The request has been denied Successfully
+  #       "400":
+  #         $ref: "#/components/responses/400_requestError"
+  #       "404":
+  #         $ref: "#/components/responses/404_notFound"
+            
+  # /sales/requests/{id}/action/createquotation:
+  #   post:
+  #     summary: Creates a quotation for the request
+  #     tags:
+  #       - Sales/Requests
+  #     parameters:
+  #       - $ref: "#/components/parameters/domainParameter"
+  #       - in: path
+  #         required: true
+  #         name: id
+  #         description: The id of the request to deny
+  #         schema:
+  #           type: integer
+  #     responses:
+  #       "200":
+  #         description: Quotation created
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: object
+  #               properties:
+  #                 quotationId: 
+  #                   type: string
+  #       "400":
+  #         $ref: "#/components/responses/400_requestError"
+  #       "404":
+  #         $ref: "#/components/responses/404_notFound"
         
-    post:
-      summary: Create a new quotation
-      description: Creats a new quotation in the system
-      tags:
-        - Sales/Quotations
-      parameters:
-        - $ref: "#/components/parameters/domainParameter"
-      requestBody:
-        description: Quotation data
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Quotation"
-      responses:
-        "201":
-          description: Request created
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  requestId:
-                    type: string
-        "400":
-          $ref: "#/components/responses/400_requestError"
+  # /sales/quotations:
+    # get:
+    #   summary: Returns a list of quotations
+    #   description: Returns a list of quotations based on the filters provided
+    #   tags:
+    #     - Sales/Quotations
+    #   parameters:
+    #     - $ref: "#/components/parameters/domainParameter"
+    #     - in: query
+    #       name: customer
+    #       schema:
+    #         type: string
+    #   responses:
+    #     "200":
+    #       description: Successfully returned a list of quotations
+    #       content:
+    #         application/json:
+    #           schema:
+    #             type: array
+    #             items:
+    #               $ref: "#/components/schemas/Quotation"
+    #     "400":
+    #       $ref: "#/components/responses/400_requestError"
         
-  /sales/quotations/{id}:
-    get:
-      description: Returns a single quotation
-      tags:
-        - Sales/Quotations
-      parameters:
-        - $ref: "#/components/parameters/domainParameter"
-        - name: id
-          in: path
-          description: Quotation ID
-          required: true
-          schema:
-            type: integer
-      responses:
-        "200":
-          description: Successfully returned a quotation
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Quotation"
-        "400":
-          $ref: "#/components/responses/400_requestError"
-        "404":
-          $ref: "#/components/responses/404_notFound"
+    # post:
+    #   summary: Create a new quotation
+    #   description: Creats a new quotation in the system
+    #   tags:
+    #     - Sales/Quotations
+    #   parameters:
+    #     - $ref: "#/components/parameters/domainParameter"
+    #   requestBody:
+    #     description: Quotation data
+    #     required: true
+    #     content:
+    #       application/json:
+    #         schema:
+    #           $ref: "#/components/schemas/Quotation"
+    #   responses:
+    #     "201":
+    #       description: Request created
+    #       content:
+    #         application/json:
+    #           schema:
+    #             type: object
+    #             properties:
+    #               requestId:
+    #                 type: string
+    #     "400":
+    #       $ref: "#/components/responses/400_requestError"
         
-  /sales/orders:
-    get:
-      summary: Returns a list of orders
-      description: Returns a list of orders based on the filters provided
-      tags:
-        - Sales/Orders
-      parameters:
-        - $ref: "#/components/parameters/domainParameter"
-        - in: query
-          name: customer
-          schema:
-            type: string
-        - in: query
-          name: fromDate
-          schema:
-            type: string
-        - in: query
-          name: toDate
-          schema:
-            type: string
-        - in: query
-          name: responsible
-          schema:
-            type: string
-        - in: query
-          name: departmentId
-          schema:
-            type: integer
-      responses:
-        "200":
-          description: Successfully returned a list of orders
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Order"
-        "400":
-          $ref: "#/components/responses/400_requestError"
+  # /sales/quotations/{id}:
+  #   get:
+  #     description: Returns a single quotation
+  #     tags:
+  #       - Sales/Quotations
+  #     parameters:
+  #       - $ref: "#/components/parameters/domainParameter"
+  #       - name: id
+  #         in: path
+  #         description: Quotation ID
+  #         required: true
+  #         schema:
+  #           type: integer
+  #     responses:
+  #       "200":
+  #         description: Successfully returned a quotation
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/Quotation"
+  #       "400":
+  #         $ref: "#/components/responses/400_requestError"
+  #       "404":
+  #         $ref: "#/components/responses/404_notFound"
+        
+  # /sales/orders:
+  #   get:
+  #     summary: Returns a list of orders
+  #     description: Returns a list of orders based on the filters provided
+  #     tags:
+  #       - Sales/Orders
+  #     parameters:
+  #       - $ref: "#/components/parameters/domainParameter"
+  #       - in: query
+  #         name: customer
+  #         schema:
+  #           type: string
+  #       - in: query
+  #         name: fromDate
+  #         schema:
+  #           type: string
+  #       - in: query
+  #         name: toDate
+  #         schema:
+  #           type: string
+  #       - in: query
+  #         name: responsible
+  #         schema:
+  #           type: string
+  #       - in: query
+  #         name: departmentId
+  #         schema:
+  #           type: integer
+  #     responses:
+  #       "200":
+  #         description: Successfully returned a list of orders
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: array
+  #               items:
+  #                 $ref: "#/components/schemas/Order"
+  #       "400":
+  #         $ref: "#/components/responses/400_requestError"
 
   /sales/orders/{customerId}:
     post:
@@ -687,30 +713,30 @@ paths:
           description: "The given customer does not exist"
 
 
-  /sales/orders/{id}:
-    get:
-      description: Returns a single order
-      tags:
-        - Sales/Orders
-      parameters:
-        - $ref: "#/components/parameters/domainParameter"
-        - name: id
-          in: path
-          description: Order ID
-          required: true
-          schema:
-            type: integer
-      responses:
-        "200":
-          description: Successfully returned a order
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Order"
-        "400":
-          $ref: "#/components/responses/400_requestError"
-        "404":
-          $ref: "#/components/responses/404_notFound"
+  # /sales/orders/{id}:
+  #   get:
+  #     description: Returns a single order
+  #     tags:
+  #       - Sales/Orders
+  #     parameters:
+  #       - $ref: "#/components/parameters/domainParameter"
+  #       - name: id
+  #         in: path
+  #         description: Order ID
+  #         required: true
+  #         schema:
+  #           type: integer
+  #     responses:
+  #       "200":
+  #         description: Successfully returned a order
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/Order"
+  #       "400":
+  #         $ref: "#/components/responses/400_requestError"
+  #       "404":
+  #         $ref: "#/components/responses/404_notFound"
 
   /core/vehicles:
     get:
