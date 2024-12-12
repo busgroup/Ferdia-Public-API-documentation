@@ -35,10 +35,12 @@ info:
     To obtain your access credentials, please contact TEQ support on (support@ferdia.co).
 
     ## Domain-header
+
     For all API requests an HTTP-header `domain` must be included. This header should contain the domain/company name that the API-call should be directed to. 
     You will receive this domain name when you sign up for the TEQ API.
 
-    # Timezone
+    # TimeZone
+    
     The API uses the timezone of the client of the request to calculate dates and times. The timezone should be included in the HTTP-header `TimeZone` in the format `Continent/City` (e.g. `Europe/Berlin`).
     
 paths:
