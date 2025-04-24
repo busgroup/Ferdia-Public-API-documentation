@@ -311,7 +311,7 @@ paths:
         
   /sales/customers/{id}:
     put:
-      description: Update a customer
+      description: Updates an existing customer
       tags:
         - Sales/Customers
       parameters:
