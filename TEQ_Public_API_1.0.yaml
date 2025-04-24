@@ -322,6 +322,13 @@ paths:
           required: true
           schema:
             type: integer
+      requestBody:
+        description: Customer data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PutCustomer"
       responses:
         "200":
           description: Successfully updated customer
@@ -1106,6 +1113,78 @@ components:
           items:
             $ref: "#/components/schemas/ContactPerson"
     PostCustomer:
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        type:
+          $ref: "#/components/schemas/CustomerType"
+        orgno:
+          type: string
+        category:
+          $ref: "#/components/schemas/CustomerCategory"
+        customerNumber: 
+          type: string
+        parentCustomerId:
+          type: integer
+        orgNumber:
+          type: string
+        address1:
+          $ref: "#/components/schemas/Address"
+        address2:
+          $ref: "#/components/schemas/Address"
+        notes:
+          type: string
+        paymentType:
+          type: string
+          enum:
+            - Invoice
+            - Vipps
+            - Cash
+            - Card
+        deadline:
+          type: integer
+        creditLimit:
+          type: integer
+        invoiceMethod:
+          type: string
+          enum:
+            - Email
+            - Post
+        purchaseOrder:
+          type: string
+        language:
+          type: string
+          enum:
+            - Norwegian
+            - English 
+            - Swedish
+            - Danish
+        currency:
+          type: string
+          enum:
+            - NOK
+            - SEK
+            - DKK
+            - EUR
+            - USD
+            - GBP
+            - BDT
+        EAN:
+          type: string
+        VATNumber:
+          type: string
+        includeVAT:
+          type: boolean   
+        fixedDiscountPercentage:
+          type: number
+        contactPersons:
+          type: array
+          items:
+            $ref: "#/components/schemas/ContactPerson"
+    PutCustomer:
       properties:
         name:
           type: string
