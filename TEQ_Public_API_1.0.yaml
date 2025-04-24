@@ -237,39 +237,39 @@ paths:
   #         $ref: "#/components/responses/404_notFound"
         
   /sales/customers:
-    # post:
-    #   deprecated: true
-    #   summary: Creates a new customer
-    #   description: Creates a new customer
-    #   tags:
-    #     - Sales/Customers
-    #   parameters:
-    #     - $ref: "#/components/parameters/domainParameter"
-    #   requestBody:
-    #     description: Customer data
-    #     required: true
-    #     content:
-    #       application/json:
-    #         schema:
-    #           $ref: "#/components/schemas/PostCustomer"
-    #   responses:
-    #     "201":
-    #       description: Successfully created customer
-    #       headers:
-    #         Location:
-    #           description: Returns the Location to get the created Customer in TEQ UI. 
-    #           schema:
-    #             type: string
-    #             example: /sales/customers/details/0001
-    #       content:
-    #         application/json:
-    #           schema:
-    #             type: object
-    #             properties:
-    #               customerId:
-    #                 type: string
-    #     "400":
-    #       $ref: "#/components/responses/400_requestError"
+    post:
+      deprecated: true
+      summary: Creates a new customer
+      description: Creates a new customer
+      tags:
+        - Sales/Customers
+      parameters:
+        - $ref: "#/components/parameters/domainParameter"
+      requestBody:
+        description: Customer data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PostCustomer"
+      responses:
+        "201":
+          description: Successfully created customer
+          headers:
+            Location:
+              description: Returns the Location to get the created Customer in TEQ UI. 
+              schema:
+                type: string
+                example: /sales/customers/details/0001
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  customerId:
+                    type: string
+        "400":
+          $ref: "#/components/responses/400_requestError"
         
     get:
       summary: Returns a list of customers
@@ -310,26 +310,26 @@ paths:
         "400":
           $ref: "#/components/responses/400_requestError"
         
-  # /sales/customers/{id}:
-  #   patch:
-  #     description: Update a customer
-  #     tags:
-  #       - Sales/Customers
-  #     parameters:
-  #       - $ref: "#/components/parameters/domainParameter"
-  #       - name: id
-  #         in: path
-  #         description: Customer ID
-  #         required: true
-  #         schema:
-  #           type: integer
-  #     responses:
-  #       "200":
-  #         description: Successfully updated customer
-  #       "400":
-  #         $ref: "#/components/responses/400_requestError"
-  #       "404":
-  #         $ref: "#/components/responses/404_notFound"
+  /sales/customers/{id}:
+    put:
+      description: Update a customer
+      tags:
+        - Sales/Customers
+      parameters:
+        - $ref: "#/components/parameters/domainParameter"
+        - name: id
+          in: path
+          description: Customer ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successfully updated customer
+        "400":
+          $ref: "#/components/responses/400_requestError"
+        "404":
+          $ref: "#/components/responses/404_notFound"
         
   #   get:
   #     description: Returns a single customer
