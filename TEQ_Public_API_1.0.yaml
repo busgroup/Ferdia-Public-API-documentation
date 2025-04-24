@@ -237,8 +237,7 @@ paths:
   #         $ref: "#/components/responses/404_notFound"
         
   /sales/customers:
-    post:
-      deprecated: true
+    post:      
       summary: Creates a new customer
       description: Creates a new customer
       tags:
@@ -1138,7 +1137,7 @@ components:
             - Vipps
             - Cash
             - Card
-        Deadline:
+        deadline:
           type: integer
         creditLimit:
           type: integer
