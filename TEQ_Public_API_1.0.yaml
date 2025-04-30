@@ -1129,8 +1129,6 @@ components:
           type: string
         parentCustomerId:
           type: integer
-        orgNumber:
-          type: string
         address1:
           $ref: "#/components/schemas/Address"
         address2:
