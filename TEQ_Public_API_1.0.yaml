@@ -729,11 +729,41 @@ paths:
                 properties:
                   orderId:
                     type: string
+                    description: "The unique internal order ID created"
+                    example: "34290"                      
+                  gen_oid:
+                    type: string
+                    description: "The order ID in the format used in TEQ UI, e.g. BT-034150-S01"
+                    example: "BT-034150-S01"
         "400":
           $ref: "#/components/responses/400_requestError"
         "404":
           description: "The given customer does not exist"
 
+  /sales/orders/status/{id}:
+    get:
+      description: Returns the status for a given order and the status of all trips related to this order
+      tags:
+        - Sales/Orders
+      parameters:
+        - $ref: "#/components/parameters/domainParameter"
+        - name: id
+          in: path
+          description: Order ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successfully returned status for the order
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderStatus"
+        "400":
+          $ref: "#/components/responses/400_requestError"
+        "404":
+          $ref: "#/components/responses/404_notFound"
 
   # /sales/orders/{id}:
   #   get:
@@ -1687,10 +1717,31 @@ components:
         vehicleId:
           type: integer
           description: "The vehicle to use for the trip"
-        
 
-          
+    OrderStatus:
+      properties:
+        order_id:
+          type: string
+          description: "The unique internal order ID"
+          example: "34290"        
+        status:
+          type: string
+          description: "The status of the order"
+        trips:
+          type: array
+          items:
+            $ref: "#/components/schemas/OrderStatusTrip"
         
+    OrderStatusTrip:
+      properties:
+        trip_id:
+          type: object
+          properties:
+            status:
+              type: string
+              description: "The status of the trip"        
+          description: "The trip ID"                    
+                        
                 
 servers:
   # Added by API Auto Mocking Plugin
