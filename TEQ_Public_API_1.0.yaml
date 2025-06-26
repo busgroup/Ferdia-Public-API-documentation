@@ -1469,7 +1469,16 @@ components:
             end:
               type: string
               format: date-time
-            
+        orderStatus:
+          type: string
+          description: "The status to set for the newly created order"
+          enum:
+            - Draft
+            - Sent to customer
+            - Accepted by customer
+            - Active order
+          default: Active order
+
     PostRequestGivenCustomer:
         type: object
         required:          
