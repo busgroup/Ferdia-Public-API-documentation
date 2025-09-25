@@ -765,6 +765,53 @@ paths:
         "404":
           $ref: "#/components/responses/404_notFound"
 
+  /sales/capacity:
+    get:
+      description: Returns the vehicle capacity for a given time
+      tags:
+        - Sales/Capacity
+      parameters:
+        - $ref: "#/components/parameters/domainParameter"
+        - name: startTime
+          in: path
+          description: The start-time for the trip. Format DD.MM.YYYY HH:MM
+          required: true
+          example: "01.01.2025 10:00"
+          schema:
+            type: string
+        - name: endTime
+          in: path
+          description: The end-time for the trip. Format DD.MM.YYYY HH:MM
+          required: true
+          example: "01.01.2025 12:00"
+          schema:
+            type: string
+        - name: departmentId
+          in: path
+          description: Id of the department to get the capacity for
+          schema:
+            type: integer
+        - name: vehicleTypeId
+          in: path
+          description: Id of the vehicle type to get the capacity for
+          schema:
+            type: integer
+        - name: pax
+          in: path
+          description: The number of passengers to get the capacity for, vehicle type will be set to default based on the number of passengers
+          schema:
+            type: integer
+    
+      responses:
+        "200":
+          description: Successfully returned sales capacity
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SalesCapacity"
+        "400":
+          $ref: "#/components/responses/400_requestError"
+
   # /sales/orders/{id}:
   #   get:
   #     description: Returns a single order
@@ -1102,6 +1149,99 @@ components:
         id: TE-001-001
 
   schemas:
+
+    SalesCapacity:
+      type: object
+      properties:
+        capacity:
+          type: string
+          enum: 
+            - High
+            - Medium
+            - Low
+        departmentId:
+          type: integer
+        departmentName:
+          type: string
+        vehicletypeId:
+          type: integer
+        vehicleTypeName:
+          type: string
+        tripCount:
+          type: object
+          properties:
+            total:
+              type: integer
+              example: 8
+              description: The total number of trips in the timerange of the capacity request
+            activeNormalTrips:
+              type: integer
+              example: 4
+              description: The total number of active normal trips in the timerange of the capacity request
+            activeFixedTrips:  
+              type: integer
+              example: 2
+              description: The total number of active fixed trips in the timerange of the capacity request
+            confirmedNormalTrips:
+              type: integer
+              example: 1
+              description: The total number of confirmed normal trips in the timerange of the capacity request
+            sentQuotations:
+              type: integer
+              example: 0
+              description: The total number of quoted, but not accepted trips in the timerange of the capacity request
+            drafts:
+              type: integer
+              example: 1
+              description: The total number of draft trips in the timerange of the capacity request
+        fullDayInfo:
+          type: array
+          items:
+            type: object
+            properties:
+              startTime: 
+                type: string
+                format: date-time
+                example: "01.01.2025 00:00"
+              endTime: 
+                type: string
+                format: date-time
+                example: "01.01.2025 01:00"
+              capacity:
+                type: string
+                enum:
+                  - High
+                  - Medium
+                  - Low
+              tripCount:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    example: 4
+                    description: The total number of trips in the timerange of the capacity request
+                  activeNormalTrips:
+                    type: integer
+                    example: 0
+                    description: The total number of active normal trips in the timerange of the capacity request
+                  activeFixedTrips:  
+                    type: integer
+                    example: 2
+                    description: The total number of active fixed trips in the timerange of the capacity request
+                  confirmedNormalTrips:
+                    type: integer
+                    example: 1
+                    description: The total number of confirmed normal trips in the timerange of the capacity request
+                  sentQuotations:
+                    type: integer
+                    example: 0
+                    description: The total number of quoted, but not accepted trips in the timerange of the capacity request
+                  drafts:
+                    type: integer
+                    example: 1
+                    description: The total number of draft trips in the timerange of the capacity request
+              
+
     CustomerType:
       type: string
       enum:
