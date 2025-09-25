@@ -1590,7 +1590,7 @@ components:
           type: number
           format: decimal
           example: 1000.00
-          description: "The price of the trip, only relevant if the trip is already priced"
+          description: "The price of the trip (inc. VAT), only relevant if the trip is already priced and the TEQ price-calcuator shoul be bypassed."
         prepaid:
           type: boolean
           default: false
