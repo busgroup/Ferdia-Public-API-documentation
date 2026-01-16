@@ -54,11 +54,36 @@
       <section id="powerbi" class="card tab-panel" role="tabpanel" aria-labelledby="tab-powerbi">
         <h2>Power BI Desktop</h2>
         <ol>
-          <li>Open Power BI Desktop and select <strong>Get Data</strong>.</li>
-          <li>Choose the appropriate connector (e.g., <strong>SQL Server</strong> or your warehouse connector).</li>
-          <li>Enter <strong>Server</strong> and <strong>Database</strong> from the details above.</li>
-          <li>Select the correct <strong>Authentication method</strong> (e.g., Organizational/SSO or Database).</li>
-          <li>Click <strong>Connect</strong> and select the schemas/tables you need.</li>
+          <li>
+            <figure>
+              <figcaption>Open Power BI Desktop and go to Home → Get data → More, then choose ODBC.</figcaption>
+              <img src="img/powerbi1.png" alt="Power BI: Home ribbon with Get Data and ODBC option" />
+            </figure>
+          </li>
+          <li>
+            <figure>
+              <figcaption>Select your configured Ferdia Data Warehouse ODBC data source (DSN) and click OK.</figcaption>
+              <img src="img/powerbi2.png" alt="Power BI: From ODBC dialog showing available DSNs" />
+            </figure>
+          </li>
+          <li>
+            <figure>
+              <figcaption>In the Navigator, browse to ferdia_dw_production/public and select the tables you need.</figcaption>
+              <img src="img/powerbi3.png" alt="Power BI: Navigator with schemas and tables listed" />
+            </figure>
+          </li>
+          <li>
+            <figure>
+              <figcaption>Choose Load (or Transform Data) to bring the data into your report model.</figcaption>
+              <img src="img/powerbi4.png" alt="Power BI: Load data buttons and preview" />
+            </figure>
+          </li>
+          <li>
+            <figure>
+              <figcaption>Choose Load (or Transform Data) to bring the data into your report model.</figcaption>
+              <img src="img/powerbi5.png" alt="Power BI: Load data buttons and preview" />
+            </figure>
+          </li>
         </ol>
         <p>Optional advanced: enable query folding and set privacy levels to optimize performance.</p>
       </section>
