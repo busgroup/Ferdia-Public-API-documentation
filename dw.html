@@ -1,5 +1,50 @@
-<html>
-    <body>
-        <h1>You have reached the DW</h1>
-    </body>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ferdia Data Warehouse</title>
+    <style>
+      :root { color-scheme: light dark; }
+      body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; line-height: 1.6; }
+      header { padding: 2rem 1.25rem; background: #0b5ed7; color: #fff; }
+      main { padding: 1.5rem 1.25rem 3rem; max-width: 900px; margin: 0 auto; }
+      h1 { margin: 0 0 .5rem; font-weight: 600; }
+      p.lead { margin: 0; opacity: .9; }
+      section { margin-top: 2rem; }
+      ul { padding-left: 1.25rem; }
+      a { color: #0b5ed7; text-decoration: none; }
+      a:hover { text-decoration: underline; }
+      .card { border: 1px solid rgba(0,0,0,.12); border-radius: .5rem; padding: 1rem; margin-top: 1rem; background: rgba(255,255,255,.6); }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Ferdia Data Warehouse</h1>
+      <p class="lead">Centralized analytics data for reporting and insights across Ferdia.</p>
+    </header>
+    <main>
+      <section class="card">
+        <h2>About</h2>
+        <p>
+          The Ferdia Data Warehouse consolidates operational and analytical datasets to support BI, self-service analytics,
+          and data-driven decision making. Use the resources below to get started.
+        </p>
+      </section>
+ 
+      <section class="card">
+        <h2>Get Started</h2>
+        <ul>
+          <li>
+            <a href="dw-connect.html">How to connect from BI tools</a>
+            – step-by-step guides for connecting with common tools (e.g., Power BI, Excel, SQL clients).
+          </li>
+          <li>
+            <a href="dw-data.html">Available data and schemas</a>
+            – overview of datasets, tables, and key fields available in the warehouse.
+          </li>
+        </ul>
+      </section>
+    </main>
+  </body>
 </html>
