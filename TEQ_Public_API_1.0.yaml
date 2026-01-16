@@ -363,7 +363,44 @@ paths:
   #         $ref: "#/components/responses/400_requestError"
   #       "404":
   #         $ref: "#/components/responses/404_notFound"
-        
+
+  # https://ferdia.atlassian.net/browse/PROD-3966
+  # /sales/customers/{id}/fixedtripsinfo:
+  #   get:
+  #     summary: Returns a list of fixed trips for a customer
+  #     description: Returns a list of fixed trips for a customer based on the filters provided
+  #     tags:
+  #       - Sales/Customers
+  #     parameters:
+  #       - $ref: "#/components/parameters/domainParameter"
+  #       - $ref: "#/components/parameters/timezoneParameter"
+  #       - name: id
+  #         in: path
+  #         description: Customer ID
+  #         required: true
+  #         schema:
+  #           type: integer
+  #       - name: date
+  #         in: query
+  #         description: Date to get fixed trips for                    
+  #         schema:
+  #           type: string
+  #           format: date
+  #           default: today
+  #     responses:
+  #       "200":
+  #         description: Successfully returned a list of fixed trips for a customer
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: array
+  #               items:
+  #                 $ref: "#/components/schemas/CustomerFixedTripInfo"
+  #       "400":
+  #         $ref: "#/components/responses/400_requestError"
+  #       "404":
+  #         $ref: "#/components/responses/404_notFound"
+
   /sales/requests:
     # get:
     #   summary: Returns a list of requests
@@ -773,31 +810,31 @@ paths:
       parameters:
         - $ref: "#/components/parameters/domainParameter"
         - name: startTime
-          in: path
+          in: query
           description: The start-time for the trip. Format DD.MM.YYYY HH:MM
           required: true
           example: "01.01.2025 10:00"
           schema:
             type: string
         - name: endTime
-          in: path
+          in: query
           description: The end-time for the trip. Format DD.MM.YYYY HH:MM
           required: true
           example: "01.01.2025 12:00"
           schema:
             type: string
         - name: departmentId
-          in: path
-          description: Id of the department to get the capacity for
+          in: query
+          description: Id of the department to get the capacity for          
           schema:
             type: integer
         - name: vehicleTypeId
-          in: path
+          in: query
           description: Id of the vehicle type to get the capacity for
           schema:
             type: integer
         - name: pax
-          in: path
+          in: query
           description: The number of passengers to get the capacity for, vehicle type will be set to default based on the number of passengers
           schema:
             type: integer
@@ -1590,7 +1627,7 @@ components:
           type: number
           format: decimal
           example: 1000.00
-          description: "The price of the trip, only relevant if the trip is already priced"
+          description: "The price of the trip (inc. VAT), only relevant if the trip is already priced and the TEQ price-calcuator shoul be bypassed."
         prepaid:
           type: boolean
           default: false
@@ -1890,7 +1927,39 @@ components:
               type: string
               description: "The status of the trip"        
           description: "The trip ID"                    
-                        
+
+    CustomerFixedTripInfo:
+      properties:
+        emergency_phone_company_name: 
+          type: string
+        emergency_phone_number:         
+          type: string
+        fixed-trips:
+          type: array
+          items:
+            properties:
+              status:
+                type: string
+              from:
+                type: string
+              planned-withdrawal-time:
+                type: string
+                format: date-time
+              actual-withdrawal-time:
+                type: string
+                format: date-time
+              pax: 
+                type: integer
+              to:
+                type: string  
+              planned-deliver-time:
+                type: string
+                format: date-time
+              actual-deliver-time:
+                type: string
+                format: date-time
+              
+            
                 
 servers:
   # Added by API Auto Mocking Plugin

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Connect to Ferdia Data Warehouse</title>
+    <style>
+      :root { color-scheme: light dark; }
+      body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; line-height: 1.6; }
+      header { padding: 1.5rem 1.25rem; background: #0b5ed7; color: #fff; }
+      main { padding: 1.5rem 1.25rem 3rem; max-width: 900px; margin: 0 auto; }
+      h1, h2, h3 { font-weight: 600; }
+      a { color: #0b5ed7; text-decoration: none; }
+      a:hover { text-decoration: underline; }
+      .card { border: 1px solid rgba(0,0,0,.12); border-radius: .5rem; padding: 1rem; margin-top: 1rem; background: rgba(255,255,255,.6); }
+      .back { display: inline-block; margin-top: .5rem; }
+      code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; }
+      pre { background: rgba(0,0,0,.05); padding: .75rem; border-radius: .5rem; overflow: auto; }
+      ul { padding-left: 1.25rem; }
+      /* Tabs */
+      .tabs { display: flex; flex-wrap: wrap; gap: .5rem; border-bottom: 1px solid rgba(0,0,0,.12); margin-bottom: 1rem; }
+      .tab { appearance: none; border: 1px solid rgba(0,0,0,.12); background: rgba(255,255,255,.7); color: inherit; padding: .5rem .75rem; border-radius: .5rem .5rem 0 0; cursor: pointer; }
+      .tab[aria-selected="true"], .tab.active { background: #0b5ed7; color: #fff; border-color: #0b5ed7; }
+      .tab:focus { outline: 2px solid #0b5ed7; outline-offset: 2px; }
+      .tab-panel { display: none; }
+      .tab-panel.active { display: block; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Connect to the Ferdia Data Warehouse</h1>
+      <a class="back" href="dw.html">← Back to overview</a>
+    </header>
+    <main>
+      <nav class="tabs" role="tablist" aria-label="Connection guides">
+        <button class="tab active" role="tab" aria-selected="true" data-tab="connection">Connection details</button>
+        <button class="tab" role="tab" aria-selected="false" data-tab="powerbi">Power BI</button>
+        <button class="tab" role="tab" aria-selected="false" data-tab="excel">Microsoft Excel</button>
+        <button class="tab" role="tab" aria-selected="false" data-tab="sql">SQL clients</button>
+        <button class="tab" role="tab" aria-selected="false" data-tab="troubleshooting">Troubleshooting</button>
+      </nav>
+      <section id="connection" class="card tab-panel active" role="tabpanel" aria-labelledby="tab-connection">
+        <h2>Connection details</h2>
+        <ul>
+          <li><strong>Server/Host:</strong> datawarehouse.986575127476.eu-west-1.redshift-serverless.amazonaws.com</li>
+          <li><strong>Port:</strong> 5439</li>
+          <li><strong>Database:</strong> ferdia_dw_production</li>
+          <li><strong>Username:</strong> Your username provided by Ferdia</li>
+          <li><strong>Password:</strong> Your password provided by Ferdia</li>
+        </ul>
+        <p><em>Replace placeholders above with your actual environment values.</em></p>
+      </section>
+
+      <section id="powerbi" class="card tab-panel" role="tabpanel" aria-labelledby="tab-powerbi">
+        <h2>Power BI Desktop</h2>
+        <ol>
+          <li>Open Power BI Desktop and select <strong>Get Data</strong>.</li>
+          <li>Choose the appropriate connector (e.g., <strong>SQL Server</strong> or your warehouse connector).</li>
+          <li>Enter <strong>Server</strong> and <strong>Database</strong> from the details above.</li>
+          <li>Select the correct <strong>Authentication method</strong> (e.g., Organizational/SSO or Database).</li>
+          <li>Click <strong>Connect</strong> and select the schemas/tables you need.</li>
+        </ol>
+        <p>Optional advanced: enable query folding and set privacy levels to optimize performance.</p>
+      </section>
+
+      <section id="excel" class="card tab-panel" role="tabpanel" aria-labelledby="tab-excel">
+        <h2>Microsoft Excel</h2>
+        <ol>
+          <li>Install the <a href="https://docs.aws.amazon.com/redshift/latest/mgmt/odbc-driver-windows-how-to-install.html">Amazon Redshift ODBC driver</a> appropriate for your system. After installation, restart Excel.</li>
+          <li>
+            <figure>
+              <figcaption>Open ODBC Data Sources from the start-button.</figcaption>
+              <img src="img/odbc1.png" alt="ODBC Data Sources: System DSN tab with Add button" />
+            </figure>
+          </li>
+          <li>
+            <figure>
+              <figcaption>Click Add to create a new data source.</figcaption>
+              <img src="img/odbc2.png" alt="ODBC: Select Amazon Redshift ODBC driver dialog" />
+            </figure>
+          </li>
+          <li>
+            <figure>
+              <figcaption>Select the Amazon Redshift ODBC Driver from the list and proceed.</figcaption>
+              <img src="img/odbc3.png" alt="ODBC: Configure DSN with server, port, database, username, password" />
+            </figure>
+          </li>
+          <li>
+            <figure>
+              <figcaption>Enter the Ferdia Data Warehouse details, and your username/password).</figcaption>
+              <img src="img/odbc4.png" alt="ODBC: Connection test succeeded message" />
+            </figure>
+          </li>
+          <li>
+            <figure>
+              <figcaption>Open Excel and navigate to Data → Get Data → From Other Sources → From ODBC to start a new connection.</figcaption>  
+              <img src="img/excel1.png" alt="Excel: Data tab with Get Data menu highlighted" />
+            </figure>
+          </li>
+          <li>
+            <figure>
+              <figcaption>Select your configured Ferdia Daatawarehouse ODBC connection.</figcaption>
+              <img src="img/excel2.png" alt="Excel: Choose data source dialog showing database options" />
+            </figure>
+          </li>
+          <li>
+            <figure>
+              <figcaption>You can now browse all the available data-tables, found under "ferdia_dw_production/public", select the tables you need.</figcaption>
+              <img src="img/excel3.png" alt="Excel: Connection dialog with Server and Database fields" />
+            </figure>
+          </li>
+          <li>
+            <figure>
+              <figcaption>You can now load the data to a Sheet or PivotTable.</figcaption>
+              <img src="img/excel4.png" alt="Excel: Navigator window with tables selected for load" />
+            </figure>
+          </li>
+        </ol>
+      </section>
+
+      <section id="sql" class="card tab-panel" role="tabpanel" aria-labelledby="tab-sql">
+        <h2>SQL clients (Azure Data Studio / SSMS / DBeaver)</h2>
+        <ol>
+          <li>Create a new connection.</li>
+          <li>Set <strong>Host</strong>, <strong>Port</strong>, and <strong>Database</strong> from the details above.</li>
+          <li>Select the correct <strong>Driver</strong> (e.g., SQL Server, PostgreSQL, etc.).</li>
+          <li>Choose <strong>Authentication</strong> and connect.</li>
+        </ol>
+        <p>Example query:</p>
+        <pre><code>SELECT TOP 100 *
+FROM dbo.SampleTable
+ORDER BY 1;
+</code></pre>
+      </section>
+
+      <section id="troubleshooting" class="card tab-panel" role="tabpanel" aria-labelledby="tab-troubleshooting">
+        <h2>Troubleshooting</h2>
+        <ul>
+          <li>Validate network access (VPN/allow-list) and correct port.</li>
+          <li>Confirm driver versions match warehouse requirements.</li>
+          <li>If SSO fails, try interactive login or use database credentials.</li>
+          <li>Check that your user has access to the required schemas.</li>
+        </ul>
+      </section>
+    </main>
+    <script>
+      (function() {
+        const tabs = Array.from(document.querySelectorAll('.tab'));
+        const panels = Array.from(document.querySelectorAll('.tab-panel'));
+
+        function activate(key, updateHash = true) {
+          tabs.forEach(t => {
+            const isActive = t.dataset.tab === key;
+            t.classList.toggle('active', isActive);
+            t.setAttribute('aria-selected', String(isActive));
+          });
+          panels.forEach(p => {
+            p.classList.toggle('active', p.id === key);
+          });
+          if (updateHash) {
+            history.replaceState(null, '', '#' + key);
+          }
+        }
+
+        tabs.forEach(t => t.addEventListener('click', () => activate(t.dataset.tab)));
+
+        // Initialize from hash if present
+        const initial = (location.hash || '#connection').replace('#','');
+        if (panels.some(p => p.id === initial)) {
+          activate(initial, false);
+        } else {
+          activate('connection', false);
+        }
+      })();
+    </script>
+  </body>
+</html>
