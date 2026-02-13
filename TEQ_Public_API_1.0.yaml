@@ -365,41 +365,41 @@ paths:
   #         $ref: "#/components/responses/404_notFound"
 
   # https://ferdia.atlassian.net/browse/PROD-3966
-  # /sales/customers/{id}/fixedtripsinfo:
-  #   get:
-  #     summary: Returns a list of fixed trips for a customer
-  #     description: Returns a list of fixed trips for a customer based on the filters provided
-  #     tags:
-  #       - Sales/Customers
-  #     parameters:
-  #       - $ref: "#/components/parameters/domainParameter"
-  #       - $ref: "#/components/parameters/timezoneParameter"
-  #       - name: id
-  #         in: path
-  #         description: Customer ID
-  #         required: true
-  #         schema:
-  #           type: integer
-  #       - name: date
-  #         in: query
-  #         description: Date to get fixed trips for                    
-  #         schema:
-  #           type: string
-  #           format: date
-  #           default: today
-  #     responses:
-  #       "200":
-  #         description: Successfully returned a list of fixed trips for a customer
-  #         content:
-  #           application/json:
-  #             schema:
-  #               type: array
-  #               items:
-  #                 $ref: "#/components/schemas/CustomerFixedTripInfo"
-  #       "400":
-  #         $ref: "#/components/responses/400_requestError"
-  #       "404":
-  #         $ref: "#/components/responses/404_notFound"
+  /sales/customers/{id}/fixedtripsinfo:
+    get:
+      summary: Returns a list of fixed trips for a customer
+      description: Returns a list of fixed trips for a customer based on the filters provided
+      tags:
+        - Sales/Customers
+      parameters:
+        - $ref: "#/components/parameters/domainParameter"
+        - $ref: "#/components/parameters/timezoneParameter"
+        - name: id
+          in: path
+          description: Customer ID
+          required: true
+          schema:
+            type: integer
+        - name: date
+          in: query
+          description: Date to get fixed trips for                    
+          schema:
+            type: string
+            format: date
+            default: today
+      responses:
+        "200":
+          description: Successfully returned a list of fixed trips for a customer
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CustomerFixedTripInfo"
+        "400":
+          $ref: "#/components/responses/400_requestError"
+        "404":
+          $ref: "#/components/responses/404_notFound"
 
   /sales/requests:
     # get:
