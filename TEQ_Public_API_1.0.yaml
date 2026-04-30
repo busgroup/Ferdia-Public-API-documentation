@@ -44,86 +44,149 @@ info:
     The API uses the timezone of the client of the request to calculate dates and times. The timezone should be included in the HTTP-header `TimeZone` in the format `Continent/City` (e.g. `Europe/Berlin`).
     
 paths:
-  # /trips/trips:
-  #   get:
-  #     summary: Returns a list of trips
-  #     description: Returns a list of trips based on the filters provided
-  #     tags:
-  #       - Trips
-  #     parameters:
-  #       - $ref: "#/components/parameters/domainParameter"
-  #     responses:
-  #       "200":
-  #         description: Successfully returned a list of trips
-  #         content:
-  #           application/json:
-  #             schema:
-  #               type: array
-  #               items:
-  #                 $ref: "#/components/schemas/Trip"
-  #       "400":
-  #         $ref: "#/components/responses/400_requestError"
+  /trips/trips:
+    get:
+      summary: Returns a list of trips
+      description: Returns a list of trips based on the filters provided
+      tags:
+        - Trips
+      parameters:
+        - $ref: "#/components/parameters/domainParameter"
+        - in: query
+          name: triptype
+          schema:
+            type: string
+          description: Trip type
+          examples:
+            normal:
+              summary: Normal trips
+              value: normal
+            vip:
+              summary: VIP trips
+              value: vip
+            airport:
+              summary: Airport trips
+              value: airport
+        - in: query
+          name: status
+          schema:
+            type: string
+          description: Trip status
+          examples:
+            planning:
+              summary: Planning
+              value: planning
+            running:
+              summary: running
+              value: running
+            closed:
+              summary: Closed
+              value: closed
+        - in: query
+          name: department
+          schema:
+            type: integer
+          description: The trip department Id
+          example: 1
+        - in: query
+          name: fromDate
+          schema:
+            type: string
+            format: date
+          description: From Date
+          example: 2026-03-01
+        - in: query
+          name: toDate
+          schema:
+            type: string
+            format: date
+          description: To Date
+          example: 2026-03-02        
+        - in: query
+          name: customerId
+          schema:
+            type: integer            
+          description: The Id of the customer for the trip
+          example: 1000
+        - in: query
+          name: driverId
+          schema:
+            type: integer            
+          description: The Id of the driver assigned to the trip
+          example: 251
+        - in: query
+          name: vehicleId
+          schema:
+            type: integer            
+          description: The Id of the vehicle assigned to the trip
+          example: 9
+            
+      responses:
+        "200":
+          description: Successfully returned a list of trips
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TripList"
+        "400":
+          $ref: "#/components/responses/400_requestError"
         
-  # /trips/trips/{id}:
-  #   get:
-  #     summary: Returns a single trip
-  #     description: Returns a single trip
-  #     tags:
-  #       - Trips/Trip
-  #     parameters:
-  #       - $ref: "#/components/parameters/domainParameter"
-  #       - name: id
-  #         in: path
-  #         description: Trip Id
-  #         required: true
-  #         schema:
-  #           type: string
-  #     responses:
-  #       "200":
-  #         description: Successfully returned a trip
-  #         content:
-  #           application/json:
-  #             schema:
-  #               $ref: "#/components/schemas/Trip"
-  #             example:
+  /trips/trips/{id}:
+    get:
+      summary: Returns a single trip
+      description: Returns a single trip
+      tags:
+        - Trips
+      parameters:
+        - $ref: "#/components/parameters/domainParameter"
+        - name: id
+          in: path
+          description: Trip Id
+          required: true
+          schema:
+            type: string
+          example: TQ-001001-S01-N001
+      responses:
+        "200":
+          description: Successfully returned a trip
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Trip"              
                 
-  #       "400":
-  #         $ref: "#/components/responses/400_requestError"
-  #       "404":
-  #         $ref: "#/components/responses/404_notFound"
+        "400":
+          $ref: "#/components/responses/400_requestError"
+        "404":
+          $ref: "#/components/responses/404_notFound"
           
-  # /trips/tripstatus/{id}:
-  #   get:
-  #     summary: Gets the current status of a trip
-  #     description: Gets the current status of a trip
-  #     tags:
-  #       - Trips/Trip
-  #     parameters:
-  #       - $ref: "#/components/parameters/domainParameter"
-  #       - name: id
-  #         in: path
-  #         description: Trip Id
-  #         required: true
-  #         schema:
-  #           type: string
-  #       - name: includelocation
-  #         description: Include the current location of the bus in the response
-  #         in: query
-  #         schema:
-  #           type: boolean
-  #     responses:
-  #       "200":
-  #         description: Successfully returned trip status
-  #         content:
-  #           application/json:
-  #             schema:
-  #               $ref: "#/components/schemas/TripStatus"
-  #             example:
-  #               id: TE-001-001
-  #       "400":
-  #         $ref: "#/components/responses/400_requestError"
-  #       "404":
-  #         $ref: "#/components/responses/404_notFound"
+  /trips/tripstatus/{id}:
+    get:
+      summary: Gets the current status of a trip
+      description: Gets the current status of a trip
+      tags:
+        - Trips
+      parameters:
+        - $ref: "#/components/parameters/domainParameter"
+        - name: id
+          in: path
+          description: Trip Id
+          required: true
+          schema:
+            type: string
+          example: TE-0000001-S01-N001        
+      responses:
+        "200":
+          description: Successfully returned trip status
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TripStatus"              
+        "400":
+          $ref: "#/components/responses/400_requestError"
+        "404":
+          $ref: "#/components/responses/404_notFound"
         
   # /sales/customercategories:
   #   post:
@@ -1399,12 +1462,20 @@ components:
       properties:
         address1:
           type: string
+          description: Address 1
+          example: Rådhusplassen 1, 0037 Oslo, Norway
         postcode:
           type: string
+          description: Postcode
+          example: 0037
         city:
           type: string
+          description: City
+          example: Oslo
         country:
           type: string
+          description: Country
+          example: Norway
     CustomerAddress:
       properties:
         address1:
@@ -1618,20 +1689,58 @@ components:
           type: boolean
       # examples:
       #   $ref: "#/components/examples/customerCategory_get"
-    Trip:
+    TripList:
+      properties:
+        count:
+          type: integer
+          description: Total number of results
+          example: 552
+        next:
+          type: string
+          description: URL to get next page of results
+          example: "https://api.ferdia.no/trips/trips?page=2"
+        previous:
+          type: string
+          description: URL to get previous page of results
+          example: "https://api.ferdia.no/trips/trips?page=1"
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/TripListEntry"
+    TripListEntry:
       properties:
         tripID:
           type: string
+          description: The id of the trip
+          example: TQ-001001-S01-N001
+        tripType: 
+          type: string
+          description: The type of trip
+          example: NORMAL          
         status:
           type: string
+          description: The status of the trip
+          example: planning
         vehicleID:
           type: string
+          description: The Id of the vehicle assigned to the trip
+          example: 10
         driverID:
           type: string
+          description: The Id of the driver assigned to the trip
+          example: 100
         customerId:
           type: string
+          description: The Id of the customer for the trip
+          example: 1000
         contactPerson:
           type: string
+          description: The name of the contact person for the trip
+          example: John Doe
+        pax:
+          type: integer
+          description: The number of passengers for the trip
+          example: 26
         travelFrom:
           $ref: "#/components/schemas/Location"
         travelTo:
@@ -1642,26 +1751,122 @@ components:
           $ref: "#/components/schemas/Location"
         deliver:
           $ref: "#/components/schemas/Location"
+        viaPoints:
+          type: array
+          description: The viapoints for the trip
+          items:
+            $ref: "#/components/schemas/Location"
         commentsFromHQ:
           type: string
+          description: Trip comments from HQ
+          example: HQ Comment
         commentsFromCustomer:
           type: string
+          description: Trip comments from the Customer
+          example: Customer comment
         commentsToDriver:
           type: string
-    TripStatus:
+          description: Trip comments to the Driver
+          example: Driver comment
+    Trip:
       properties:
-        id:
+        tripID:
           type: string
+          description: The id of the trip
+          example: TQ-001001-S01-N001
+        tripType: 
+          type: string
+          description: The type of trip
+          example: NORMAL          
         status:
           type: string
-        location:
+          description: The status of the trip
+          example: planning
+        vehicleID:
+          type: string
+          description: The Id of the vehicle assigned to the trip
+          example: 10
+        driverID:
+          type: string
+          description: The Id of the driver assigned to the trip
+          example: 100
+        customerId:
+          type: string
+          description: The Id of the customer for the trip
+          example: 1000
+        contactPerson:
+          type: string
+          description: The name of the contact person for the trip
+          example: John Doe
+        pax:
+          type: integer
+          description: The number of passengers for the trip
+          example: 26
+        travelFrom:
           $ref: "#/components/schemas/Location"
+        travelTo:
+          $ref: "#/components/schemas/Location"
+        garage: 
+          $ref: "#/components/schemas/Garage"
+        withdrawal:
+          $ref: "#/components/schemas/Location"
+        deliver:
+          $ref: "#/components/schemas/Location"
+        viaPoints:
+          type: array
+          description: The viapoints for the trip
+          items:
+            $ref: "#/components/schemas/Location"
+        flag:
+          type: boolean
+          description: Is the trip flagged
+          example: false
+        sign:
+          type: string
+          description: The sign to use on the trip
+          example: Sign value
+        alternativeTripName:
+          type: string
+          description: The alternative trip name for the trip
+          example: Field excursion
+        tripExecution:
+          type: array
+          description: Information about the execution of the trip
+          items:
+            $ref: "#/components/schemas/TripExecution"
+    TripStatus:
+      properties:
+        status:
+          type: string
+          description: The status of the trip
+          example: planning
+        current_location:
+          type: object
+          description: The current location of the trip
+          properties:
+            latitude:
+              type: number
+              description: The latitude of the location
+              example: 59.9133301
+            longitude:
+              type: number
+              description: The longitude of the location
+              example: 10.7389701
+            address:
+              type: string
+              description: The address of the location
+              example: "Storgata 1, 0164 Oslo"
+          
     GeoLocation:
       properties:
-        lat:
+        lat:          
           type: number
+          description: The latitude of the location
+          example: 59.9133301
         long:
           type: number
+          description: The longfitude of the location
+          example: 10.7389701
     RequestSource:
       type: string
       enum:
@@ -1897,8 +2102,10 @@ components:
           $ref: "#/components/schemas/GeoLocation"
         address:
           $ref: "#/components/schemas/Address"
-        googleFormattedAddress:
+        googleFormattedAddress:          
           type: string
+          description: The google-formatted address 
+          example: Oslo rådhus, Rådhusplassen 1, Vika, Sentrum, Oslo, 0160, Norway
     ViaPoint:
       properties:
         location:
@@ -2200,6 +2407,54 @@ components:
               actual-deliver-time:
                 type: string
                 format: date-time
+      
+    TripExecution:
+      properties:
+        action:
+          type: string
+          description: The action for this execution step
+          example: Withdrawal garage (A)
+        plannedTime:
+          type: string
+          description: The planned time for this step
+          example: 2026-04-28T16:00:00
+        actualTime:
+          type: string
+          description: The actual time for this step
+          example: 2026-04-28T16:00:00
+        status:
+          type: string
+          description: The status of this step
+          example: Critical
+        plannedDistance:
+          type: number
+          description: The planned distance for this step
+          example: 45667.1
+        actualDistance:
+          type: number
+          description: The actual distance for this step
+          example: 44781.8
+        traffic:
+          type: boolean
+          description: Deviation caused by traffic
+          example: false
+        customer:
+          type: boolean
+          description: Deviation caused by customer
+          example: false
+        badPlanning:
+          type: boolean
+          description: Deviation caused by bad planning
+          example: false
+        other:
+          type: boolean
+          description: Deviation caused of other reason
+          example: true
+        comment:
+          type: string
+          description: Drivers comment for deviation
+          example: Comment
+
               
             
                 
