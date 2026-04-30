@@ -963,7 +963,7 @@ paths:
 
   /core/employees:
     get:
-      description: Returns returns a list of employees based on criteria
+      description: Returns returns a list of employees
       tags:
         - Core/Employees
       parameters:
@@ -976,8 +976,8 @@ paths:
         - in: query
           name: number
           schema:
-            type: string
-          description: Employeenumber
+            type: integer
+          description: Employee number
       responses:
         "200":
           description: Successfully returned employee list
@@ -990,7 +990,7 @@ paths:
         "400":
           $ref: "#/components/responses/400_requestError"
 
-  /core/employees/{id}/calendar:
+  /core/employees/calendar/{id}:
     get:
       description: Returns calendar entries for an employee
       tags:
@@ -1005,13 +1005,13 @@ paths:
             type: string
           description: The ID of the employee
         - in: query
-          name: startDate
+          name: start
           schema:
             type: string
             format: date
           description: Start date for the calendar range (YYYY-MM-DD)
         - in: query
-          name: endDate
+          name: end
           schema:
             type: string
             format: date
@@ -1963,25 +1963,38 @@ components:
     Employee:
       properties:
         id:
-          type: string
+          type: integer 
+          description: Unique identifier for the employee
         employeeNumber:
-          type: string
+          type: integer 
+          description: The employeenumber
+          example: 1234
         first_name:
           type: string
+          description: First name
         last_name:
           type: string
+          description: Last name
         initial:
           type: string
+          description: The initials of the employee
         language:
           type: string
+          description: The laguage of the employee
+          example: "en_US"
         phone:
           type: string
+          description: The phonenumber of the employee
+          example: "+4712345678"
         email:
           type: string
+          description: The email-address of the employee
         note:
           type: string
+          description: Additional notes about the employee
         active:
           type: boolean
+          description: Whether the employee is active
     
     EmployeeCalendarEntry:
       type: object
@@ -1992,7 +2005,7 @@ components:
         entryType:
           type: string
           enum:
-            - Normal trip
+            - Normal Trip
             - Fixed Trip
             - Absence
             - Availability
@@ -2035,7 +2048,7 @@ components:
           type: string
           description: Name of the vehicle (if assigned to trip)
           example: Volvo AB11245
-        vehicleLicenseplate:
+        vehicleLicense:
           type: string
           description: License plate of the vehicle (if assigned to trip)
           example: AB11245
