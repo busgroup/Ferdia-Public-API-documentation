@@ -34,7 +34,15 @@ info:
 
     To obtain your access credentials, please contact TEQ support on (support@ferdia.co).
 
-    ## Domain-header
+    ## OAuth 2.0 flow
+
+    The Authentication supports OAuth 2.0 Client Credentials flow
+
+    ## Authentication-endpoints:
+
+    Token-endpoint: **https://auth.api.ferdia.app/oauth2/token**
+
+    # Domain-header
 
     For all API requests an HTTP-header `domain` must be included. This header should contain the domain/company name that the API-call should be directed to. 
     You will receive this domain name when you sign up for the TEQ API.
@@ -2458,7 +2466,3 @@ components:
               
             
                 
-servers:
-  # Added by API Auto Mocking Plugin
-  - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/ferdia-thomas/TEQPublic/1.0
