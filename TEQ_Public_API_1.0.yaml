@@ -1664,6 +1664,36 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/ContactPerson"
+    NewContactPerson:
+      properties:
+        firstname:
+          type: string
+          description: The firstname of the contactperson
+          example: John
+        lastname:
+          type: string
+          description: The lastname of the contactperson
+          example: Doe
+        email: 
+          type: string
+          format: email
+          description: The email of the contact-person. This is used to validate unique contacts, if a contact with the same email is found the existing contact will be used.
+          example: john.doe@mail.com
+        mobilePhone:
+          type: string
+          description: The Mobilephone of the contact person
+          example: +479911223344
+        fixedPhone:
+          type: string
+          description: The fixed phone of the contact person
+          example: +479911223344
+        primaryContact:
+          type: boolean
+          description: Should this contact be set as the primary contact for the customer
+        roleInCompany:
+          type: string
+          description: The role this contactperson has with the customer
+          example: Manager
     ContactPerson:
       properties:
         id:
@@ -1935,7 +1965,7 @@ components:
         newPointOfContact:
           type: object
           description: "Add a new point of contact to the customer for this trip"          
-          $ref: "#/components/schemas/ContactPerson"
+          $ref: "#/components/schemas/NewContactPerson"
         comments:
           type: object
           properties:
@@ -2100,7 +2130,32 @@ components:
           type: string
     PostOrder:
       properties:
-        Trips:
+        # orderContactPersonId:
+        #   type: integer
+        #   description: The Id of the contactperson to assign this order to, the contact person must exist on the customer
+        #   example: 2556
+        # newOrderContactPerson:
+        #   type: object
+        #   description: Add a new contact person to the customer for this order          
+        #   $ref: "#/components/schemas/NewContactPerson"
+        # salesPersonId:
+        #   type: integer
+        #   description: The ID of the employee to set as sales person for this order
+        #   example: 100
+        # externalOrderReference:
+        #   type: string
+        #   description: The external order reference to set for this order
+        #   example: 123-abc
+        # orderStatus:
+        #   type: string
+        #   description: The status to create the order with
+        #   example: draft
+        #   enum:
+        #     - draft
+        #     - sent to customer
+        #     - accepted by customer
+        #     - active order
+        trips:
           type: array
           items:
             $ref: "#/components/schemas/PostTrip"
