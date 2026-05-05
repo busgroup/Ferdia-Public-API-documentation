@@ -1591,7 +1591,7 @@ components:
         contactPersons:
           type: array
           items:
-            $ref: "#/components/schemas/ContactPerson"
+            $ref: "#/components/schemas/NewContactPerson"
     PutCustomer:
       properties:
         name:
