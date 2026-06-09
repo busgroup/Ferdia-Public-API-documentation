@@ -34,10 +34,10 @@ jobs:
         run: pnpm install @redocly/cli -g
         
       - name: Generate documentation
-        run: redocly build-docs *.yaml --template custom.hbs -o index.html
+        run: redocly build-docs TEQ_Public_API_1.0.yaml --template custom.hbs -o index.html
 
       - name: Convert to JSON
-        run: redocly bundle *.yaml -o openapi.json
+        run: redocly bundle TEQ_Public_API_1.0.yaml -o openapi.json
         
       - name: Setup Pages
         uses: actions/configure-pages@v4
