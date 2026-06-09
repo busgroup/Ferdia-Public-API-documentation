@@ -445,9 +445,7 @@
             "$ref": "#/components/responses/404_notFound"
           }
         }
-      }
-    },
-    "/sales/requests": {
+      },
       "post": {
         "summary": "Create a new Request",
         "description": "Creats a new Request in the system",
@@ -561,122 +559,6 @@
                   "properties": {
                     "requestId": {
                       "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400_requestError"
-          },
-          "404": {
-            "$ref": "#/components/responses/404_notFound"
-          }
-        }
-      }
-    },
-    "/sales/orders/{id}/addtrip": {
-      "post": {
-        "summary": "Adds a trip to an existing order",
-        "description": "Adds a new trip to an existing order",
-        "tags": [
-          "Sales/Orders"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/domainParameter"
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "description": "existing order Id",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "Request data",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/PostTrip"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Trip successfuly added to order",
-            "headers": {
-              "Location": {
-                "description": "Returns the Location to get the created Trip in TEQ UI.",
-                "schema": {
-                  "type": "string",
-                  "example": "planning/trips/trip-details/20000/"
-                }
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "gen_tid": {
-                      "type": "string",
-                      "description": "The trip ID in the format used in TEQ UI, e.g. BT-034150-S01",
-                      "example": "BT-034150-S01-N001"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400_requestError"
-          },
-          "404": {
-            "$ref": "#/components/responses/404_notFound"
-          }
-        }
-      }
-    },
-    "/sales/orders/{id}/orderconfirmation": {
-      "get": {
-        "summary": "Get the order confirmation for a given order",
-        "description": "Returns the orderconfirmation for the order in PDF format",
-        "tags": [
-          "Sales/Orders"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/domainParameter"
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "description": "existing order Id",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Order confirmation PDF",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "pdf": {
-                      "type": "string",
-                      "format": "byte",
-                      "description": "Base64 encoded PDF document containing the order confirmation"
                     }
                   }
                 }
