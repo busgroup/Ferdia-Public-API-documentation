@@ -35,6 +35,9 @@ jobs:
         
       - name: Generate documentation
         run: redocly build-docs *.yaml --template custom.hbs -o index.html
+
+      - name: Convert to JSON
+        run: redocly bundle *.yaml -o openapi.json
         
       - name: Setup Pages
         uses: actions/configure-pages@v4
