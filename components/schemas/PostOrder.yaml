@@ -1,4 +1,22 @@
 properties:
+  orderContactPersonId:
+    type: integer
+    description: The ID of the contact person for the order
+    example: 2255
+  newOrderContactPerson:
+    $ref: "./NewContactPerson.yaml"
+  salesPersonId:
+    type: integer
+    description: The ID of the sales person for the order
+    example: 100
+  externalOrderReference:
+    type: string
+    description: The external order reference
+    example: "EXT-12345"
+  orderStatus:
+    type: string
+    description: The status of the order
+    example: "draft"
   trips:
     type: array
     items:
