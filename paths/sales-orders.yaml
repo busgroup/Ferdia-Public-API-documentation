@@ -1,0 +1,73 @@
+/sales/orders/{customerId}:
+  post:
+    summary: Create a new Order for a given customer
+    description: Creats a new Order in the system
+    tags:
+      - Sales/Orders
+    parameters:
+      - $ref: "../components/parameters/domain.yaml"
+      - $ref: "../components/parameters/timezone.yaml"
+      - name: customerId
+        in: path
+        description: existing customer Id
+        required: true
+        schema:
+          type: integer
+    requestBody:
+      description: Request data
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/PostOrder.yaml"
+    responses:
+      "201":
+        description: Order created
+        headers:
+          Location:
+            description: Returns the Location to get the created Order in TEQ UI. 
+            schema:
+              type: string
+              example: /sales/quotations/0001
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                orderId:
+                  type: string
+                  description: "The unique internal order ID created"
+                  example: "34290"                      
+                gen_oid:
+                  type: string
+                  description: "The order ID in the format used in TEQ UI, e.g. BT-034150-S01"
+                  example: "BT-034150-S01"
+      "400":
+        $ref: "../components/responses/400.yaml"
+      "404":
+        description: "The given customer does not exist"
+
+/sales/orders/status/{id}:
+  get:
+    description: Returns the status for a given order and the status of all trips related to this order
+    tags:
+      - Sales/Orders
+    parameters:
+      - $ref: "../components/parameters/domain.yaml"
+      - name: id
+        in: path
+        description: Order ID
+        required: true
+        schema:
+          type: integer
+    responses:
+      "200":
+        description: Successfully returned status for the order
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/OrderStatus.yaml"
+      "400":
+        $ref: "../components/responses/400.yaml"
+      "404":
+        $ref: "../components/responses/404.yaml"

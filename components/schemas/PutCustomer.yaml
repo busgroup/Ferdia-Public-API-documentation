@@ -1,0 +1,71 @@
+properties:
+  name:
+    type: string
+  email:
+    type: string
+    format: email
+  type:
+    $ref: "./CustomerType.yaml"
+  orgno:
+    type: string
+  category:
+    $ref: "./CustomerCategory.yaml"
+  customerNumber: 
+    type: string
+  parentCustomerId:
+    type: integer
+  orgNumber:
+    type: string
+  address1:
+    $ref: "./Address.yaml"
+  address2:
+    $ref: "./Address.yaml"
+  notes:
+    type: string
+  paymentType:
+    type: string
+    enum:
+      - Invoice
+      - Vipps
+      - Cash
+      - Card
+  deadline:
+    type: integer
+  creditLimit:
+    type: integer
+  invoiceMethod:
+    type: string
+    enum:
+      - Email
+      - Post
+  purchaseOrder:
+    type: string
+  language:
+    type: string
+    enum:
+      - Norwegian
+      - English 
+      - Swedish
+      - Danish
+  currency:
+    type: string
+    enum:
+      - NOK
+      - SEK
+      - DKK
+      - EUR
+      - USD
+      - GBP
+      - BDT
+  EAN:
+    type: string
+  VATNumber:
+    type: string
+  includeVAT:
+    type: boolean   
+  fixedDiscountPercentage:
+    type: number
+  contactPersons:
+    type: array
+    items:
+      $ref: "./ContactPerson.yaml"

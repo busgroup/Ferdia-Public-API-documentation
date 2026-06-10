@@ -1,0 +1,10 @@
+description: Not found
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: The requested object does not exist

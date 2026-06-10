@@ -1,0 +1,17 @@
+properties:
+  id:
+    type: string
+  orderDate:
+    type: string
+  date:
+    type: string
+  travelFrom:
+    $ref: "./Address.yaml"
+  travelTo:
+    $ref: "./Address.yaml"
+  pax:
+    type: integer
+  customerId:
+    type: integer
+  contactPerson:
+    type: integer

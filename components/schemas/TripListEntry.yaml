@@ -1,0 +1,60 @@
+properties:
+  tripID:
+    type: string
+    description: The id of the trip
+    example: TQ-001001-S01-N001
+  tripType: 
+    type: string
+    description: The type of trip
+    example: NORMAL          
+  status:
+    type: string
+    description: The status of the trip
+    example: planning
+  vehicleID:
+    type: string
+    description: The Id of the vehicle assigned to the trip
+    example: 10
+  driverID:
+    type: string
+    description: The Id of the driver assigned to the trip
+    example: 100
+  customerId:
+    type: string
+    description: The Id of the customer for the trip
+    example: 1000
+  contactPerson:
+    type: string
+    description: The name of the contact person for the trip
+    example: John Doe
+  pax:
+    type: integer
+    description: The number of passengers for the trip
+    example: 26
+  travelFrom:
+    $ref: "./Location.yaml"
+  travelTo:
+    $ref: "./Location.yaml"
+  garage: 
+    $ref: "./Garage.yaml"
+  withdrawal:
+    $ref: "./Location.yaml"
+  deliver:
+    $ref: "./Location.yaml"
+  viaPoints:
+    type: array
+    description: The viapoints for the trip
+    items:
+      $ref: "./Location.yaml"
+  commentsFromHQ:
+    type: string
+    description: Trip comments from HQ
+    example: HQ Comment
+  commentsFromCustomer:
+    type: string
+    description: Trip comments from the Customer
+    example: Customer comment
+  commentsToDriver:
+    type: string
+    description: Trip comments to the Driver
+    example: Driver comment

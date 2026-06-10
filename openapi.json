@@ -20,7 +20,7 @@
         ],
         "parameters": [
           {
-            "$ref": "#/components/parameters/domainParameter"
+            "$ref": "#/components/parameters/domain"
           },
           {
             "in": "query",
@@ -138,7 +138,7 @@
             }
           },
           "400": {
-            "$ref": "#/components/responses/400_requestError"
+            "$ref": "#/components/responses/400"
           }
         }
       }
@@ -152,7 +152,7 @@
         ],
         "parameters": [
           {
-            "$ref": "#/components/parameters/domainParameter"
+            "$ref": "#/components/parameters/domain"
           },
           {
             "name": "id",
@@ -177,10 +177,10 @@
             }
           },
           "400": {
-            "$ref": "#/components/responses/400_requestError"
+            "$ref": "#/components/responses/400"
           },
           "404": {
-            "$ref": "#/components/responses/404_notFound"
+            "$ref": "#/components/responses/404"
           }
         }
       }
@@ -194,7 +194,7 @@
         ],
         "parameters": [
           {
-            "$ref": "#/components/parameters/domainParameter"
+            "$ref": "#/components/parameters/domain"
           },
           {
             "name": "id",
@@ -219,10 +219,10 @@
             }
           },
           "400": {
-            "$ref": "#/components/responses/400_requestError"
+            "$ref": "#/components/responses/400"
           },
           "404": {
-            "$ref": "#/components/responses/404_notFound"
+            "$ref": "#/components/responses/404"
           }
         }
       }
@@ -236,7 +236,7 @@
         ],
         "parameters": [
           {
-            "$ref": "#/components/parameters/domainParameter"
+            "$ref": "#/components/parameters/domain"
           }
         ],
         "requestBody": {
@@ -276,7 +276,7 @@
             }
           },
           "400": {
-            "$ref": "#/components/responses/400_requestError"
+            "$ref": "#/components/responses/400"
           }
         }
       },
@@ -288,7 +288,7 @@
         ],
         "parameters": [
           {
-            "$ref": "#/components/parameters/domainParameter"
+            "$ref": "#/components/parameters/domain"
           },
           {
             "in": "query",
@@ -341,7 +341,7 @@
             }
           },
           "400": {
-            "$ref": "#/components/responses/400_requestError"
+            "$ref": "#/components/responses/400"
           }
         }
       }
@@ -354,7 +354,7 @@
         ],
         "parameters": [
           {
-            "$ref": "#/components/parameters/domainParameter"
+            "$ref": "#/components/parameters/domain"
           },
           {
             "name": "id",
@@ -382,10 +382,10 @@
             "description": "Successfully updated customer"
           },
           "400": {
-            "$ref": "#/components/responses/400_requestError"
+            "$ref": "#/components/responses/400"
           },
           "404": {
-            "$ref": "#/components/responses/404_notFound"
+            "$ref": "#/components/responses/404"
           }
         }
       }
@@ -399,10 +399,10 @@
         ],
         "parameters": [
           {
-            "$ref": "#/components/parameters/domainParameter"
+            "$ref": "#/components/parameters/domain"
           },
           {
-            "$ref": "#/components/parameters/timezoneParameter"
+            "$ref": "#/components/parameters/timezone"
           },
           {
             "name": "id",
@@ -439,13 +439,15 @@
             }
           },
           "400": {
-            "$ref": "#/components/responses/400_requestError"
+            "$ref": "#/components/responses/400"
           },
           "404": {
-            "$ref": "#/components/responses/404_notFound"
+            "$ref": "#/components/responses/404"
           }
         }
-      },
+      }
+    },
+    "/sales/requests": {
       "post": {
         "summary": "Create a new Request",
         "description": "Creats a new Request in the system",
@@ -454,10 +456,10 @@
         ],
         "parameters": [
           {
-            "$ref": "#/components/parameters/domainParameter"
+            "$ref": "#/components/parameters/domain"
           },
           {
-            "$ref": "#/components/parameters/timezoneParameter"
+            "$ref": "#/components/parameters/timezone"
           }
         ],
         "requestBody": {
@@ -500,7 +502,7 @@
             }
           },
           "400": {
-            "$ref": "#/components/responses/400_requestError"
+            "$ref": "#/components/responses/400"
           }
         }
       }
@@ -514,10 +516,10 @@
         ],
         "parameters": [
           {
-            "$ref": "#/components/parameters/domainParameter"
+            "$ref": "#/components/parameters/domain"
           },
           {
-            "$ref": "#/components/parameters/timezoneParameter"
+            "$ref": "#/components/parameters/timezone"
           },
           {
             "name": "customerId",
@@ -566,10 +568,10 @@
             }
           },
           "400": {
-            "$ref": "#/components/responses/400_requestError"
+            "$ref": "#/components/responses/400"
           },
           "404": {
-            "$ref": "#/components/responses/404_notFound"
+            "$ref": "#/components/responses/404"
           }
         }
       }
@@ -583,10 +585,10 @@
         ],
         "parameters": [
           {
-            "$ref": "#/components/parameters/domainParameter"
+            "$ref": "#/components/parameters/domain"
           },
           {
-            "$ref": "#/components/parameters/timezoneParameter"
+            "$ref": "#/components/parameters/timezone"
           },
           {
             "name": "customerId",
@@ -642,7 +644,7 @@
             }
           },
           "400": {
-            "$ref": "#/components/responses/400_requestError"
+            "$ref": "#/components/responses/400"
           },
           "404": {
             "description": "The given customer does not exist"
@@ -658,7 +660,7 @@
         ],
         "parameters": [
           {
-            "$ref": "#/components/parameters/domainParameter"
+            "$ref": "#/components/parameters/domain"
           },
           {
             "name": "id",
@@ -682,10 +684,10 @@
             }
           },
           "400": {
-            "$ref": "#/components/responses/400_requestError"
+            "$ref": "#/components/responses/400"
           },
           "404": {
-            "$ref": "#/components/responses/404_notFound"
+            "$ref": "#/components/responses/404"
           }
         }
       }
@@ -698,7 +700,7 @@
         ],
         "parameters": [
           {
-            "$ref": "#/components/parameters/domainParameter"
+            "$ref": "#/components/parameters/domain"
           },
           {
             "name": "startTime",
@@ -757,7 +759,7 @@
             }
           },
           "400": {
-            "$ref": "#/components/responses/400_requestError"
+            "$ref": "#/components/responses/400"
           }
         }
       }
@@ -770,7 +772,7 @@
         ],
         "parameters": [
           {
-            "$ref": "#/components/parameters/domainParameter"
+            "$ref": "#/components/parameters/domain"
           },
           {
             "name": "itemCode",
@@ -804,7 +806,7 @@
             }
           },
           "400": {
-            "$ref": "#/components/responses/400_requestError"
+            "$ref": "#/components/responses/400"
           }
         }
       }
@@ -817,7 +819,7 @@
         ],
         "parameters": [
           {
-            "$ref": "#/components/parameters/domainParameter"
+            "$ref": "#/components/parameters/domain"
           }
         ],
         "responses": {
@@ -835,7 +837,7 @@
             }
           },
           "400": {
-            "$ref": "#/components/responses/400_requestError"
+            "$ref": "#/components/responses/400"
           }
         }
       }
@@ -848,7 +850,7 @@
         ],
         "parameters": [
           {
-            "$ref": "#/components/parameters/domainParameter"
+            "$ref": "#/components/parameters/domain"
           },
           {
             "in": "query",
@@ -882,7 +884,7 @@
             }
           },
           "400": {
-            "$ref": "#/components/responses/400_requestError"
+            "$ref": "#/components/responses/400"
           }
         }
       }
@@ -895,10 +897,10 @@
         ],
         "parameters": [
           {
-            "$ref": "#/components/parameters/domainParameter"
+            "$ref": "#/components/parameters/domain"
           },
           {
-            "$ref": "#/components/parameters/timezoneParameter"
+            "$ref": "#/components/parameters/timezone"
           },
           {
             "in": "path",
@@ -943,10 +945,10 @@
             }
           },
           "400": {
-            "$ref": "#/components/responses/400_requestError"
+            "$ref": "#/components/responses/400"
           },
           "404": {
-            "$ref": "#/components/responses/404_notFound"
+            "$ref": "#/components/responses/404"
           }
         }
       }
@@ -954,25 +956,7 @@
   },
   "components": {
     "responses": {
-      "404_notFound": {
-        "description": "Not found",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string"
-                }
-              },
-              "example": {
-                "message": "The requested object does not exist"
-              }
-            }
-          }
-        }
-      },
-      "400_requestError": {
+      "400": {
         "description": "Invalid request",
         "content": {
           "application/json": {
@@ -999,10 +983,40 @@
             }
           }
         }
+      },
+      "404": {
+        "description": "Not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "message": "The requested object does not exist"
+              }
+            }
+          }
+        }
+      },
+      "404_notFound": {
+        "$ref": "#/components/responses/404"
+      },
+      "400_requestError": {
+        "$ref": "#/components/responses/400"
       }
     },
     "parameters": {
       "domainParameter": {
+        "$ref": "#/components/parameters/domain"
+      },
+      "timezoneParameter": {
+        "$ref": "#/components/parameters/timezone"
+      },
+      "domain": {
         "name": "domain",
         "in": "header",
         "description": "The domain/company to direct the API-call to",
@@ -1012,7 +1026,7 @@
           "example": "ferdia"
         }
       },
-      "timezoneParameter": {
+      "timezone": {
         "in": "header",
         "name": "TimeZone",
         "description": "The timezone of the client of the request",
@@ -1023,148 +1037,7 @@
         }
       }
     },
-    "examples": {
-      "customerCategory_get": {
-        "summary": "Customer Category",
-        "description": "Customer Category",
-        "value": {
-          "id": 1,
-          "name": "VIP Customer",
-          "description": "Very important customers",
-          "active": true,
-          "default": false
-        }
-      },
-      "trip_get": {
-        "summary": "A standard Trip",
-        "description": "Trip",
-        "value": {
-          "id": "TE-001-001"
-        }
-      }
-    },
     "schemas": {
-      "SalesCapacity": {
-        "type": "object",
-        "properties": {
-          "capacity": {
-            "type": "string",
-            "enum": [
-              "High",
-              "Medium",
-              "Low"
-            ]
-          },
-          "departmentId": {
-            "type": "integer"
-          },
-          "departmentName": {
-            "type": "string"
-          },
-          "vehicletypeId": {
-            "type": "integer"
-          },
-          "vehicleTypeName": {
-            "type": "string"
-          },
-          "tripCount": {
-            "type": "object",
-            "properties": {
-              "total": {
-                "type": "integer",
-                "example": 8,
-                "description": "The total number of trips in the timerange of the capacity request"
-              },
-              "activeNormalTrips": {
-                "type": "integer",
-                "example": 4,
-                "description": "The total number of active normal trips in the timerange of the capacity request"
-              },
-              "activeFixedTrips": {
-                "type": "integer",
-                "example": 2,
-                "description": "The total number of active fixed trips in the timerange of the capacity request"
-              },
-              "confirmedNormalTrips": {
-                "type": "integer",
-                "example": 1,
-                "description": "The total number of confirmed normal trips in the timerange of the capacity request"
-              },
-              "sentQuotations": {
-                "type": "integer",
-                "example": 0,
-                "description": "The total number of quoted, but not accepted trips in the timerange of the capacity request"
-              },
-              "drafts": {
-                "type": "integer",
-                "example": 1,
-                "description": "The total number of draft trips in the timerange of the capacity request"
-              }
-            }
-          },
-          "fullDayInfo": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "startTime": {
-                  "type": "string",
-                  "format": "date-time",
-                  "example": "01.01.2025 00:00"
-                },
-                "endTime": {
-                  "type": "string",
-                  "format": "date-time",
-                  "example": "01.01.2025 01:00"
-                },
-                "capacity": {
-                  "type": "string",
-                  "enum": [
-                    "High",
-                    "Medium",
-                    "Low"
-                  ]
-                },
-                "tripCount": {
-                  "type": "object",
-                  "properties": {
-                    "total": {
-                      "type": "integer",
-                      "example": 4,
-                      "description": "The total number of trips in the timerange of the capacity request"
-                    },
-                    "activeNormalTrips": {
-                      "type": "integer",
-                      "example": 0,
-                      "description": "The total number of active normal trips in the timerange of the capacity request"
-                    },
-                    "activeFixedTrips": {
-                      "type": "integer",
-                      "example": 2,
-                      "description": "The total number of active fixed trips in the timerange of the capacity request"
-                    },
-                    "confirmedNormalTrips": {
-                      "type": "integer",
-                      "example": 1,
-                      "description": "The total number of confirmed normal trips in the timerange of the capacity request"
-                    },
-                    "sentQuotations": {
-                      "type": "integer",
-                      "example": 0,
-                      "description": "The total number of quoted, but not accepted trips in the timerange of the capacity request"
-                    },
-                    "drafts": {
-                      "type": "integer",
-                      "example": 1,
-                      "description": "The total number of draft trips in the timerange of the capacity request"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
       "CustomerType": {
         "type": "string",
         "enum": [
@@ -1213,6 +1086,93 @@
           "isInvoiceAddress": {
             "type": "boolean",
             "description": "This field defines if this address should be used as the invoice address for the customer. When creating a new customer, one address must be marked as the invoice address"
+          }
+        }
+      },
+      "ContactPerson": {
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "firstname": {
+            "type": "string"
+          },
+          "lastname": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "mobilePhone": {
+            "type": "string"
+          },
+          "fixedPhone": {
+            "type": "string"
+          },
+          "primaryContact": {
+            "type": "boolean"
+          },
+          "roleInCompany": {
+            "type": "string"
+          }
+        }
+      },
+      "NewContactPerson": {
+        "properties": {
+          "firstname": {
+            "type": "string",
+            "description": "The firstname of the contactperson",
+            "example": "John"
+          },
+          "lastname": {
+            "type": "string",
+            "description": "The lastname of the contactperson",
+            "example": "Doe"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "The email of the contact-person. This is used to validate unique contacts, if a contact with the same email is found the existing contact will be used.",
+            "example": "john.doe@mail.com"
+          },
+          "mobilePhone": {
+            "type": "string",
+            "description": "The Mobilephone of the contact person",
+            "example": 479911223344
+          },
+          "fixedPhone": {
+            "type": "string",
+            "description": "The fixed phone of the contact person",
+            "example": 479911223344
+          },
+          "primaryContact": {
+            "type": "boolean",
+            "description": "Should this contact be set as the primary contact for the customer"
+          },
+          "roleInCompany": {
+            "type": "string",
+            "description": "The role this contactperson has with the customer",
+            "example": "Manager"
+          }
+        }
+      },
+      "CustomerCategory": {
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "default": {
+            "type": "boolean"
           }
         }
       },
@@ -1455,115 +1415,159 @@
           }
         }
       },
-      "NewContactPerson": {
+      "CustomerFixedTripInfo": {
         "properties": {
-          "firstname": {
-            "type": "string",
-            "description": "The firstname of the contactperson",
-            "example": "John"
+          "emergency_phone_company_name": {
+            "type": "string"
           },
-          "lastname": {
-            "type": "string",
-            "description": "The lastname of the contactperson",
-            "example": "Doe"
+          "emergency_phone_number": {
+            "type": "string"
           },
-          "email": {
-            "type": "string",
-            "format": "email",
-            "description": "The email of the contact-person. This is used to validate unique contacts, if a contact with the same email is found the existing contact will be used.",
-            "example": "john.doe@mail.com"
-          },
-          "mobilePhone": {
-            "type": "string",
-            "description": "The Mobilephone of the contact person",
-            "example": 479911223344
-          },
-          "fixedPhone": {
-            "type": "string",
-            "description": "The fixed phone of the contact person",
-            "example": 479911223344
-          },
-          "primaryContact": {
-            "type": "boolean",
-            "description": "Should this contact be set as the primary contact for the customer"
-          },
-          "roleInCompany": {
-            "type": "string",
-            "description": "The role this contactperson has with the customer",
-            "example": "Manager"
+          "fixed-trips": {
+            "type": "array",
+            "items": {
+              "properties": {
+                "status": {
+                  "type": "string"
+                },
+                "from": {
+                  "type": "string"
+                },
+                "planned-withdrawal-time": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "actual-withdrawal-time": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "pax": {
+                  "type": "integer"
+                },
+                "to": {
+                  "type": "string"
+                },
+                "planned-deliver-time": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "actual-deliver-time": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
           }
         }
       },
-      "ContactPerson": {
+      "GeoLocation": {
         "properties": {
-          "id": {
-            "type": "integer"
+          "lat": {
+            "type": "number",
+            "description": "The latitude of the location",
+            "example": 59.9133301
           },
-          "firstname": {
-            "type": "string"
-          },
-          "lastname": {
-            "type": "string"
-          },
-          "email": {
-            "type": "string",
-            "format": "email"
-          },
-          "mobilePhone": {
-            "type": "string"
-          },
-          "fixedPhone": {
-            "type": "string"
-          },
-          "primaryContact": {
-            "type": "boolean"
-          },
-          "roleInCompany": {
-            "type": "string"
+          "long": {
+            "type": "number",
+            "description": "The longfitude of the location",
+            "example": 10.7389701
           }
         }
       },
-      "CustomerCategory": {
+      "Location": {
+        "properties": {
+          "geoLocation": {
+            "$ref": "#/components/schemas/GeoLocation"
+          },
+          "address": {
+            "$ref": "#/components/schemas/Address"
+          },
+          "googleFormattedAddress": {
+            "type": "string",
+            "description": "The google-formatted address",
+            "example": "Oslo rådhus, Rådhusplassen 1, Vika, Sentrum, Oslo, 0160, Norway"
+          }
+        }
+      },
+      "ViaPoint": {
+        "properties": {
+          "location": {
+            "$ref": "#/components/schemas/Location"
+          },
+          "pauseTimeInMinutes": {
+            "type": "integer"
+          }
+        }
+      },
+      "Garage": {
         "properties": {
           "id": {
-            "type": "integer"
+            "type": "string"
           },
           "name": {
             "type": "string"
           },
-          "description": {
-            "type": "string"
-          },
-          "active": {
-            "type": "boolean"
-          },
-          "default": {
-            "type": "boolean"
+          "location": {
+            "$ref": "#/components/schemas/Location"
           }
         }
       },
-      "TripList": {
+      "TripExecution": {
         "properties": {
-          "count": {
-            "type": "integer",
-            "description": "Total number of results",
-            "example": 552
-          },
-          "next": {
+          "action": {
             "type": "string",
-            "description": "URL to get next page of results",
-            "example": "https://api.ferdia.no/trips/trips?page=2"
+            "description": "The action for this execution step",
+            "example": "Withdrawal garage (A)"
           },
-          "previous": {
+          "plannedTime": {
             "type": "string",
-            "description": "URL to get previous page of results",
-            "example": "https://api.ferdia.no/trips/trips?page=1"
+            "description": "The planned time for this step",
+            "example": "2026-04-28T16:00:00"
           },
-          "results": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TripListEntry"
-            }
+          "actualTime": {
+            "type": "string",
+            "description": "The actual time for this step",
+            "example": "2026-04-28T16:00:00"
+          },
+          "status": {
+            "type": "string",
+            "description": "The status of this step",
+            "example": "Critical"
+          },
+          "plannedDistance": {
+            "type": "number",
+            "description": "The planned distance for this step",
+            "example": 45667.1
+          },
+          "actualDistance": {
+            "type": "number",
+            "description": "The actual distance for this step",
+            "example": 44781.8
+          },
+          "traffic": {
+            "type": "boolean",
+            "description": "Deviation caused by traffic",
+            "example": false
+          },
+          "customer": {
+            "type": "boolean",
+            "description": "Deviation caused by customer",
+            "example": false
+          },
+          "badPlanning": {
+            "type": "boolean",
+            "description": "Deviation caused by bad planning",
+            "example": false
+          },
+          "other": {
+            "type": "boolean",
+            "description": "Deviation caused of other reason",
+            "example": true
+          },
+          "comment": {
+            "type": "string",
+            "description": "Drivers comment for deviation",
+            "example": "Comment"
           }
         }
       },
@@ -1736,6 +1740,31 @@
           }
         }
       },
+      "TripList": {
+        "properties": {
+          "count": {
+            "type": "integer",
+            "description": "Total number of results",
+            "example": 552
+          },
+          "next": {
+            "type": "string",
+            "description": "URL to get next page of results",
+            "example": "https://api.ferdia.no/trips/trips?page=2"
+          },
+          "previous": {
+            "type": "string",
+            "description": "URL to get previous page of results",
+            "example": "https://api.ferdia.no/trips/trips?page=1"
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TripListEntry"
+            }
+          }
+        }
+      },
       "TripStatus": {
         "properties": {
           "status": {
@@ -1766,26 +1795,45 @@
           }
         }
       },
-      "GeoLocation": {
+      "TripType": {
         "properties": {
-          "lat": {
-            "type": "number",
-            "description": "The latitude of the location",
-            "example": 59.9133301
+          "id": {
+            "type": "integer",
+            "description": "The ID of the trip type",
+            "example": 1
           },
-          "long": {
-            "type": "number",
-            "description": "The longfitude of the location",
-            "example": 10.7389701
+          "name": {
+            "type": "string",
+            "description": "The name of the trip type",
+            "example": "Standard"
+          },
+          "description": {
+            "type": "string",
+            "description": "The description of the trip type",
+            "example": "Standard trip type"
+          },
+          "category": {
+            "type": "string",
+            "description": "The category of the trip type",
+            "example": "Normal"
+          },
+          "tripPriority": {
+            "type": "integer",
+            "description": "The trip priority for trips of this type",
+            "example": 50
+          },
+          "color": {
+            "type": "string",
+            "format": "hex-color",
+            "description": "The color for this trip type (hex color code)",
+            "example": "#FF5733"
+          },
+          "active": {
+            "type": "boolean",
+            "description": "Is this trip type active",
+            "example": true
           }
         }
-      },
-      "RequestSource": {
-        "type": "string",
-        "enum": [
-          "Direct",
-          "Shared"
-        ]
       },
       "PostTrip": {
         "type": "object",
@@ -1955,6 +2003,13 @@
           }
         }
       },
+      "RequestSource": {
+        "type": "string",
+        "enum": [
+          "Direct",
+          "Shared"
+        ]
+      },
       "PostRequestGivenCustomer": {
         "type": "object",
         "required": [
@@ -2120,41 +2175,157 @@
           }
         }
       },
-      "Location": {
+      "OrderStatus": {
         "properties": {
-          "geoLocation": {
-            "$ref": "#/components/schemas/GeoLocation"
-          },
-          "address": {
-            "$ref": "#/components/schemas/Address"
-          },
-          "googleFormattedAddress": {
+          "order_id": {
             "type": "string",
-            "description": "The google-formatted address",
-            "example": "Oslo rådhus, Rådhusplassen 1, Vika, Sentrum, Oslo, 0160, Norway"
+            "description": "The unique internal order ID",
+            "example": "34290"
+          },
+          "status": {
+            "type": "string",
+            "description": "The status of the order"
+          },
+          "trips": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrderStatusTrip"
+            }
           }
         }
       },
-      "ViaPoint": {
+      "OrderStatusTrip": {
         "properties": {
-          "location": {
-            "$ref": "#/components/schemas/Location"
+          "trip_id": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "string",
+                "description": "The status of the trip"
+              }
+            },
+            "description": "The trip ID"
+          }
+        }
+      },
+      "SalesCapacity": {
+        "type": "object",
+        "properties": {
+          "capacity": {
+            "type": "string",
+            "enum": [
+              "High",
+              "Medium",
+              "Low"
+            ]
           },
-          "pauseTimeInMinutes": {
+          "departmentId": {
             "type": "integer"
-          }
-        }
-      },
-      "Garage": {
-        "properties": {
-          "id": {
+          },
+          "departmentName": {
             "type": "string"
           },
-          "name": {
+          "vehicletypeId": {
+            "type": "integer"
+          },
+          "vehicleTypeName": {
             "type": "string"
           },
-          "location": {
-            "$ref": "#/components/schemas/Location"
+          "tripCount": {
+            "type": "object",
+            "properties": {
+              "total": {
+                "type": "integer",
+                "example": 8,
+                "description": "The total number of trips in the timerange of the capacity request"
+              },
+              "activeNormalTrips": {
+                "type": "integer",
+                "example": 4,
+                "description": "The total number of active normal trips in the timerange of the capacity request"
+              },
+              "activeFixedTrips": {
+                "type": "integer",
+                "example": 2,
+                "description": "The total number of active fixed trips in the timerange of the capacity request"
+              },
+              "confirmedNormalTrips": {
+                "type": "integer",
+                "example": 1,
+                "description": "The total number of confirmed normal trips in the timerange of the capacity request"
+              },
+              "sentQuotations": {
+                "type": "integer",
+                "example": 0,
+                "description": "The total number of quoted, but not accepted trips in the timerange of the capacity request"
+              },
+              "drafts": {
+                "type": "integer",
+                "example": 1,
+                "description": "The total number of draft trips in the timerange of the capacity request"
+              }
+            }
+          },
+          "fullDayInfo": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "startTime": {
+                  "type": "string",
+                  "format": "date-time",
+                  "example": "01.01.2025 00:00"
+                },
+                "endTime": {
+                  "type": "string",
+                  "format": "date-time",
+                  "example": "01.01.2025 01:00"
+                },
+                "capacity": {
+                  "type": "string",
+                  "enum": [
+                    "High",
+                    "Medium",
+                    "Low"
+                  ]
+                },
+                "tripCount": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer",
+                      "example": 4,
+                      "description": "The total number of trips in the timerange of the capacity request"
+                    },
+                    "activeNormalTrips": {
+                      "type": "integer",
+                      "example": 0,
+                      "description": "The total number of active normal trips in the timerange of the capacity request"
+                    },
+                    "activeFixedTrips": {
+                      "type": "integer",
+                      "example": 2,
+                      "description": "The total number of active fixed trips in the timerange of the capacity request"
+                    },
+                    "confirmedNormalTrips": {
+                      "type": "integer",
+                      "example": 1,
+                      "description": "The total number of confirmed normal trips in the timerange of the capacity request"
+                    },
+                    "sentQuotations": {
+                      "type": "integer",
+                      "example": 0,
+                      "description": "The total number of quoted, but not accepted trips in the timerange of the capacity request"
+                    },
+                    "drafts": {
+                      "type": "integer",
+                      "example": 1,
+                      "description": "The total number of draft trips in the timerange of the capacity request"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -2483,183 +2654,6 @@
           "vehicleId": {
             "type": "integer",
             "description": "The vehicle to use for the trip"
-          }
-        }
-      },
-      "OrderStatus": {
-        "properties": {
-          "order_id": {
-            "type": "string",
-            "description": "The unique internal order ID",
-            "example": "34290"
-          },
-          "status": {
-            "type": "string",
-            "description": "The status of the order"
-          },
-          "trips": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/OrderStatusTrip"
-            }
-          }
-        }
-      },
-      "OrderStatusTrip": {
-        "properties": {
-          "trip_id": {
-            "type": "object",
-            "properties": {
-              "status": {
-                "type": "string",
-                "description": "The status of the trip"
-              }
-            },
-            "description": "The trip ID"
-          }
-        }
-      },
-      "CustomerFixedTripInfo": {
-        "properties": {
-          "emergency_phone_company_name": {
-            "type": "string"
-          },
-          "emergency_phone_number": {
-            "type": "string"
-          },
-          "fixed-trips": {
-            "type": "array",
-            "items": {
-              "properties": {
-                "status": {
-                  "type": "string"
-                },
-                "from": {
-                  "type": "string"
-                },
-                "planned-withdrawal-time": {
-                  "type": "string",
-                  "format": "date-time"
-                },
-                "actual-withdrawal-time": {
-                  "type": "string",
-                  "format": "date-time"
-                },
-                "pax": {
-                  "type": "integer"
-                },
-                "to": {
-                  "type": "string"
-                },
-                "planned-deliver-time": {
-                  "type": "string",
-                  "format": "date-time"
-                },
-                "actual-deliver-time": {
-                  "type": "string",
-                  "format": "date-time"
-                }
-              }
-            }
-          }
-        }
-      },
-      "TripExecution": {
-        "properties": {
-          "action": {
-            "type": "string",
-            "description": "The action for this execution step",
-            "example": "Withdrawal garage (A)"
-          },
-          "plannedTime": {
-            "type": "string",
-            "description": "The planned time for this step",
-            "example": "2026-04-28T16:00:00"
-          },
-          "actualTime": {
-            "type": "string",
-            "description": "The actual time for this step",
-            "example": "2026-04-28T16:00:00"
-          },
-          "status": {
-            "type": "string",
-            "description": "The status of this step",
-            "example": "Critical"
-          },
-          "plannedDistance": {
-            "type": "number",
-            "description": "The planned distance for this step",
-            "example": 45667.1
-          },
-          "actualDistance": {
-            "type": "number",
-            "description": "The actual distance for this step",
-            "example": 44781.8
-          },
-          "traffic": {
-            "type": "boolean",
-            "description": "Deviation caused by traffic",
-            "example": false
-          },
-          "customer": {
-            "type": "boolean",
-            "description": "Deviation caused by customer",
-            "example": false
-          },
-          "badPlanning": {
-            "type": "boolean",
-            "description": "Deviation caused by bad planning",
-            "example": false
-          },
-          "other": {
-            "type": "boolean",
-            "description": "Deviation caused of other reason",
-            "example": true
-          },
-          "comment": {
-            "type": "string",
-            "description": "Drivers comment for deviation",
-            "example": "Comment"
-          }
-        }
-      },
-      "TripType": {
-        "properties": {
-          "id": {
-            "type": "integer",
-            "description": "The ID of the trip type",
-            "example": 1
-          },
-          "name": {
-            "type": "string",
-            "description": "The name of the trip type",
-            "example": "Standard"
-          },
-          "description": {
-            "type": "string",
-            "description": "The description of the trip type",
-            "example": "Standard trip type"
-          },
-          "category": {
-            "type": "string",
-            "description": "The category of the trip type",
-            "example": "Normal"
-          },
-          "tripPriority": {
-            "type": "integer",
-            "description": "The trip priority for trips of this type",
-            "example": 50
-          },
-          "color": {
-            "type": "string",
-            "format": "hex-color",
-            "description": "The color for this trip type (hex color code)",
-            "example": "#FF5733"
-          },
-          "active": {
-            "type": "boolean",
-            "description": "Is this trip type active",
-            "example": true
           }
         }
       }

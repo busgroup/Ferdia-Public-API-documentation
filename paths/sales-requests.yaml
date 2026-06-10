@@ -1,0 +1,79 @@
+/:
+  post:
+    summary: Create a new Request
+    description: Creats a new Request in the system
+    tags:
+      - Sales/Requests
+    parameters:
+      - $ref: "../components/parameters/domain.yaml"
+      - $ref: "../components/parameters/timezone.yaml"
+    requestBody:
+      description: Request data
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/PostRequest.yaml"
+    responses:
+      "201":
+        description: Request created
+        headers:
+          Location:
+            description: Returns the Location to get the created Request in TEQ UI. 
+            schema:
+              type: string
+              example: /sales/request/new/TT-000001
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                requestId:
+                  type: string
+                customerId:
+                  type: string
+      "400":
+        $ref: "../components/responses/400.yaml"
+
+/sales/requests/{customerId}:
+  post:
+    summary: Create a new Request for a given customer
+    description: Create a new Request for a given customer
+    tags:
+      - Sales/Requests
+    parameters:
+      - $ref: "../components/parameters/domain.yaml"
+      - $ref: "../components/parameters/timezone.yaml"
+      - name: customerId
+        in: path
+        description: existing customer Id
+        required: true
+        schema:
+          type: integer
+    requestBody:
+      description: Request data
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/PostRequestGivenCustomer.yaml"
+    responses:
+      "201":
+        description: Request created
+        headers:
+          Location:
+            description: Returns the Location to get the created Request in TEQ UI. 
+            schema:
+              type: string
+              example: /sales/request/new/TT-000001
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                requestId:
+                  type: string                  
+      "400":
+        $ref: "../components/responses/400.yaml"
+      "404":
+        $ref: "../components/responses/404.yaml"

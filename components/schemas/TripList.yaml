@@ -1,0 +1,17 @@
+properties:
+  count:
+    type: integer
+    description: Total number of results
+    example: 552
+  next:
+    type: string
+    description: URL to get next page of results
+    example: "https://api.ferdia.no/trips/trips?page=2"
+  previous:
+    type: string
+    description: URL to get previous page of results
+    example: "https://api.ferdia.no/trips/trips?page=1"
+  results:
+    type: array
+    items:
+      $ref: "./TripListEntry.yaml"

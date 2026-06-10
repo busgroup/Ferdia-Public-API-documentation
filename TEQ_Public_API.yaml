@@ -1,0 +1,1844 @@
+openapi: 3.0.0
+info:
+  version: '1.0'
+  title: TEQ Public API
+  x-logo:
+    url: https://raw.githubusercontent.com/busgroup/Ferdia-Public-API-documentation/main/Ferdia-logo.png
+    backgroundColor: '#FFFFFF'
+    altText: TEQ Logo
+  description: |
+    # Introduction
+    [comment]: <> (x-product-description-placeholder)
+    With the TEQ API you can integrate your system with the TEQ platform. The API is designed to be easy to use and to provide a seamless integration experience.
+
+    The TEQ API is built on HTTP and is RESTful.
+    It has predictable resource URLs and returns HTTP response codes to indicate errors.
+    It also accepts and returns JSON in the HTTP body.
+    Use your favorite HTTP/REST library in your programming language when using this API.
+    This API reference documentation contains the most commonly integrated resources.
+    # Authentication
+    The API uses OAuth2 for authentication. You will need to obtain an access token to use the API. The access token should be included in the Authorization header of each request.
+    To obtain your access credentials, please contact TEQ support on (support@ferdia.co).
+    ## OAuth 2.0 flow
+    The Authentication supports OAuth 2.0 Client Credentials flow
+    ## Authentication-endpoints:
+    Token-endpoint: **https://auth.api.ferdia.app/oauth2/token**
+    # Domain-header
+    For all API requests an HTTP-header `domain` must be included. This header should contain the domain/company name that the API-call should be directed to.  You will receive this domain name when you sign up for the TEQ API.
+    # TimeZone
+    The API uses the timezone of the client of the request to calculate dates and times. The timezone should be included in the HTTP-header `TimeZone` in the format `Continent/City` (e.g. `Europe/Berlin`).
+paths:
+  /trips/trips:
+    get:
+      summary: Returns a list of trips
+      description: Returns a list of trips based on the filters provided
+      tags:
+        - Operations/Trips
+      parameters:
+        - $ref: '#/components/parameters/domain'
+        - in: query
+          name: triptype
+          schema:
+            type: string
+          description: Trip type
+          examples:
+            normal:
+              summary: Normal trips
+              value: normal
+            vip:
+              summary: VIP trips
+              value: vip
+            airport:
+              summary: Airport trips
+              value: airport
+        - in: query
+          name: status
+          schema:
+            type: string
+          description: Trip status
+          examples:
+            planning:
+              summary: Planning
+              value: planning
+            running:
+              summary: running
+              value: running
+            closed:
+              summary: Closed
+              value: closed
+        - in: query
+          name: department
+          schema:
+            type: integer
+          description: The trip department Id
+          example: 1
+        - in: query
+          name: fromDate
+          schema:
+            type: string
+            format: date
+          description: From Date
+          example: '2026-03-01'
+        - in: query
+          name: toDate
+          schema:
+            type: string
+            format: date
+          description: To Date
+          example: '2026-03-02'
+        - in: query
+          name: customerId
+          schema:
+            type: integer
+          description: The Id of the customer for the trip
+          example: 1000
+        - in: query
+          name: driverId
+          schema:
+            type: integer
+          description: The Id of the driver assigned to the trip
+          example: 251
+        - in: query
+          name: vehicleId
+          schema:
+            type: integer
+          description: The Id of the vehicle assigned to the trip
+          example: 9
+      responses:
+        '200':
+          description: Successfully returned a list of trips
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TripList'
+        '400':
+          $ref: '#/components/responses/400'
+  /trips/trips/{id}:
+    get:
+      summary: Returns a single trip
+      description: Returns a single trip
+      tags:
+        - Operations/Trips
+      parameters:
+        - $ref: '#/components/parameters/domain'
+        - name: id
+          in: path
+          description: Trip Id
+          required: true
+          schema:
+            type: string
+          example: TQ-001001-S01-N001
+      responses:
+        '200':
+          description: Successfully returned a trip
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Trip'
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+  /trips/tripstatus/{id}:
+    get:
+      summary: Gets the current status of a trip
+      description: Gets the current status of a trip
+      tags:
+        - Operations/Trips
+      parameters:
+        - $ref: '#/components/parameters/domain'
+        - name: id
+          in: path
+          description: Trip Id
+          required: true
+          schema:
+            type: string
+          example: TE-0000001-S01-N001
+      responses:
+        '200':
+          description: Successfully returned trip status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TripStatus'
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+  /sales/customers:
+    post:
+      summary: Creates a new customer
+      description: Creates a new customer
+      tags:
+        - Sales/Customers
+      parameters:
+        - $ref: '#/components/parameters/domain'
+      requestBody:
+        description: Customer data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostCustomer'
+      responses:
+        '201':
+          description: Successfully created customer
+          headers:
+            Location:
+              description: Returns the Location to get the created Customer in TEQ UI.
+              schema:
+                type: string
+                example: /sales/customers/details/0001
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  customerId:
+                    type: string
+        '400':
+          $ref: '#/components/responses/400'
+    get:
+      summary: Returns a list of customers
+      description: Returns a list of customers based on the filters provided
+      tags:
+        - Sales/Customers
+      parameters:
+        - $ref: '#/components/parameters/domain'
+        - in: query
+          name: type
+          schema:
+            $ref: '#/components/schemas/CustomerType'
+        - in: query
+          name: name
+          schema:
+            type: string
+        - in: query
+          name: email
+          schema:
+            type: string
+        - in: query
+          name: orgno
+          schema:
+            type: string
+        - in: query
+          name: freetext
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully returned a list of customers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Customer'
+        '400':
+          $ref: '#/components/responses/400'
+  /sales/customers/{id}:
+    put:
+      description: Updates an existing customer
+      tags:
+        - Sales/Customers
+      parameters:
+        - $ref: '#/components/parameters/domain'
+        - name: id
+          in: path
+          description: Customer ID
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Customer data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PutCustomer'
+      responses:
+        '200':
+          description: Successfully updated customer
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+  /sales/customers/{id}/fixedtripsinfo:
+    get:
+      summary: Returns a list of fixed trips for a customer
+      description: Returns a list of fixed trips for a customer based on the filters provided
+      tags:
+        - Sales/Customers
+      parameters:
+        - $ref: '#/components/parameters/domain'
+        - $ref: '#/components/parameters/timezone'
+        - name: id
+          in: path
+          description: Customer ID
+          required: true
+          schema:
+            type: integer
+        - name: date
+          in: query
+          description: Date to get fixed trips for
+          schema:
+            type: string
+            format: date
+            default: today
+      responses:
+        '200':
+          description: Successfully returned a list of fixed trips for a customer
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CustomerFixedTripInfo'
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+  /sales/requests:
+    post:
+      summary: Create a new Request
+      description: Creats a new Request in the system
+      tags:
+        - Sales/Requests
+      parameters:
+        - $ref: '#/components/parameters/domain'
+        - $ref: '#/components/parameters/timezone'
+      requestBody:
+        description: Request data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostRequest'
+      responses:
+        '201':
+          description: Request created
+          headers:
+            Location:
+              description: Returns the Location to get the created Request in TEQ UI.
+              schema:
+                type: string
+                example: /sales/request/new/TT-000001
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  requestId:
+                    type: string
+                  customerId:
+                    type: string
+        '400':
+          $ref: '#/components/responses/400'
+  /sales/requests/{customerId}:
+    post:
+      summary: Create a new Request for a given customer
+      description: Create a new Request for a given customer
+      tags:
+        - Sales/Requests
+      parameters:
+        - $ref: '#/components/parameters/domain'
+        - $ref: '#/components/parameters/timezone'
+        - name: customerId
+          in: path
+          description: existing customer Id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Request data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostRequestGivenCustomer'
+      responses:
+        '201':
+          description: Request created
+          headers:
+            Location:
+              description: Returns the Location to get the created Request in TEQ UI.
+              schema:
+                type: string
+                example: /sales/request/new/TT-000001
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  requestId:
+                    type: string
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+  /sales/orders/{customerId}:
+    post:
+      summary: Create a new Order for a given customer
+      description: Creats a new Order in the system
+      tags:
+        - Sales/Orders
+      parameters:
+        - $ref: '#/components/parameters/domain'
+        - $ref: '#/components/parameters/timezone'
+        - name: customerId
+          in: path
+          description: existing customer Id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Request data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostOrder'
+      responses:
+        '201':
+          description: Order created
+          headers:
+            Location:
+              description: Returns the Location to get the created Order in TEQ UI.
+              schema:
+                type: string
+                example: /sales/quotations/0001
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  orderId:
+                    type: string
+                    description: The unique internal order ID created
+                    example: '34290'
+                  gen_oid:
+                    type: string
+                    description: The order ID in the format used in TEQ UI, e.g. BT-034150-S01
+                    example: BT-034150-S01
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          description: The given customer does not exist
+  /sales/orders/status/{id}:
+    get:
+      description: Returns the status for a given order and the status of all trips related to this order
+      tags:
+        - Sales/Orders
+      parameters:
+        - $ref: '#/components/parameters/domain'
+        - name: id
+          in: path
+          description: Order ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successfully returned status for the order
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderStatus'
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+  /sales/capacity:
+    get:
+      description: Returns the vehicle capacity for a given time
+      tags:
+        - Sales/Capacity
+      parameters:
+        - $ref: '#/components/parameters/domain'
+        - name: startTime
+          in: query
+          description: The start-time for the trip. Format DD.MM.YYYY HH:MM
+          required: true
+          example: 01.01.2025 10:00
+          schema:
+            type: string
+        - name: endTime
+          in: query
+          description: The end-time for the trip. Format DD.MM.YYYY HH:MM
+          required: true
+          example: 01.01.2025 12:00
+          schema:
+            type: string
+        - name: departmentId
+          in: query
+          description: Id of the department to get the capacity for
+          schema:
+            type: integer
+        - name: vehicleTypeId
+          in: query
+          description: Id of the vehicle type to get the capacity for
+          schema:
+            type: integer
+        - name: pax
+          in: query
+          description: The number of passengers to get the capacity for, vehicle type will be set to default based on the number of passengers
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successfully returned sales capacity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SalesCapacity'
+        '400':
+          $ref: '#/components/responses/400'
+  /core/products:
+    get:
+      description: Returns a list of products
+      tags:
+        - Core/Products
+      parameters:
+        - $ref: '#/components/parameters/domain'
+        - name: itemCode
+          in: query
+          description: The Item Code to search for
+          schema:
+            type: integer
+        - name: description
+          in: query
+          description: The Item Description to search for
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully returned a list of products
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        '400':
+          $ref: '#/components/responses/400'
+  /core/vehicles:
+    get:
+      description: Returns a list of vehicles
+      tags:
+        - Core/Vehicles
+      parameters:
+        - $ref: '#/components/parameters/domain'
+      responses:
+        '200':
+          description: Successfully returned a list of vehicles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Vehicle'
+        '400':
+          $ref: '#/components/responses/400'
+  /core/employees:
+    get:
+      description: Returns returns a list of employees
+      tags:
+        - Core/Employees
+      parameters:
+        - $ref: '#/components/parameters/domain'
+        - in: query
+          name: name
+          schema:
+            type: string
+          description: Name of the employee
+        - in: query
+          name: number
+          schema:
+            type: integer
+          description: Employee number
+      responses:
+        '200':
+          description: Successfully returned employee list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Employee'
+        '400':
+          $ref: '#/components/responses/400'
+  /core/employees/calendar/{id}:
+    get:
+      description: Returns calendar entries for an employee
+      tags:
+        - Core/Employees
+      parameters:
+        - $ref: '#/components/parameters/domain'
+        - $ref: '#/components/parameters/timezone'
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: The ID of the employee
+        - in: query
+          name: start
+          schema:
+            type: string
+            format: date
+          description: Start date for the calendar range (YYYY-MM-DD)
+        - in: query
+          name: end
+          schema:
+            type: string
+            format: date
+          description: End date for the calendar range (YYYY-MM-DD)
+      responses:
+        '200':
+          description: Successfully returned employee calendar
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EmployeeCalendarEntry'
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+components:
+  responses:
+    '400':
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                items:
+                  properties:
+                    error:
+                      type: string
+            example:
+              message: Invalid request, please review the errors and retry the request
+    '404':
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+            example:
+              message: The requested object does not exist
+    404_notFound:
+      $ref: '#/components/responses/404'
+    400_requestError:
+      $ref: '#/components/responses/400'
+  parameters:
+    domainParameter:
+      $ref: '#/components/parameters/domain'
+    timezoneParameter:
+      $ref: '#/components/parameters/timezone'
+    domain:
+      name: domain
+      in: header
+      description: The domain/company to direct the API-call to
+      required: true
+      schema:
+        type: string
+        example: ferdia
+    timezone:
+      in: header
+      name: TimeZone
+      description: The timezone of the client of the request
+      required: false
+      schema:
+        type: string
+        example: Europe/Berlin
+  schemas:
+    CustomerType:
+      type: string
+      enum:
+        - person
+        - organization
+    Address:
+      properties:
+        address1:
+          type: string
+          description: Address 1
+          example: Rådhusplassen 1, 0037 Oslo, Norway
+        postcode:
+          type: string
+          description: Postcode
+          example: 37
+        city:
+          type: string
+          description: City
+          example: Oslo
+        country:
+          type: string
+          description: Country
+          example: Norway
+    CustomerAddress:
+      properties:
+        address1:
+          type: string
+        postcode:
+          type: string
+        city:
+          type: string
+        country:
+          type: string
+        isInvoiceAddress:
+          type: boolean
+          description: This field defines if this address should be used as the invoice address for the customer. When creating a new customer, one address must be marked as the invoice address
+    ContactPerson:
+      properties:
+        id:
+          type: integer
+        firstname:
+          type: string
+        lastname:
+          type: string
+        email:
+          type: string
+          format: email
+        mobilePhone:
+          type: string
+        fixedPhone:
+          type: string
+        primaryContact:
+          type: boolean
+        roleInCompany:
+          type: string
+    NewContactPerson:
+      properties:
+        firstname:
+          type: string
+          description: The firstname of the contactperson
+          example: John
+        lastname:
+          type: string
+          description: The lastname of the contactperson
+          example: Doe
+        email:
+          type: string
+          format: email
+          description: The email of the contact-person. This is used to validate unique contacts, if a contact with the same email is found the existing contact will be used.
+          example: john.doe@mail.com
+        mobilePhone:
+          type: string
+          description: The Mobilephone of the contact person
+          example: 479911223344
+        fixedPhone:
+          type: string
+          description: The fixed phone of the contact person
+          example: 479911223344
+        primaryContact:
+          type: boolean
+          description: Should this contact be set as the primary contact for the customer
+        roleInCompany:
+          type: string
+          description: The role this contactperson has with the customer
+          example: Manager
+    CustomerCategory:
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        active:
+          type: boolean
+        default:
+          type: boolean
+    Customer:
+      properties:
+        id:
+          type: integer
+        customerNumber:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        type:
+          $ref: '#/components/schemas/CustomerType'
+        orgno:
+          type: string
+        category:
+          $ref: '#/components/schemas/CustomerCategory'
+        addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Address'
+        contactPersons:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactPerson'
+    PostCustomer:
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        type:
+          $ref: '#/components/schemas/CustomerType'
+        orgno:
+          type: string
+        category:
+          $ref: '#/components/schemas/CustomerCategory'
+        customerNumber:
+          type: string
+        parentCustomerId:
+          type: integer
+        address1:
+          $ref: '#/components/schemas/CustomerAddress'
+        address2:
+          $ref: '#/components/schemas/CustomerAddress'
+        notes:
+          type: string
+        paymentType:
+          type: string
+          enum:
+            - Invoice
+            - Vipps
+            - Cash
+            - Card
+        deadline:
+          type: integer
+        creditLimit:
+          type: integer
+        invoiceMethod:
+          type: string
+          enum:
+            - Email
+            - Post
+        purchaseOrder:
+          type: string
+        language:
+          type: string
+          enum:
+            - Norwegian
+            - English
+            - Swedish
+            - Danish
+        currency:
+          type: string
+          enum:
+            - NOK
+            - SEK
+            - DKK
+            - EUR
+            - USD
+            - GBP
+            - BDT
+        EAN:
+          type: string
+        VATNumber:
+          type: string
+        includeVAT:
+          type: boolean
+        fixedDiscountPercentage:
+          type: number
+        contactPersons:
+          type: array
+          items:
+            $ref: '#/components/schemas/NewContactPerson'
+    PutCustomer:
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        type:
+          $ref: '#/components/schemas/CustomerType'
+        orgno:
+          type: string
+        category:
+          $ref: '#/components/schemas/CustomerCategory'
+        customerNumber:
+          type: string
+        parentCustomerId:
+          type: integer
+        orgNumber:
+          type: string
+        address1:
+          $ref: '#/components/schemas/Address'
+        address2:
+          $ref: '#/components/schemas/Address'
+        notes:
+          type: string
+        paymentType:
+          type: string
+          enum:
+            - Invoice
+            - Vipps
+            - Cash
+            - Card
+        deadline:
+          type: integer
+        creditLimit:
+          type: integer
+        invoiceMethod:
+          type: string
+          enum:
+            - Email
+            - Post
+        purchaseOrder:
+          type: string
+        language:
+          type: string
+          enum:
+            - Norwegian
+            - English
+            - Swedish
+            - Danish
+        currency:
+          type: string
+          enum:
+            - NOK
+            - SEK
+            - DKK
+            - EUR
+            - USD
+            - GBP
+            - BDT
+        EAN:
+          type: string
+        VATNumber:
+          type: string
+        includeVAT:
+          type: boolean
+        fixedDiscountPercentage:
+          type: number
+        contactPersons:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactPerson'
+    CustomerFixedTripInfo:
+      properties:
+        emergency_phone_company_name:
+          type: string
+        emergency_phone_number:
+          type: string
+        fixed-trips:
+          type: array
+          items:
+            properties:
+              status:
+                type: string
+              from:
+                type: string
+              planned-withdrawal-time:
+                type: string
+                format: date-time
+              actual-withdrawal-time:
+                type: string
+                format: date-time
+              pax:
+                type: integer
+              to:
+                type: string
+              planned-deliver-time:
+                type: string
+                format: date-time
+              actual-deliver-time:
+                type: string
+                format: date-time
+    GeoLocation:
+      properties:
+        lat:
+          type: number
+          description: The latitude of the location
+          example: 59.9133301
+        long:
+          type: number
+          description: The longfitude of the location
+          example: 10.7389701
+    Location:
+      properties:
+        geoLocation:
+          $ref: '#/components/schemas/GeoLocation'
+        address:
+          $ref: '#/components/schemas/Address'
+        googleFormattedAddress:
+          type: string
+          description: The google-formatted address
+          example: Oslo rådhus, Rådhusplassen 1, Vika, Sentrum, Oslo, 0160, Norway
+    ViaPoint:
+      properties:
+        location:
+          $ref: '#/components/schemas/Location'
+        pauseTimeInMinutes:
+          type: integer
+    Garage:
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        location:
+          $ref: '#/components/schemas/Location'
+    TripExecution:
+      properties:
+        action:
+          type: string
+          description: The action for this execution step
+          example: Withdrawal garage (A)
+        plannedTime:
+          type: string
+          description: The planned time for this step
+          example: '2026-04-28T16:00:00'
+        actualTime:
+          type: string
+          description: The actual time for this step
+          example: '2026-04-28T16:00:00'
+        status:
+          type: string
+          description: The status of this step
+          example: Critical
+        plannedDistance:
+          type: number
+          description: The planned distance for this step
+          example: 45667.1
+        actualDistance:
+          type: number
+          description: The actual distance for this step
+          example: 44781.8
+        traffic:
+          type: boolean
+          description: Deviation caused by traffic
+          example: false
+        customer:
+          type: boolean
+          description: Deviation caused by customer
+          example: false
+        badPlanning:
+          type: boolean
+          description: Deviation caused by bad planning
+          example: false
+        other:
+          type: boolean
+          description: Deviation caused of other reason
+          example: true
+        comment:
+          type: string
+          description: Drivers comment for deviation
+          example: Comment
+    TripListEntry:
+      properties:
+        tripID:
+          type: string
+          description: The id of the trip
+          example: TQ-001001-S01-N001
+        tripType:
+          type: string
+          description: The type of trip
+          example: NORMAL
+        status:
+          type: string
+          description: The status of the trip
+          example: planning
+        vehicleID:
+          type: string
+          description: The Id of the vehicle assigned to the trip
+          example: 10
+        driverID:
+          type: string
+          description: The Id of the driver assigned to the trip
+          example: 100
+        customerId:
+          type: string
+          description: The Id of the customer for the trip
+          example: 1000
+        contactPerson:
+          type: string
+          description: The name of the contact person for the trip
+          example: John Doe
+        pax:
+          type: integer
+          description: The number of passengers for the trip
+          example: 26
+        travelFrom:
+          $ref: '#/components/schemas/Location'
+        travelTo:
+          $ref: '#/components/schemas/Location'
+        garage:
+          $ref: '#/components/schemas/Garage'
+        withdrawal:
+          $ref: '#/components/schemas/Location'
+        deliver:
+          $ref: '#/components/schemas/Location'
+        viaPoints:
+          type: array
+          description: The viapoints for the trip
+          items:
+            $ref: '#/components/schemas/Location'
+        commentsFromHQ:
+          type: string
+          description: Trip comments from HQ
+          example: HQ Comment
+        commentsFromCustomer:
+          type: string
+          description: Trip comments from the Customer
+          example: Customer comment
+        commentsToDriver:
+          type: string
+          description: Trip comments to the Driver
+          example: Driver comment
+    Trip:
+      properties:
+        tripID:
+          type: string
+          description: The id of the trip
+          example: TQ-001001-S01-N001
+        tripType:
+          type: string
+          description: The type of trip
+          example: NORMAL
+        status:
+          type: string
+          description: The status of the trip
+          example: planning
+        vehicleID:
+          type: string
+          description: The Id of the vehicle assigned to the trip
+          example: 10
+        driverID:
+          type: string
+          description: The Id of the driver assigned to the trip
+          example: 100
+        customerId:
+          type: string
+          description: The Id of the customer for the trip
+          example: 1000
+        contactPerson:
+          type: string
+          description: The name of the contact person for the trip
+          example: John Doe
+        pax:
+          type: integer
+          description: The number of passengers for the trip
+          example: 26
+        travelFrom:
+          $ref: '#/components/schemas/Location'
+        travelTo:
+          $ref: '#/components/schemas/Location'
+        garage:
+          $ref: '#/components/schemas/Garage'
+        withdrawal:
+          $ref: '#/components/schemas/Location'
+        deliver:
+          $ref: '#/components/schemas/Location'
+        viaPoints:
+          type: array
+          description: The viapoints for the trip
+          items:
+            $ref: '#/components/schemas/Location'
+        flag:
+          type: boolean
+          description: Is the trip flagged
+          example: false
+        sign:
+          type: string
+          description: The sign to use on the trip
+          example: Sign value
+        alternativeTripName:
+          type: string
+          description: The alternative trip name for the trip
+          example: Field excursion
+        tripExecution:
+          type: array
+          description: Information about the execution of the trip
+          items:
+            $ref: '#/components/schemas/TripExecution'
+    TripList:
+      properties:
+        count:
+          type: integer
+          description: Total number of results
+          example: 552
+        next:
+          type: string
+          description: URL to get next page of results
+          example: https://api.ferdia.no/trips/trips?page=2
+        previous:
+          type: string
+          description: URL to get previous page of results
+          example: https://api.ferdia.no/trips/trips?page=1
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/TripListEntry'
+    TripStatus:
+      properties:
+        status:
+          type: string
+          description: The status of the trip
+          example: planning
+        current_location:
+          type: object
+          description: The current location of the trip
+          properties:
+            latitude:
+              type: number
+              description: The latitude of the location
+              example: 59.9133301
+            longitude:
+              type: number
+              description: The longitude of the location
+              example: 10.7389701
+            address:
+              type: string
+              description: The address of the location
+              example: Storgata 1, 0164 Oslo
+    TripType:
+      properties:
+        id:
+          type: integer
+          description: The ID of the trip type
+          example: 1
+        name:
+          type: string
+          description: The name of the trip type
+          example: Standard
+        description:
+          type: string
+          description: The description of the trip type
+          example: Standard trip type
+        category:
+          type: string
+          description: The category of the trip type
+          example: Normal
+        tripPriority:
+          type: integer
+          description: The trip priority for trips of this type
+          example: 50
+        color:
+          type: string
+          format: hex-color
+          description: The color for this trip type (hex color code)
+          example: '#FF5733'
+        active:
+          type: boolean
+          description: Is this trip type active
+          example: true
+    PostTrip:
+      type: object
+      required:
+        - departureDate
+        - departureTime
+        - travelFrom
+        - travelTo
+        - pax
+        - acceptTerms
+      properties:
+        tripType:
+          type: string
+          enum:
+            - OneWay
+            - Return
+          default: OneWay
+        departureDate:
+          type: string
+          format: date
+        departureTime:
+          type: string
+          pattern: ^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$
+        returnDate:
+          type: string
+          format: date
+        returnTime:
+          type: string
+          pattern: ^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$
+        travelFrom:
+          $ref: '#/components/schemas/Location'
+        travelTo:
+          $ref: '#/components/schemas/Location'
+        viaPoints:
+          type: array
+          items:
+            $ref: '#/components/schemas/ViaPoint'
+        pax:
+          type: integer
+          format: int32
+        busAvailableDuringStay:
+          type: boolean
+          default: false
+        tripTypeId:
+          type: integer
+          description: The id of the triptrip (GET /core/settings/triptype) to use for the trip
+          example: 1
+        flightno:
+          type: string
+          description: The flight number for the trip, this field is only relevant, but mandatory when the tripTypeId is set to the type Airport Trip
+          example: AB123
+        groupReference:
+          type: string
+          description: The group reference for the trip, this field is only relevant when the tripTypeId is set to the type Airport Trip
+        acceptTerms:
+          type: boolean
+        externalReference:
+          type: string
+        vehicleLicensePlate:
+          type: string
+          description: The license plate of the vehicle to use for the trip, only relevant if a specific vehicle is requested
+        pointOfContact:
+          type: integer
+          description: Use an exsiting point of contact for the customer for this trip
+        newPointOfContact:
+          type: object
+          description: Add a new point of contact to the customer for this trip
+          $ref: '#/components/schemas/NewContactPerson'
+        comments:
+          type: object
+          properties:
+            toInvoice:
+              type: string
+            toPlanning:
+              type: string
+            toDriver:
+              type: string
+            fromCustomer:
+              type: string
+            toCustomer:
+              type: string
+        details:
+          type: object
+          properties:
+            flag:
+              type: string
+            sign:
+              type: string
+            alternativeTripName:
+              type: string
+            purchaseOrder:
+              type: string
+        price:
+          type: number
+          format: decimal
+          example: 1000
+          description: The price of the trip (inc. VAT), only relevant if the trip is already priced and the TEQ price-calcuator shoul be bypassed.
+        prepaid:
+          type: boolean
+          default: false
+          description: If the trip is prepayed
+        addToPlanning:
+          type: boolean
+          default: false
+          description: 'If true, the trip will be automatically planned to the chosen vehicle (requires vehicleLicensePlate: to be set)'
+        plannedDuration:
+          type: object
+          description: The planned duration of the trip, only relevant if the trip is set to addToPlanning
+          properties:
+            start:
+              type: string
+              format: date-time
+            end:
+              type: string
+              format: date-time
+        orderStatus:
+          type: string
+          description: The status to set for the newly created order
+          enum:
+            - Draft
+            - Sent to customer
+            - Accepted by customer
+            - Active order
+          default: Active order
+    RequestSource:
+      type: string
+      enum:
+        - Direct
+        - Shared
+    PostRequestGivenCustomer:
+      type: object
+      required:
+        - departureDate
+        - departureTime
+        - travelFrom
+        - travelTo
+        - pax
+        - acceptTerms
+      properties:
+        tripType:
+          type: string
+          enum:
+            - OneWay
+            - Return
+          default: OneWay
+        departureDate:
+          type: string
+          format: date
+        departureTime:
+          type: string
+          pattern: ^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$
+        returnDate:
+          type: string
+          format: date
+        returnTime:
+          type: string
+          pattern: ^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$
+        travelFrom:
+          $ref: '#/components/schemas/Location'
+        travelTo:
+          $ref: '#/components/schemas/Location'
+        pax:
+          type: integer
+          format: int32
+        busAvailableDuringStay:
+          type: boolean
+          default: false
+        comments:
+          type: string
+        acceptTerms:
+          type: boolean
+        externalReference:
+          type: string
+    PostRequest:
+      allOf:
+        - $ref: '#/components/schemas/PostRequestGivenCustomer'
+        - type: object
+          required:
+            - customerType
+            - firstName
+            - lastName
+            - email
+            - phoneNo
+            - acceptTerms
+          properties:
+            customerType:
+              type: string
+              enum:
+                - person
+                - organization
+              default: person
+            companyName:
+              type: string
+            companyOrgNumber:
+              type: string
+            firstName:
+              type: string
+            lastName:
+              type: string
+            email:
+              type: string
+              format: email
+            phoneNo:
+              type: string
+    Request:
+      properties:
+        id:
+          type: string
+        orderDate:
+          type: string
+        date:
+          type: string
+        travelFrom:
+          $ref: '#/components/schemas/Address'
+        travelTo:
+          $ref: '#/components/schemas/Address'
+        pax:
+          type: integer
+        customerId:
+          type: integer
+        contactPerson:
+          type: integer
+    Quotation:
+      properties:
+        id:
+          type: string
+        customerId:
+          type: string
+    Order:
+      properties:
+        id:
+          type: string
+        customerId:
+          type: string
+    PostOrder:
+      properties:
+        trips:
+          type: array
+          items:
+            $ref: '#/components/schemas/PostTrip'
+    OrderStatus:
+      properties:
+        order_id:
+          type: string
+          description: The unique internal order ID
+          example: '34290'
+        status:
+          type: string
+          description: The status of the order
+        trips:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderStatusTrip'
+    OrderStatusTrip:
+      properties:
+        trip_id:
+          type: object
+          properties:
+            status:
+              type: string
+              description: The status of the trip
+          description: The trip ID
+    SalesCapacity:
+      type: object
+      properties:
+        capacity:
+          type: string
+          enum:
+            - High
+            - Medium
+            - Low
+        departmentId:
+          type: integer
+        departmentName:
+          type: string
+        vehicletypeId:
+          type: integer
+        vehicleTypeName:
+          type: string
+        tripCount:
+          type: object
+          properties:
+            total:
+              type: integer
+              example: 8
+              description: The total number of trips in the timerange of the capacity request
+            activeNormalTrips:
+              type: integer
+              example: 4
+              description: The total number of active normal trips in the timerange of the capacity request
+            activeFixedTrips:
+              type: integer
+              example: 2
+              description: The total number of active fixed trips in the timerange of the capacity request
+            confirmedNormalTrips:
+              type: integer
+              example: 1
+              description: The total number of confirmed normal trips in the timerange of the capacity request
+            sentQuotations:
+              type: integer
+              example: 0
+              description: The total number of quoted, but not accepted trips in the timerange of the capacity request
+            drafts:
+              type: integer
+              example: 1
+              description: The total number of draft trips in the timerange of the capacity request
+        fullDayInfo:
+          type: array
+          items:
+            type: object
+            properties:
+              startTime:
+                type: string
+                format: date-time
+                example: 01.01.2025 00:00
+              endTime:
+                type: string
+                format: date-time
+                example: 01.01.2025 01:00
+              capacity:
+                type: string
+                enum:
+                  - High
+                  - Medium
+                  - Low
+              tripCount:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    example: 4
+                    description: The total number of trips in the timerange of the capacity request
+                  activeNormalTrips:
+                    type: integer
+                    example: 0
+                    description: The total number of active normal trips in the timerange of the capacity request
+                  activeFixedTrips:
+                    type: integer
+                    example: 2
+                    description: The total number of active fixed trips in the timerange of the capacity request
+                  confirmedNormalTrips:
+                    type: integer
+                    example: 1
+                    description: The total number of confirmed normal trips in the timerange of the capacity request
+                  sentQuotations:
+                    type: integer
+                    example: 0
+                    description: The total number of quoted, but not accepted trips in the timerange of the capacity request
+                  drafts:
+                    type: integer
+                    example: 1
+                    description: The total number of draft trips in the timerange of the capacity request
+    Product:
+      properties:
+        id:
+          type: integer
+          description: The internal Id of the product
+          example: 1
+        itemCode:
+          type: string
+          description: The item code of the product
+          example: 123-abc
+        description:
+          type: string
+          description: The product description
+          example: Vehicle cleaning
+        details:
+          type: string
+          description: The product details
+          example: Extra cost for cleaning a vehicle
+        creditAccountNo:
+          type: integer
+          description: The credit account number
+          example: 1234
+        vatCode:
+          type: integer
+          description: The VAT code of the product
+          example: 1
+    Vehicle:
+      properties:
+        id:
+          type: integer
+          description: The internal Id of the vehicle
+          example: 1
+        vehicleName:
+          type: string
+          description: The name of the vehicle
+          example: Volvo Bus 1
+        manufacturer:
+          type: string
+          description: The manufacturer of the vehicle
+          example: Volvo
+        model:
+          type: string
+          description: The model of the vehicle
+          example: 7900 Electric
+        numberOfSeats:
+          type: integer
+          description: The number of seats in the vehicle
+          example: 58
+        numberOfStanding:
+          type: integer
+          description: The number of standing places in the vehicle
+          example: 20
+        numberOfGuideSeats:
+          type: integer
+          description: The number of guide seats in the vehicle
+          example: 2
+        numberOfHandicapSeats:
+          type: integer
+          description: The number of handicap seats in the vehicle
+          example: 1
+        licenseplate:
+          type: string
+          description: The license plate of the vehicle
+          example: ABC123
+        euroClass:
+          type: string
+          description: The euro class of the vehicle
+          example: Euro 6
+        vehicleCategory:
+          type: string
+          description: The category of the vehicle
+          example: Internal Vehicle
+        deadlineForRoadWorthinessTest:
+          type: string
+          format: date
+          description: The deadline for the road worthiness test
+          example: '2026-06-17'
+        fuelType:
+          type: string
+          description: The fuel type of the vehicle
+          enum:
+            - diesel
+            - petrol
+            - EL
+            - hydrogen
+            - HVO
+            - other
+        length:
+          type: number
+          description: The length of the vehicle
+          example: 12.4
+        width:
+          type: number
+          description: The width of the vehicle
+          example: 2.55
+        height:
+          type: number
+          description: The height of the vehicle
+          example: 3.65
+        weight:
+          type: number
+          description: The wight of the vehicle
+          example: 19500
+        availableInBookabus:
+          type: boolean
+          description: Is this vehicle available in Bookabus
+          example: false
+        active:
+          type: boolean
+          description: Is this vehicle active
+          example: true
+    Employee:
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the employee
+          example: 100
+        employeeNumber:
+          type: integer
+          description: The employeenumber
+          example: 1234
+        first_name:
+          type: string
+          description: First name
+          example: John
+        last_name:
+          type: string
+          description: Last name
+          example: Dow
+        initial:
+          type: string
+          description: The initials of the employee
+          example: JD
+        language:
+          type: string
+          description: The laguage of the employee
+          example: en_US
+        phone:
+          type: string
+          description: The phonenumber of the employee
+          example: '+4712345678'
+        email:
+          type: string
+          description: The email-address of the employee
+          example: john.dow@example.com
+        note:
+          type: string
+          description: Additional notes about the employee
+          example: Additional notes about the employee
+        active:
+          type: boolean
+          description: Whether the employee is active
+          example: true
+    EmployeeCalendarEntry:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the calendar entry
+        entryType:
+          type: string
+          enum:
+            - Normal Trip
+            - Fixed Trip
+            - Absence
+            - Availability
+          description: The type of calendar entry
+          example: Normal trip
+        category:
+          type: string
+          description: Title or description of the calendar entry category
+        startDateTime:
+          type: string
+          format: date-time
+          description: Start date and time of the calendar entry
+          example: '2026-01-01T09:00:00'
+        endDateTime:
+          type: string
+          format: date-time
+          description: End date and time of the calendar entry
+          example: '2026-01-01T11:00:00'
+        wholeDay:
+          type: boolean
+          description: Indicates if this is an all-day event
+          example: false
+        approvalStatus:
+          type: string
+          description: Approval status of the calendar entry
+          example: Approved
+        comments:
+          type: string
+          description: Additional notes or comments
+          example: ''
+        tripName:
+          type: string
+          description: Name of the trip (if entryType = trip)
+          example: TT-00001-N001
+        vehicleId:
+          type: string
+          description: ID of the vehicle (if assigned to trip)
+          example: 12345
+        vehicleName:
+          type: string
+          description: Name of the vehicle (if assigned to trip)
+          example: Volvo AB11245
+        vehicleLicense:
+          type: string
+          description: License plate of the vehicle (if assigned to trip)
+          example: AB11245
+    PostPriceCalculate:
+      type: object
+      required:
+        - travelFrom
+        - travelTo
+        - departureDate
+      properties:
+        tripType:
+          type: string
+          enum:
+            - OneWay
+            - Return
+          default: OneWay
+        departureDate:
+          type: string
+          format: date
+        departureTime:
+          type: string
+          pattern: ^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$
+          description: The time the trip should depart from the pickup point. Supply either departureTime or arrivalTime.
+        arrivalTime:
+          type: string
+          pattern: ^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$
+          description: The time the trip should arrive at the destination. Supply either departureTime or arrivalTime.
+        returnDate:
+          type: string
+          format: date
+        returnTime:
+          type: string
+          pattern: ^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$
+        travelFrom:
+          $ref: '#/components/schemas/Location'
+        travelTo:
+          $ref: '#/components/schemas/Location'
+        pax:
+          type: integer
+          format: int32
+        busAvailableDuringStay:
+          type: boolean
+          default: false
+        vehicleCategory:
+          type: string
+          description: The category of vehicle to use for the trip
+        vehicleId:
+          type: integer
+          description: The vehicle to use for the trip

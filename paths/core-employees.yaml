@@ -1,0 +1,68 @@
+/core/employees:
+  get:
+    description: Returns returns a list of employees
+    tags:
+      - Core/Employees
+    parameters:
+      - $ref: "../components/parameters/domain.yaml"
+      - in: query
+        name: name
+        schema:
+          type: string
+        description: Name of the employee
+      - in: query
+        name: number
+        schema:
+          type: integer
+        description: Employee number
+    responses:
+      "200":
+        description: Successfully returned employee list
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "../components/schemas/Employee.yaml"
+      "400":
+        $ref: "../components/responses/400.yaml"
+
+/core/employees/calendar/{id}:
+  get:
+    description: Returns calendar entries for an employee
+    tags:
+      - Core/Employees
+    parameters:
+      - $ref: "../components/parameters/domain.yaml"
+      - $ref: "../components/parameters/timezone.yaml"
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        description: The ID of the employee
+      - in: query
+        name: start
+        schema:
+          type: string
+          format: date
+        description: Start date for the calendar range (YYYY-MM-DD)
+      - in: query
+        name: end
+        schema:
+          type: string
+          format: date
+        description: End date for the calendar range (YYYY-MM-DD)
+    responses:
+      "200":
+        description: Successfully returned employee calendar
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "../components/schemas/EmployeeCalendarEntry.yaml"
+      "400":
+        $ref: "../components/responses/400.yaml"
+      "404":
+        $ref: "../components/responses/404.yaml"

@@ -1,0 +1,45 @@
+properties:
+  action:
+    type: string
+    description: The action for this execution step
+    example: Withdrawal garage (A)
+  plannedTime:
+    type: string
+    description: The planned time for this step
+    example: 2026-04-28T16:00:00
+  actualTime:
+    type: string
+    description: The actual time for this step
+    example: 2026-04-28T16:00:00
+  status:
+    type: string
+    description: The status of this step
+    example: Critical
+  plannedDistance:
+    type: number
+    description: The planned distance for this step
+    example: 45667.1
+  actualDistance:
+    type: number
+    description: The actual distance for this step
+    example: 44781.8
+  traffic:
+    type: boolean
+    description: Deviation caused by traffic
+    example: false
+  customer:
+    type: boolean
+    description: Deviation caused by customer
+    example: false
+  badPlanning:
+    type: boolean
+    description: Deviation caused by bad planning
+    example: false
+  other:
+    type: boolean
+    description: Deviation caused of other reason
+    example: true
+  comment:
+    type: string
+    description: Drivers comment for deviation
+    example: Comment

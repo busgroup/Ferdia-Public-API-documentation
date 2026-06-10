@@ -1,0 +1,41 @@
+properties:
+  id:
+    type: integer 
+    description: Unique identifier for the employee
+    example: 100
+  employeeNumber:
+    type: integer 
+    description: The employeenumber
+    example: 1234
+  first_name:
+    type: string
+    description: First name
+    example: John
+  last_name:
+    type: string
+    description: Last name
+    example: Dow
+  initial:
+    type: string
+    description: The initials of the employee
+    example: JD
+  language:
+    type: string
+    description: The laguage of the employee
+    example: "en_US"
+  phone:
+    type: string
+    description: The phonenumber of the employee
+    example: "+4712345678"
+  email:
+    type: string
+    description: The email-address of the employee
+    example: "john.dow@example.com"
+  note:
+    type: string
+    description: Additional notes about the employee
+    example: "Additional notes about the employee"
+  active:
+    type: boolean
+    description: Whether the employee is active
+    example: true

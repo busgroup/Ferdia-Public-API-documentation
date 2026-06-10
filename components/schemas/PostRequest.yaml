@@ -1,0 +1,30 @@
+allOf:
+  - $ref: "./PostRequestGivenCustomer.yaml"
+  - type: object  
+    required:                      
+      - customerType
+      - firstName
+      - lastName
+      - email
+      - phoneNo
+      - acceptTerms
+    properties:                        
+      customerType:
+        type: string
+        enum:
+          - person
+          - organization
+        default: person
+      companyName:
+        type: string
+      companyOrgNumber:
+        type: string
+      firstName:
+        type: string
+      lastName:
+        type: string
+      email:
+        type: string
+        format: email
+      phoneNo:
+        type: string

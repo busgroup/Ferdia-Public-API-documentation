@@ -1,0 +1,29 @@
+properties:
+  firstname:
+    type: string
+    description: The firstname of the contactperson
+    example: John
+  lastname:
+    type: string
+    description: The lastname of the contactperson
+    example: Doe
+  email: 
+    type: string
+    format: email
+    description: The email of the contact-person. This is used to validate unique contacts, if a contact with the same email is found the existing contact will be used.
+    example: john.doe@mail.com
+  mobilePhone:
+    type: string
+    description: The Mobilephone of the contact person
+    example: +479911223344
+  fixedPhone:
+    type: string
+    description: The fixed phone of the contact person
+    example: +479911223344
+  primaryContact:
+    type: boolean
+    description: Should this contact be set as the primary contact for the customer
+  roleInCompany:
+    type: string
+    description: The role this contactperson has with the customer
+    example: Manager
