@@ -1,0 +1,7 @@
+name: domain
+in: header
+description: The domain/company to direct the API-call to
+required: true
+schema:
+  type: string
+  example: "ferdia"

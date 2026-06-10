@@ -1,0 +1,45 @@
+type: object
+required:
+  - travelFrom
+  - travelTo
+  - departureDate
+properties:
+  tripType:
+      type: string
+      enum:
+        - OneWay
+        - Return 
+      default: OneWay
+  departureDate:
+    type: string
+    format: date            
+  departureTime:
+    type: string
+    pattern: '^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$'
+    description: 'The time the trip should depart from the pickup point. Supply either departureTime or arrivalTime.'
+  arrivalTime:
+    type: string
+    pattern: '^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$'
+    description: 'The time the trip should arrive at the destination. Supply either departureTime or arrivalTime.'
+  returnDate:
+    type: string
+    format: date
+  returnTime:
+    type: string
+    pattern: '^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$'
+  travelFrom:
+    $ref: "./Location.yaml"
+  travelTo:
+    $ref: "./Location.yaml"
+  pax:
+    type: integer
+    format: int32                         
+  busAvailableDuringStay:
+    type: boolean
+    default: false
+  vehicleCategory:
+    type: string
+    description: "The category of vehicle to use for the trip"
+  vehicleId:
+    type: integer
+    description: "The vehicle to use for the trip"

@@ -1,0 +1,46 @@
+/sales/capacity:
+  get:
+    description: Returns the vehicle capacity for a given time
+    tags:
+      - Sales/Capacity
+    parameters:
+      - $ref: "../components/parameters/domain.yaml"
+      - name: startTime
+        in: query
+        description: The start-time for the trip. Format DD.MM.YYYY HH:MM
+        required: true
+        example: "01.01.2025 10:00"
+        schema:
+          type: string
+      - name: endTime
+        in: query
+        description: The end-time for the trip. Format DD.MM.YYYY HH:MM
+        required: true
+        example: "01.01.2025 12:00"
+        schema:
+          type: string
+      - name: departmentId
+        in: query
+        description: Id of the department to get the capacity for          
+        schema:
+          type: integer
+      - name: vehicleTypeId
+        in: query
+        description: Id of the vehicle type to get the capacity for
+        schema:
+          type: integer
+      - name: pax
+        in: query
+        description: The number of passengers to get the capacity for, vehicle type will be set to default based on the number of passengers
+        schema:
+          type: integer
+  
+    responses:
+      "200":
+        description: Successfully returned sales capacity
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/SalesCapacity.yaml"
+      "400":
+        $ref: "../components/responses/400.yaml"

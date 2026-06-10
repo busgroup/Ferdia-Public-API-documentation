@@ -1,0 +1,12 @@
+properties:
+  address1:
+    type: string
+  postcode:
+    type: string
+  city:
+    type: string
+  country:
+    type: string
+  isInvoiceAddress:
+    type: boolean
+    description: "This field defines if this address should be used as the invoice address for the customer. When creating a new customer, one address must be marked as the invoice address"

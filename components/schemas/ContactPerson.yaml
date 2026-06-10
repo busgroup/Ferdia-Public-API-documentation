@@ -1,0 +1,18 @@
+properties:
+  id:
+    type: integer
+  firstname:
+    type: string
+  lastname:
+    type: string
+  email: 
+    type: string
+    format: email
+  mobilePhone:
+    type: string
+  fixedPhone:
+    type: string
+  primaryContact:
+    type: boolean
+  roleInCompany:
+    type: string

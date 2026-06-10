@@ -1,0 +1,17 @@
+properties:
+  address1:
+    type: string
+    description: Address 1
+    example: Rådhusplassen 1, 0037 Oslo, Norway
+  postcode:
+    type: string
+    description: Postcode
+    example: 0037
+  city:
+    type: string
+    description: City
+    example: Oslo
+  country:
+    type: string
+    description: Country
+    example: Norway

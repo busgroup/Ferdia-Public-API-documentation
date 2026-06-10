@@ -1,0 +1,9 @@
+properties:
+  lat:          
+    type: number
+    description: The latitude of the location
+    example: 59.9133301
+  long:
+    type: number
+    description: The longfitude of the location
+    example: 10.7389701

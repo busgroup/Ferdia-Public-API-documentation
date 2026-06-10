@@ -1,0 +1,84 @@
+properties:
+  id:
+    type: integer
+    description: The internal Id of the vehicle
+    example: 1
+  vehicleName:
+    type: string
+    description: The name of the vehicle
+    example: Volvo Bus 1
+  manufacturer:
+    type: string
+    description: The manufacturer of the vehicle
+    example: Volvo
+  model:  
+    type: string
+    description: The model of the vehicle
+    example: 7900 Electric
+  numberOfSeats:
+    type: integer
+    description: The number of seats in the vehicle
+    example: 58
+  numberOfStanding:
+    type: integer
+    description: The number of standing places in the vehicle
+    example: 20
+  numberOfGuideSeats:
+    type: integer
+    description: The number of guide seats in the vehicle
+    example: 2
+  numberOfHandicapSeats:
+    type: integer
+    description: The number of handicap seats in the vehicle
+    example: 1
+  licenseplate:
+    type: string
+    description: The license plate of the vehicle
+    example: ABC123
+  euroClass:
+    type: string
+    description: The euro class of the vehicle
+    example: Euro 6
+  vehicleCategory:
+    type: string
+    description: The category of the vehicle
+    example: Internal Vehicle
+  deadlineForRoadWorthinessTest:
+    type: string
+    format: date      
+    description: The deadline for the road worthiness test
+    example: 2026-06-17
+  fuelType:
+    type: string
+    description: The fuel type of the vehicle
+    enum:
+      - diesel
+      - petrol
+      - EL
+      - hydrogen
+      - HVO
+      - other
+  length:
+    type: number
+    description: The length of the vehicle
+    example: 12.4
+  width:
+    type: number
+    description: The width of the vehicle
+    example: 2.55
+  height: 
+    type: number
+    description: The height of the vehicle
+    example: 3.65
+  weight: 
+    type: number 
+    description: The wight of the vehicle
+    example: 19500
+  availableInBookabus:
+    type: boolean
+    description: Is this vehicle available in Bookabus
+    example: false
+  active:
+    type: boolean
+    description: Is this vehicle active
+    example: true

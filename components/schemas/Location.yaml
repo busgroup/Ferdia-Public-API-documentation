@@ -1,0 +1,9 @@
+properties:
+  geoLocation: 
+    $ref: "./GeoLocation.yaml"
+  address:
+    $ref: "./Address.yaml"
+  googleFormattedAddress:          
+    type: string
+    description: The google-formatted address 
+    example: Oslo rådhus, Rådhusplassen 1, Vika, Sentrum, Oslo, 0160, Norway

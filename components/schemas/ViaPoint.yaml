@@ -1,0 +1,5 @@
+properties:
+  location:
+    $ref: "./Location.yaml"
+  pauseTimeInMinutes:
+    type: integer

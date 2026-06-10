@@ -1,0 +1,16 @@
+description: Invalid request
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            properties:
+              error:
+                type: string
+      example:
+        message: Invalid request, please review the errors and retry the request

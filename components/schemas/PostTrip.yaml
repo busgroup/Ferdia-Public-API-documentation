@@ -1,0 +1,122 @@
+type: object
+required:          
+  - departureDate
+  - departureTime
+  - travelFrom
+  - travelTo
+  - pax        
+  - acceptTerms  
+properties:
+  tripType:
+    type: string
+    enum:
+      - OneWay
+      - Return 
+    default: OneWay
+  departureDate:
+    type: string
+    format: date            
+  departureTime:
+    type: string
+    pattern: '^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$'
+  returnDate:
+    type: string
+    format: date
+  returnTime:
+    type: string
+    pattern: '^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$'
+  travelFrom:
+    $ref: "./Location.yaml"
+  travelTo:
+    $ref: "./Location.yaml"
+  viaPoints:
+    type: array
+    items:
+      $ref: "./ViaPoint.yaml"
+  pax:
+    type: integer
+    format: int32                         
+  busAvailableDuringStay:
+    type: boolean
+    default: false 
+  tripTypeId:
+    type: integer
+    description: The id of the triptrip (GET /core/settings/triptype) to use for the trip
+    example: 1
+  flightno:
+    type: string
+    description: The flight number for the trip, this field is only relevant, but mandatory when the tripTypeId is set to the type Airport Trip
+    example: AB123
+  groupReference:
+    type: string
+    description: The group reference for the trip, this field is only relevant when the tripTypeId is set to the type Airport Trip  
+  acceptTerms:
+    type: boolean
+  externalReference:
+    type: string
+  vehicleLicensePlate:
+    type: string
+    description: "The license plate of the vehicle to use for the trip, only relevant if a specific vehicle is requested"
+  pointOfContact:
+    type: integer
+    description: "Use an exsiting point of contact for the customer for this trip"
+  newPointOfContact:
+    type: object
+    description: "Add a new point of contact to the customer for this trip"          
+    $ref: "./NewContactPerson.yaml"
+  comments:
+    type: object
+    properties:
+      toInvoice:
+        type: string
+      toPlanning:
+        type: string
+      toDriver:
+        type: string
+      fromCustomer:
+        type: string     
+      toCustomer:  
+        type: string
+  details:
+    type: object  
+    properties:
+      flag:
+        type: string
+      sign:
+        type: string
+      alternativeTripName:
+        type: string
+      purchaseOrder:
+        type: string
+  price:
+    type: number
+    format: decimal
+    example: 1000.00
+    description: "The price of the trip (inc. VAT), only relevant if the trip is already priced and the TEQ price-calcuator shoul be bypassed."
+  prepaid:
+    type: boolean
+    default: false
+    description: "If the trip is prepayed"
+  addToPlanning:
+    type: boolean
+    default: false
+    description: "If true, the trip will be automatically planned to the chosen vehicle (requires vehicleLicensePlate: to be set)"
+  plannedDuration:
+    type: object
+    description: "The planned duration of the trip, only relevant if the trip is set to addToPlanning"
+    properties:
+      start:
+        type: string
+        format: date-time
+      end:
+        type: string
+        format: date-time
+  orderStatus:
+    type: string
+    description: "The status to set for the newly created order"
+    enum:
+      - Draft
+      - Sent to customer
+      - Accepted by customer
+      - Active order
+    default: Active order

@@ -1,0 +1,55 @@
+type: object
+properties:
+  id:
+    type: string
+    description: Unique identifier for the calendar entry
+  entryType:
+    type: string
+    enum:
+      - Normal Trip
+      - Fixed Trip
+      - Absence
+      - Availability
+    description: The type of calendar entry
+    example: Normal trip
+  category:
+    type: string
+    description: Title or description of the calendar entry category
+  startDateTime:
+    type: string
+    format: date-time
+    description: Start date and time of the calendar entry
+    example: 2026-01-01T09:00:00
+  endDateTime:
+    type: string
+    format: date-time
+    description: End date and time of the calendar entry
+    example: 2026-01-01T11:00:00
+  wholeDay:
+    type: boolean
+    description: Indicates if this is an all-day event
+    example: false
+  approvalStatus:
+    type: string
+    description: Approval status of the calendar entry
+    example: Approved
+  comments:
+    type: string
+    description: Additional notes or comments
+    example: ""
+  tripName:
+    type: string
+    description: Name of the trip (if entryType = trip)
+    example: TT-00001-N001
+  vehicleId:
+    type: string
+    description: ID of the vehicle (if assigned to trip)
+    example: 12345
+  vehicleName:
+    type: string
+    description: Name of the vehicle (if assigned to trip)
+    example: Volvo AB11245
+  vehicleLicense:
+    type: string
+    description: License plate of the vehicle (if assigned to trip)
+    example: AB11245

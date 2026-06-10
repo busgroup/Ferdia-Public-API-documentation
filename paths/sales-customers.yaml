@@ -1,0 +1,136 @@
+/sales/customers:
+  post:      
+    summary: Creates a new customer
+    description: Creates a new customer
+    tags:
+      - Sales/Customers
+    parameters:
+      - $ref: "../components/parameters/domain.yaml"
+    requestBody:
+      description: Customer data
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/PostCustomer.yaml"
+    responses:
+      "201":
+        description: Successfully created customer
+        headers:
+          Location:
+            description: Returns the Location to get the created Customer in TEQ UI. 
+            schema:
+              type: string
+              example: /sales/customers/details/0001
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                customerId:
+                  type: string
+      "400":
+        $ref: "../components/responses/400.yaml"
+      
+  get:
+    summary: Returns a list of customers
+    description: Returns a list of customers based on the filters provided
+    tags:
+      - Sales/Customers
+    parameters:
+      - $ref: "../components/parameters/domain.yaml"
+      - in: query
+        name: type
+        schema:
+          $ref: "../components/schemas/CustomerType.yaml"
+      - in: query
+        name: name
+        schema:
+          type: string
+      - in: query
+        name: email
+        schema:
+          type: string
+      - in: query
+        name: orgno
+        schema:
+          type: string
+      - in: query
+        name: freetext
+        schema:
+          type: string
+    responses:
+      "200":
+        description: Successfully returned a list of customers
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "../components/schemas/Customer.yaml"
+      "400":
+        $ref: "../components/responses/400.yaml"
+      
+/sales/customers/{id}:
+  put:
+    description: Updates an existing customer
+    tags:
+      - Sales/Customers
+    parameters:
+      - $ref: "../components/parameters/domain.yaml"
+      - name: id
+        in: path
+        description: Customer ID
+        required: true
+        schema:
+          type: integer
+    requestBody:
+      description: Customer data
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/PutCustomer.yaml"
+    responses:
+      "200":
+        description: Successfully updated customer
+      "400":
+        $ref: "../components/responses/400.yaml"
+      "404":
+        $ref: "../components/responses/404.yaml"      
+
+/sales/customers/{id}/fixedtripsinfo:
+  get:
+    summary: Returns a list of fixed trips for a customer
+    description: Returns a list of fixed trips for a customer based on the filters provided
+    tags:
+      - Sales/Customers
+    parameters:
+      - $ref: "../components/parameters/domain.yaml"
+      - $ref: "../components/parameters/timezone.yaml"
+      - name: id
+        in: path
+        description: Customer ID
+        required: true
+        schema:
+          type: integer
+      - name: date
+        in: query
+        description: Date to get fixed trips for                    
+        schema:
+          type: string
+          format: date
+          default: today
+    responses:
+      "200":
+        description: Successfully returned a list of fixed trips for a customer
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "../components/schemas/CustomerFixedTripInfo.yaml"
+      "400":
+        $ref: "../components/responses/400.yaml"
+      "404":
+        $ref: "../components/responses/404.yaml"

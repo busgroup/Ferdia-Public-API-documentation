@@ -1,0 +1,197 @@
+openapi: 3.0.0
+info:
+  version: "1.0"
+  title: TEQ Public API
+  x-logo:
+    url: 'https://raw.githubusercontent.com/busgroup/Ferdia-Public-API-documentation/main/Ferdia-logo.png'
+    backgroundColor: '#FFFFFF'
+    altText: 'TEQ Logo'
+  description: >
+    # Introduction
+
+    [comment]: <> (x-product-description-placeholder)
+
+    With the TEQ API you can integrate your system with the TEQ platform. The API is designed to be easy to use and to provide a seamless integration experience.
+
+
+    The TEQ API is built on HTTP and is RESTful.
+
+    It has predictable resource URLs and returns HTTP response codes to indicate
+    errors.
+
+    It also accepts and returns JSON in the HTTP body.
+
+    Use your favorite HTTP/REST library in your programming language when using
+    this API.
+
+    This API reference documentation contains the most commonly integrated
+    resources.
+
+    # Authentication
+
+    The API uses OAuth2 for authentication. You will need to obtain an access token to use the API.
+    The access token should be included in the Authorization header of each request.
+
+    To obtain your access credentials, please contact TEQ support on (support@ferdia.co).
+
+    ## OAuth 2.0 flow
+
+    The Authentication supports OAuth 2.0 Client Credentials flow
+
+    ## Authentication-endpoints:
+
+    Token-endpoint: **https://auth.api.ferdia.app/oauth2/token**
+
+    # Domain-header
+
+    For all API requests an HTTP-header `domain` must be included. This header should contain the domain/company name that the API-call should be directed to. 
+    You will receive this domain name when you sign up for the TEQ API.
+
+    # TimeZone
+    
+    The API uses the timezone of the client of the request to calculate dates and times. The timezone should be included in the HTTP-header `TimeZone` in the format `Continent/City` (e.g. `Europe/Berlin`).
+    
+paths:
+  # Operations/Trips
+  /trips/trips:
+    $ref: './paths/operations-trips.yaml#/~1trips~1trips'
+  /trips/trips/{id}:
+    $ref: './paths/operations-trips.yaml#/~1trips~1trips~1{id}'
+  /trips/tripstatus/{id}:
+    $ref: './paths/operations-trips.yaml#/~1trips~1tripstatus~1{id}'
+  
+  # Sales/Customers
+  /sales/customers:
+    $ref: './paths/sales-customers.yaml#/~1sales~1customers'
+  /sales/customers/{id}:
+    $ref: './paths/sales-customers.yaml#/~1sales~1customers~1{id}'
+  /sales/customers/{id}/fixedtripsinfo:
+    $ref: './paths/sales-customers.yaml#/~1sales~1customers~1{id}~1fixedtripsinfo'
+  
+  # Sales/Requests
+  /sales/requests:
+    $ref: './paths/sales-requests.yaml#/~1'
+  /sales/requests/{customerId}:
+    $ref: './paths/sales-requests.yaml#/~1sales~1requests~1{customerId}'
+  
+  # Sales/Orders
+  /sales/orders/{customerId}:
+    $ref: './paths/sales-orders.yaml#/~1sales~1orders~1{customerId}'
+  /sales/orders/status/{id}:
+    $ref: './paths/sales-orders.yaml#/~1sales~1orders~1status~1{id}'
+  
+  # Sales/Capacity
+  /sales/capacity:
+    $ref: './paths/sales-capacity.yaml#/~1sales~1capacity'
+  
+  # Core/Products
+  /core/products:
+    $ref: './paths/core-products.yaml#/~1core~1products'
+  
+  # Core/Vehicles
+  /core/vehicles:
+    $ref: './paths/core-vehicles.yaml#/~1core~1vehicles'
+  
+  # Core/Employees
+  /core/employees:
+    $ref: './paths/core-employees.yaml#/~1core~1employees'
+  /core/employees/calendar/{id}:
+    $ref: './paths/core-employees.yaml#/~1core~1employees~1calendar~1{id}'
+
+components:
+  responses:    
+    404_notFound:
+      $ref: './components/responses/404.yaml'
+    400_requestError:
+      $ref: './components/responses/400.yaml'
+  
+  parameters:
+    domainParameter:
+      $ref: './components/parameters/domain.yaml'
+    timezoneParameter:
+      $ref: './components/parameters/timezone.yaml'
+
+  schemas:
+    # Customer related schemas
+    CustomerType:
+      $ref: './components/schemas/CustomerType.yaml'
+    Address:
+      $ref: './components/schemas/Address.yaml'
+    CustomerAddress:
+      $ref: './components/schemas/CustomerAddress.yaml'
+    ContactPerson:
+      $ref: './components/schemas/ContactPerson.yaml'
+    NewContactPerson:
+      $ref: './components/schemas/NewContactPerson.yaml'
+    CustomerCategory:
+      $ref: './components/schemas/CustomerCategory.yaml'
+    Customer:
+      $ref: './components/schemas/Customer.yaml'
+    PostCustomer:
+      $ref: './components/schemas/PostCustomer.yaml'
+    PutCustomer:
+      $ref: './components/schemas/PutCustomer.yaml'
+    CustomerFixedTripInfo:
+      $ref: './components/schemas/CustomerFixedTripInfo.yaml'
+    
+    # Trip related schemas
+    GeoLocation:
+      $ref: './components/schemas/GeoLocation.yaml'
+    Location:
+      $ref: './components/schemas/Location.yaml'
+    ViaPoint:
+      $ref: './components/schemas/ViaPoint.yaml'
+    Garage:
+      $ref: './components/schemas/Garage.yaml'
+    TripExecution:
+      $ref: './components/schemas/TripExecution.yaml'
+    TripListEntry:
+      $ref: './components/schemas/TripListEntry.yaml'
+    Trip:
+      $ref: './components/schemas/Trip.yaml'
+    TripList:
+      $ref: './components/schemas/TripList.yaml'
+    TripStatus:
+      $ref: './components/schemas/TripStatus.yaml'
+    TripType:
+      $ref: './components/schemas/TripType.yaml'
+    PostTrip:
+      $ref: './components/schemas/PostTrip.yaml'
+    
+    # Request/Order related schemas
+    RequestSource:
+      $ref: './components/schemas/RequestSource.yaml'
+    PostRequestGivenCustomer:
+      $ref: './components/schemas/PostRequestGivenCustomer.yaml'
+    PostRequest:
+      $ref: './components/schemas/PostRequest.yaml'
+    Request:
+      $ref: './components/schemas/Request.yaml'
+    Quotation:
+      $ref: './components/schemas/Quotation.yaml'
+    Order:
+      $ref: './components/schemas/Order.yaml'
+    PostOrder:
+      $ref: './components/schemas/PostOrder.yaml'
+    OrderStatus:
+      $ref: './components/schemas/OrderStatus.yaml'
+    OrderStatusTrip:
+      $ref: './components/schemas/OrderStatusTrip.yaml'
+    
+    # Sales/Capacity
+    SalesCapacity:
+      $ref: './components/schemas/SalesCapacity.yaml'
+    
+    # Core schemas
+    Product:
+      $ref: './components/schemas/Product.yaml'
+    Vehicle:
+      $ref: './components/schemas/Vehicle.yaml'
+    Employee:
+      $ref: './components/schemas/Employee.yaml'
+    EmployeeCalendarEntry:
+      $ref: './components/schemas/EmployeeCalendarEntry.yaml'
+    
+    # Other schemas
+    PostPriceCalculate:
+      $ref: './components/schemas/PostPriceCalculate.yaml'

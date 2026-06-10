@@ -1,0 +1,12 @@
+properties:
+  order_id:
+    type: string
+    description: "The unique internal order ID"
+    example: "34290"        
+  status:
+    type: string
+    description: "The status of the order"
+  trips:
+    type: array
+    items:
+      $ref: "./OrderStatusTrip.yaml"

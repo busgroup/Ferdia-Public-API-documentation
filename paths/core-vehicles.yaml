@@ -1,0 +1,18 @@
+/core/vehicles:
+  get:
+    description: Returns a list of vehicles
+    tags:
+      - Core/Vehicles
+    parameters:
+      - $ref: "../components/parameters/domain.yaml"        
+    responses:
+      "200":
+        description: Successfully returned a list of vehicles
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "../components/schemas/Vehicle.yaml"
+      "400":
+        $ref: "../components/responses/400.yaml"

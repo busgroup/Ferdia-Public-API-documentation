@@ -1,0 +1,29 @@
+properties:
+  emergency_phone_company_name: 
+    type: string
+  emergency_phone_number:         
+    type: string
+  fixed-trips:
+    type: array
+    items:
+      properties:
+        status:
+          type: string
+        from:
+          type: string
+        planned-withdrawal-time:
+          type: string
+          format: date-time
+        actual-withdrawal-time:
+          type: string
+          format: date-time
+        pax: 
+          type: integer
+        to:
+          type: string  
+        planned-deliver-time:
+          type: string
+          format: date-time
+        actual-deliver-time:
+          type: string
+          format: date-time

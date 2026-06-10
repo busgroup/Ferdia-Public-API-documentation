@@ -1,0 +1,5 @@
+properties:
+  trips:
+    type: array
+    items:
+      $ref: "./PostTrip.yaml"

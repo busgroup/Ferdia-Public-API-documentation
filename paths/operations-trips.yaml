@@ -1,0 +1,143 @@
+/trips/trips:
+  get:
+    summary: Returns a list of trips
+    description: Returns a list of trips based on the filters provided
+    tags:
+      - Operations/Trips
+    parameters:
+      - $ref: "../components/parameters/domain.yaml"
+      - in: query
+        name: triptype
+        schema:
+          type: string
+        description: Trip type
+        examples:
+          normal:
+            summary: Normal trips
+            value: normal
+          vip:
+            summary: VIP trips
+            value: vip
+          airport:
+            summary: Airport trips
+            value: airport
+      - in: query
+        name: status
+        schema:
+          type: string
+        description: Trip status
+        examples:
+          planning:
+            summary: Planning
+            value: planning
+          running:
+            summary: running
+            value: running
+          closed:
+            summary: Closed
+            value: closed
+      - in: query
+        name: department
+        schema:
+          type: integer
+        description: The trip department Id
+        example: 1
+      - in: query
+        name: fromDate
+        schema:
+          type: string
+          format: date
+        description: From Date
+        example: 2026-03-01
+      - in: query
+        name: toDate
+        schema:
+          type: string
+          format: date
+        description: To Date
+        example: 2026-03-02        
+      - in: query
+        name: customerId
+        schema:
+          type: integer            
+        description: The Id of the customer for the trip
+        example: 1000
+      - in: query
+        name: driverId
+        schema:
+          type: integer            
+        description: The Id of the driver assigned to the trip
+        example: 251
+      - in: query
+        name: vehicleId
+        schema:
+          type: integer            
+        description: The Id of the vehicle assigned to the trip
+        example: 9
+          
+    responses:
+      "200":
+        description: Successfully returned a list of trips
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "../components/schemas/TripList.yaml"
+      "400":
+        $ref: "../components/responses/400.yaml"
+      
+/trips/trips/{id}:
+  get:
+    summary: Returns a single trip
+    description: Returns a single trip
+    tags:
+      - Operations/Trips
+    parameters:
+      - $ref: "../components/parameters/domain.yaml"
+      - name: id
+        in: path
+        description: Trip Id
+        required: true
+        schema:
+          type: string
+        example: TQ-001001-S01-N001
+    responses:
+      "200":
+        description: Successfully returned a trip
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/Trip.yaml"              
+              
+      "400":
+        $ref: "../components/responses/400.yaml"
+      "404":
+        $ref: "../components/responses/404.yaml"
+        
+/trips/tripstatus/{id}:
+  get:
+    summary: Gets the current status of a trip
+    description: Gets the current status of a trip
+    tags:
+      - Operations/Trips
+    parameters:
+      - $ref: "../components/parameters/domain.yaml"
+      - name: id
+        in: path
+        description: Trip Id
+        required: true
+        schema:
+          type: string
+        example: TE-0000001-S01-N001        
+    responses:
+      "200":
+        description: Successfully returned trip status
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/TripStatus.yaml"              
+      "400":
+        $ref: "../components/responses/400.yaml"
+      "404":
+        $ref: "../components/responses/404.yaml"
