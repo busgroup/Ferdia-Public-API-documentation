@@ -94,6 +94,10 @@ paths:
   /core/employees/calendar/{id}:
     $ref: './paths/core-employees.yaml#/~1core~1employees~1calendar~1{id}'
 
+  # Core/Products
+  /core/products:
+    $ref: './paths/core-products.yaml#/~1core~1products'
+
 components:
   responses:    
     404_notFound:
@@ -185,6 +189,8 @@ components:
       $ref: './components/schemas/Employee.yaml'
     EmployeeCalendarEntry:
       $ref: './components/schemas/EmployeeCalendarEntry.yaml'
+    Product:
+      $ref: './components/schemas/Product.yaml'
     
     # Other schemas
     PostPriceCalculate:

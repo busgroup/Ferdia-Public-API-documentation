@@ -1,0 +1,25 @@
+properties:
+  id:
+    type: integer
+    description: The internal Id of the product
+    example: 1
+  itemCode:
+    type: string
+    description: The item code of the product
+    example: 123-abc
+  description:
+    type: string
+    description: The product description
+    example: Vehicle cleaning
+  details:
+    type: string
+    description: The product details
+    example: Extra cost for cleaning a vehicle
+  creditAccountNo:
+    type: integer
+    description: The credit account number
+    example: 1234
+  vatCode:
+    type: integer
+    description: The VAT code of the product
+    example: 1
