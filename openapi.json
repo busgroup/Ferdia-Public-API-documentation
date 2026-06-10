@@ -764,53 +764,6 @@
         }
       }
     },
-    "/core/products": {
-      "get": {
-        "description": "Returns a list of products",
-        "tags": [
-          "Core/Products"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/domain"
-          },
-          {
-            "name": "itemCode",
-            "in": "query",
-            "description": "The Item Code to search for",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "description",
-            "in": "query",
-            "description": "The Item Description to search for",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully returned a list of products",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Product"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          }
-        }
-      }
-    },
     "/core/vehicles": {
       "get": {
         "description": "Returns a list of vehicles",
@@ -2326,40 +2279,6 @@
                 }
               }
             }
-          }
-        }
-      },
-      "Product": {
-        "properties": {
-          "id": {
-            "type": "integer",
-            "description": "The internal Id of the product",
-            "example": 1
-          },
-          "itemCode": {
-            "type": "string",
-            "description": "The item code of the product",
-            "example": "123-abc"
-          },
-          "description": {
-            "type": "string",
-            "description": "The product description",
-            "example": "Vehicle cleaning"
-          },
-          "details": {
-            "type": "string",
-            "description": "The product details",
-            "example": "Extra cost for cleaning a vehicle"
-          },
-          "creditAccountNo": {
-            "type": "integer",
-            "description": "The credit account number",
-            "example": 1234
-          },
-          "vatCode": {
-            "type": "integer",
-            "description": "The VAT code of the product",
-            "example": 1
           }
         }
       },
