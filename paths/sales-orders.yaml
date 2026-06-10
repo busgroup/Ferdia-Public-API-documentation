@@ -71,3 +71,34 @@
         $ref: "../components/responses/400.yaml"
       "404":
         $ref: "../components/responses/404.yaml"
+
+/sales/orders/{id}/orderconfirmation:
+    get :
+      summary: Get the order confirmation for a given order
+      description: Returns the orderconfirmation for the order in PDF format
+      tags:
+        - Sales/Orders
+      parameters:
+        - $ref: "#/components/parameters/domainParameter"
+        - name: id
+          in: path
+          description: existing order Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "201":
+          description: Order confirmation PDF
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pdf:
+                    type: string
+                    format: byte
+                    description: "Base64 encoded PDF document containing the order confirmation"
+        "400":
+          $ref: "../components/responses/400.yaml"
+        "404":
+          $ref: "../components/responses/404.yaml"
