@@ -84,10 +84,6 @@ paths:
   /sales/capacity:
     $ref: './paths/sales-capacity.yaml#/~1sales~1capacity'
   
-  # Core/Products
-  /core/products:
-    $ref: './paths/core-products.yaml#/~1core~1products'
-  
   # Core/Vehicles
   /core/vehicles:
     $ref: './paths/core-vehicles.yaml#/~1core~1vehicles'
@@ -183,8 +179,6 @@ components:
       $ref: './components/schemas/SalesCapacity.yaml'
     
     # Core schemas
-    Product:
-      $ref: './components/schemas/Product.yaml'
     Vehicle:
       $ref: './components/schemas/Vehicle.yaml'
     Employee:
