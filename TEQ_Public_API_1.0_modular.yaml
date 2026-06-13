@@ -93,6 +93,10 @@ paths:
     $ref: './paths/core-employees.yaml#/~1core~1employees'
   /core/employees/calendar/{id}:
     $ref: './paths/core-employees.yaml#/~1core~1employees~1calendar~1{id}'
+  
+  # Core/Settings
+  /core/settings/triptypes:
+    $ref: './paths/core-settings.yaml#/~1core~1settings~1triptypes'
 
 components:
   responses:    
