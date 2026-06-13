@@ -67,6 +67,10 @@ paths:
     $ref: './paths/sales-customers.yaml#/~1sales~1customers~1{id}'
   /sales/customers/{id}/fixedtripsinfo:
     $ref: './paths/sales-customers.yaml#/~1sales~1customers~1{id}~1fixedtripsinfo'
+  /sales/customers/categories:
+    $ref: './paths/sales-customers.yaml#/~1sales~1customers~1categories'
+  /sales/customers/categories/{id}:
+    $ref: './paths/sales-customers.yaml#/~1sales~1customers~1categories~1{id}'
   
   # Sales/Requests
   /sales/requests:
