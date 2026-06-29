@@ -1,9 +1,11 @@
 properties:
   name:
     type: string
-  description: 
+  description:
     type: string
   active:
     type: boolean
   default:
     type: boolean
+required:
+  - name

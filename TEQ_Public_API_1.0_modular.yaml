@@ -125,6 +125,10 @@ components:
       $ref: './components/schemas/NewContactPerson.yaml'
     CustomerCategory:
       $ref: './components/schemas/CustomerCategory.yaml'
+    PostCustomerCategory:
+      $ref: './components/schemas/PostCustomerCategory.yaml'
+    PutCustomerCategory:
+      $ref: './components/schemas/PutCustomerCategory.yaml'
     Customer:
       $ref: './components/schemas/Customer.yaml'
     PostCustomer:
