@@ -75,6 +75,8 @@ paths:
     $ref: './paths/sales-requests.yaml#/~1sales~1requests~1{customerId}'
   
   # Sales/Orders
+  /sales/orders:
+    $ref: './paths/sales-orders.yaml#/~1sales~1orders'
   /sales/orders/{customerId}:
     $ref: './paths/sales-orders.yaml#/~1sales~1orders~1{customerId}'
   /sales/orders/status/{id}:
