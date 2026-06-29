@@ -243,24 +243,3 @@
         $ref: "../components/responses/400.yaml"
       "404":
         $ref: "../components/responses/404.yaml"
-
-  delete:
-    summary: Deletes a customer category
-    description: Deletes a customer category
-    tags:
-      - Sales/Customers
-    parameters:
-      - $ref: "../components/parameters/domain.yaml"
-      - name: id
-        in: path
-        description: Customer category ID
-        required: true
-        schema:
-          type: integer
-    responses:
-      "204":
-        description: Successfully deleted customer category
-      "400":
-        $ref: "../components/responses/400.yaml"
-      "404":
-        $ref: "../components/responses/404.yaml"
