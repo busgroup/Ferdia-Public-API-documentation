@@ -128,7 +128,9 @@ components:
     PutCustomer:
       $ref: './components/schemas/PutCustomer.yaml'
     CustomerFixedTripInfo:
-      $ref: './components/schemas/CustomerFixedTripInfo.yaml'
+      $ref: './components/schemas/CustomerFixedTripInfo.yaml' 
+    CustomerList:
+      $ref: './components/schemas/CustomerList.yaml'      
     
     # Trip related schemas
     GeoLocation:
