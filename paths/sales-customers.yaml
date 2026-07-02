@@ -64,10 +64,8 @@
         description: Successfully returned a list of customers
         content:
           application/json:
-            schema:
-              type: array
-              items:
-                $ref: "../components/schemas/Customer.yaml"
+            schema:           
+              $ref: "../components/schemas/CustomerList.yaml"
       "400":
         $ref: "../components/responses/400.yaml"
       
