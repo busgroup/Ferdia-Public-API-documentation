@@ -51,9 +51,7 @@ properties:
     type: string
     description: The group reference for the trip, this field is only relevant when the tripTypeId is set to the type Airport Trip  
   acceptTerms:
-    type: boolean
-  externalReference:
-    type: string
+    type: boolean  
   vehicleLicensePlate:
     type: string
     description: "The license plate of the vehicle to use for the trip, only relevant if a specific vehicle is requested"
