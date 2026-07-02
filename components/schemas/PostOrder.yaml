@@ -15,9 +15,17 @@ properties:
     example: "EXT-12345"
   orderStatus:
     type: string
-    description: The status of the order
-    example: "draft"
+    description: "The status to set for the newly created order"
+    enum:
+      - Draft
+      - Sent to customer
+      - Accepted by customer
+      - Active order
+    default: Active order
   trips:
     type: array
     items:
       $ref: "./PostTrip.yaml"
+
+
+
