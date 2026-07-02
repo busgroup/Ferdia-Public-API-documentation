@@ -25,6 +25,14 @@ properties:
   returnTime:
     type: string
     pattern: '^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$'
+  boarding:
+    type: integer
+    description: "Number of minutes for boarding the passengers"
+    example: 10
+  disembarkation:
+    type: integer
+    description: "Number of minutes for disembarking the passengers"
+    example: 15
   travelFrom:
     $ref: "./Location.yaml"
   travelTo:
