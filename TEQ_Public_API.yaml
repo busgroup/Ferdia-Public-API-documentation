@@ -414,6 +414,10 @@ paths:
               schema:
                 type: object
                 properties:
+                  status:
+                    type: string
+                    description: The status of the operation
+                    example: success
                   orderId:
                     type: string
                     description: The unique internal order ID created
@@ -422,6 +426,10 @@ paths:
                     type: string
                     description: The order ID in the format used in TEQ UI, e.g. BT-034150-S01
                     example: BT-034150-S01
+                  createdRows:
+                    type: integer
+                    description: The number of rows created
+                    example: 1
         '400':
           $ref: '#/components/responses/400'
         '404':
@@ -1281,8 +1289,6 @@ components:
           description: The group reference for the trip, this field is only relevant when the tripTypeId is set to the type Airport Trip
         acceptTerms:
           type: boolean
-        externalReference:
-          type: string
         vehicleLicensePlate:
           type: string
           description: The license plate of the vehicle to use for the trip, only relevant if a specific vehicle is requested
@@ -1340,15 +1346,6 @@ components:
             end:
               type: string
               format: date-time
-        orderStatus:
-          type: string
-          description: The status to set for the newly created order
-          enum:
-            - Draft
-            - Sent to customer
-            - Accepted by customer
-            - Active order
-          default: Active order
     RequestSource:
       type: string
       enum:
@@ -1461,6 +1458,29 @@ components:
           type: string
     PostOrder:
       properties:
+        orderContactPersonId:
+          type: integer
+          description: The ID of the contact person for the order
+          example: 2255
+        newOrderContactPerson:
+          $ref: '#/components/schemas/NewContactPerson'
+        salesPersonId:
+          type: integer
+          description: The ID of the sales person for the order
+          example: 100
+        externalOrderReference:
+          type: string
+          description: The external order reference
+          example: EXT-12345
+        orderStatus:
+          type: string
+          description: The status to set for the newly created order
+          enum:
+            - Draft
+            - Sent to customer
+            - Accepted by customer
+            - Active order
+          default: Active order
         trips:
           type: array
           items:
