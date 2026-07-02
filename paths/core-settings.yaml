@@ -1,0 +1,18 @@
+/core/settings/triptypes:
+  get:
+    description: Returns a list of trip types
+    tags:
+      - Core/Settings
+    parameters:
+      - $ref: "../components/parameters/domain.yaml"        
+    responses:
+      "200":
+        description: Successfully returned a list of trip types
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "../components/schemas/TripType.yaml"
+      "400":
+        $ref: "../components/responses/400.yaml"

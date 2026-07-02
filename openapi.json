@@ -905,6 +905,37 @@
           }
         }
       }
+    },
+    "/core/settings/triptypes": {
+      "get": {
+        "description": "Returns a list of trip types",
+        "tags": [
+          "Core/Settings"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/domain"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully returned a list of trip types",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TripType"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1760,15 +1791,15 @@
             "description": "The name of the trip type",
             "example": "Standard"
           },
+          "category": {
+            "type": "string",
+            "description": "The category of the trip type",
+            "example": "NORMAL"
+          },
           "description": {
             "type": "string",
             "description": "The description of the trip type",
             "example": "Standard trip type"
-          },
-          "category": {
-            "type": "string",
-            "description": "The category of the trip type",
-            "example": "Normal"
           },
           "tripPriority": {
             "type": "integer",
