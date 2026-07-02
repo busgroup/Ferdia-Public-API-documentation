@@ -332,10 +332,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Customer"
-                  }
+                  "$ref": "#/components/schemas/CustomerList"
                 }
               }
             }
@@ -1454,6 +1451,31 @@
           }
         }
       },
+      "CustomerList": {
+        "properties": {
+          "count": {
+            "type": "integer",
+            "description": "Total number of results",
+            "example": 552
+          },
+          "next": {
+            "type": "string",
+            "description": "URL to get next page of results",
+            "example": "http://api.ferdia.app/publicapi/sales/customers?page=3"
+          },
+          "previous": {
+            "type": "string",
+            "description": "URL to get previous page of results",
+            "example": "http://api.ferdia.app/publicapi/sales/customers?page=1"
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CustomerListEntry"
+            }
+          }
+        }
+      },
       "GeoLocation": {
         "properties": {
           "lat": {
@@ -1863,6 +1885,16 @@
           "returnTime": {
             "type": "string",
             "pattern": "^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$"
+          },
+          "boarding": {
+            "type": "integer",
+            "description": "Number of minutes for boarding the passengers",
+            "example": 10
+          },
+          "disembarkation": {
+            "type": "integer",
+            "description": "Number of minutes for disembarking the passengers",
+            "example": 15
           },
           "travelFrom": {
             "$ref": "#/components/schemas/Location"
@@ -2629,6 +2661,44 @@
           "vehicleId": {
             "type": "integer",
             "description": "The vehicle to use for the trip"
+          }
+        }
+      },
+      "CustomerListEntry": {
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "number": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "type": {
+            "$ref": "#/components/schemas/CustomerType"
+          },
+          "orgno": {
+            "type": "string"
+          },
+          "category": {
+            "$ref": "#/components/schemas/CustomerCategory"
+          },
+          "addresses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Address"
+            }
+          },
+          "contactPersons": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContactPerson"
+            }
           }
         }
       }
