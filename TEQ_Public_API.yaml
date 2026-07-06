@@ -794,6 +794,7 @@ components:
         invoiceEmail:
           type: string
           format: email
+          example: invoice@customer.com
         type:
           $ref: '#/components/schemas/CustomerType'
         orgno:

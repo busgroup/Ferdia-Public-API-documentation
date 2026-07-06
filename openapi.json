@@ -1219,7 +1219,8 @@
           },
           "invoiceEmail": {
             "type": "string",
-            "format": "email"
+            "format": "email",
+            "example": "invoice@customer.com"
           },
           "type": {
             "$ref": "#/components/schemas/CustomerType"

@@ -9,6 +9,7 @@ properties:
   invoiceEmail:
     type: string
     format: email
+    example: invoice@customer.com
   type:
     $ref: "./CustomerType.yaml"
   orgno:
