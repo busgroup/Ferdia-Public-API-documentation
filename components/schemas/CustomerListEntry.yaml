@@ -8,6 +8,16 @@ properties:
   email:
     type: string
     format: email
+  invoiceEmail:
+    type: string
+    format: email
+  invoiceMethod:
+    type: string
+    enum:
+      - Email
+      - Post
+  invoiceReference:
+    type: string
   type:
     $ref: "./CustomerType.yaml"
   orgno:
