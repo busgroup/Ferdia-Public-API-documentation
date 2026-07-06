@@ -4,6 +4,11 @@ properties:
   email:
     type: string
     format: email
+  selectAsInvoiceEmail:
+    type: boolean
+  invoiceEmail:
+    type: string
+    format: email
   type:
     $ref: "./CustomerType.yaml"
   orgno:
@@ -60,7 +65,9 @@ properties:
   VATNumber:
     type: string
   includeVAT:
-    type: boolean   
+    type: boolean
+  displayVAT:
+    type: boolean
   fixedDiscountPercentage:
     type: number
   contactPersons:
