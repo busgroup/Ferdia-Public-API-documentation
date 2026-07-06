@@ -1214,6 +1214,13 @@
             "type": "string",
             "format": "email"
           },
+          "selectAsInvoiceEmail": {
+            "type": "boolean"
+          },
+          "invoiceEmail": {
+            "type": "string",
+            "format": "email"
+          },
           "type": {
             "$ref": "#/components/schemas/CustomerType"
           },
@@ -1291,6 +1298,9 @@
             "type": "string"
           },
           "includeVAT": {
+            "type": "boolean"
+          },
+          "displayVAT": {
             "type": "boolean"
           },
           "fixedDiscountPercentage": {
