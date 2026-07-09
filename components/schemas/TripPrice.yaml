@@ -1,0 +1,14 @@
+properties:
+  totalPrice:
+    type: number
+    format: decimal
+    description: The total calculated price for the trip
+    example: 1500.00
+  vehicleType:
+    type: string
+    description: The vehicle type used for the price calculation
+    example: Standard bus
+  priceBreakdown:
+    type: array
+    items:
+      $ref: "./PriceElement.yaml"

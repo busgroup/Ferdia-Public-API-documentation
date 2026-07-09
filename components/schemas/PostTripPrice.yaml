@@ -1,0 +1,37 @@
+type: object
+required:
+  - departureDate
+  - departureTime
+  - travelFrom
+  - travelTo
+  - pax
+properties:
+  trip_direction:
+    type: string
+    enum:
+      - one-way
+      - return
+    default: one-way
+    description: Whether the trip is one-way or a return trip
+  departureDate:
+    type: string
+    format: date
+  departureTime:
+    type: string
+    pattern: '^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$'
+  returnDate:
+    type: string
+    format: date
+  returnTime:
+    type: string
+    pattern: '^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$'
+  travelFrom:
+    $ref: "./Location.yaml"
+  travelTo:
+    $ref: "./Location.yaml"
+  pax:
+    type: integer
+    format: int32
+  busAvailableDuringStay:
+    type: boolean
+    default: false

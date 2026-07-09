@@ -83,7 +83,11 @@ paths:
   # Sales/Capacity
   /sales/capacity:
     $ref: './paths/sales-capacity.yaml#/~1sales~1capacity'
-  
+
+  # Sales/Price
+  /sales/price/calculateTripPrice:
+    $ref: './paths/sales-price.yaml#/~1sales~1price~1calculateTripPrice'
+
   # Core/Vehicles
   /core/vehicles:
     $ref: './paths/core-vehicles.yaml#/~1core~1vehicles'
@@ -183,7 +187,15 @@ components:
     # Sales/Capacity
     SalesCapacity:
       $ref: './components/schemas/SalesCapacity.yaml'
-    
+
+    # Sales/Price
+    PostTripPrice:
+      $ref: './components/schemas/PostTripPrice.yaml'
+    TripPrice:
+      $ref: './components/schemas/TripPrice.yaml'
+    PriceElement:
+      $ref: './components/schemas/PriceElement.yaml'
+
     # Core schemas
     Vehicle:
       $ref: './components/schemas/Vehicle.yaml'

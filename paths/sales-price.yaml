@@ -1,0 +1,24 @@
+/sales/price/calculateTripPrice:
+  post:
+    summary: Calculate the price for a trip
+    description: Calculates the price for a trip based on the given trip details
+    tags:
+      - Sales/Price
+    parameters:
+      - $ref: "../components/parameters/domain.yaml"
+    requestBody:
+      description: Trip details to calculate the price for
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/PostTripPrice.yaml"
+    responses:
+      "200":
+        description: Successfully calculated the trip price
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/TripPrice.yaml"
+      "400":
+        $ref: "../components/responses/400.yaml"
