@@ -6,6 +6,7 @@
       - Sales/Price
     parameters:
       - $ref: "../components/parameters/domain.yaml"
+      - $ref: "../components/parameters/timezone.yaml"
     requestBody:
       description: Trip details to calculate the price for
       required: true
