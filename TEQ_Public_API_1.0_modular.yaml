@@ -98,6 +98,14 @@ paths:
   /core/settings/triptypes:
     $ref: './paths/core-settings.yaml#/~1core~1settings~1triptypes'
 
+  # Core/Garages
+  /core/garages:
+    $ref: './paths/core-garages.yaml#/~1core~1garages'
+  /core/garages/{id}:
+    $ref: './paths/core-garages.yaml#/~1core~1garages~1{id}'
+  /core/garages/{id}/archive:
+    $ref: './paths/core-garages.yaml#/~1core~1garages~1{id}~1archive'
+
 components:
   responses:    
     404_notFound:
@@ -145,6 +153,10 @@ components:
       $ref: './components/schemas/ViaPoint.yaml'
     Garage:
       $ref: './components/schemas/Garage.yaml'
+    PostGarage:
+      $ref: './components/schemas/PostGarage.yaml'
+    PutGarage:
+      $ref: './components/schemas/PutGarage.yaml'
     TripExecution:
       $ref: './components/schemas/TripExecution.yaml'
     TripListEntry:

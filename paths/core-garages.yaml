@@ -1,0 +1,159 @@
+/core/garages:
+  get:
+    summary: Returns a list of garages
+    description: Returns a list of garages based on the filters provided
+    tags:
+      - Core/Garages
+    parameters:
+      - $ref: "../components/parameters/domain.yaml"
+      - in: query
+        name: name
+        schema:
+          type: string
+        description: Filter by garage name
+        example: Main Depot
+      - in: query
+        name: departmentId
+        schema:
+          type: integer
+        description: Filter by department Id
+        example: 1
+    responses:
+      "200":
+        description: Successfully returned a list of garages
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "../components/schemas/Garage.yaml"
+      "400":
+        $ref: "../components/responses/400.yaml"
+
+  post:
+    summary: Creates a new garage
+    description: Creates a new garage
+    tags:
+      - Core/Garages
+    parameters:
+      - $ref: "../components/parameters/domain.yaml"
+    requestBody:
+      description: Garage data
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/PostGarage.yaml"
+    responses:
+      "201":
+        description: Successfully created garage
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                garageId:
+                  type: integer
+      "400":
+        $ref: "../components/responses/400.yaml"
+
+/core/garages/{id}:
+  get:
+    summary: Returns a single garage
+    description: Returns a single garage
+    tags:
+      - Core/Garages
+    parameters:
+      - $ref: "../components/parameters/domain.yaml"
+      - name: id
+        in: path
+        description: Garage Id
+        required: true
+        schema:
+          type: integer
+        example: 1
+    responses:
+      "200":
+        description: Successfully returned a garage
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/Garage.yaml"
+      "400":
+        $ref: "../components/responses/400.yaml"
+      "404":
+        $ref: "../components/responses/404.yaml"
+
+  put:
+    summary: Updates an existing garage
+    description: Updates an existing garage
+    tags:
+      - Core/Garages
+    parameters:
+      - $ref: "../components/parameters/domain.yaml"
+      - name: id
+        in: path
+        description: Garage Id
+        required: true
+        schema:
+          type: integer
+        example: 1
+    requestBody:
+      description: Garage data
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/PutGarage.yaml"
+    responses:
+      "200":
+        description: Successfully updated garage
+      "400":
+        $ref: "../components/responses/400.yaml"
+      "404":
+        $ref: "../components/responses/404.yaml"
+
+  delete:
+    summary: Deletes a garage
+    description: Deletes a garage
+    tags:
+      - Core/Garages
+    parameters:
+      - $ref: "../components/parameters/domain.yaml"
+      - name: id
+        in: path
+        description: Garage Id
+        required: true
+        schema:
+          type: integer
+        example: 1
+    responses:
+      "204":
+        description: Successfully deleted garage
+      "400":
+        $ref: "../components/responses/400.yaml"
+      "404":
+        $ref: "../components/responses/404.yaml"
+
+/core/garages/{id}/archive:
+  post:
+    summary: Archives a garage
+    description: Archives a garage
+    tags:
+      - Core/Garages
+    parameters:
+      - $ref: "../components/parameters/domain.yaml"
+      - name: id
+        in: path
+        description: Garage Id
+        required: true
+        schema:
+          type: integer
+        example: 1
+    responses:
+      "200":
+        description: Successfully archived garage
+      "400":
+        $ref: "../components/responses/400.yaml"
+      "404":
+        $ref: "../components/responses/404.yaml"

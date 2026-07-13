@@ -1,8 +1,4 @@
 properties:
-  id:
-    type: integer
-    description: The internal Id of the garage
-    example: 1
   name:
     type: string
     description: The name of the garage
@@ -25,7 +21,7 @@ properties:
     type: integer
     description: The Id of the department the garage belongs to
     example: 1
-  archived:
-    type: boolean
-    description: Whether the garage has been archived
-    example: false
+required:
+  - name
+  - location
+  - department_id
