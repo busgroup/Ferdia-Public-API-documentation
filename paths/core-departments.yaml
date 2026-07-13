@@ -70,11 +70,20 @@
       - $ref: "../components/parameters/domain.yaml"
       - name: id
         in: path
-        description: Department Id or Department Code
+        description: Department Id or Department Code, depending on the value of identifierType
         required: true
         schema:
           type: string
         example: "42"
+      - name: identifierType
+        in: query
+        description: Specifies whether the id path parameter should be interpreted as a Department Id or a Department Code
+        required: true
+        schema:
+          type: string
+          enum:
+            - id
+            - departmentcode
     responses:
       "200":
         description: Successfully returned a department
