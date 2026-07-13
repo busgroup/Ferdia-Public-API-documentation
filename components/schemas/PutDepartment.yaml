@@ -1,0 +1,15 @@
+type: object
+required:
+  - name
+  - parentDepartmentId
+properties:
+  name:
+    type: string
+  parentDepartmentId:
+    type: integer
+  useParentBillingProfile:
+    type: boolean
+    default: false
+  billingProfileId:
+    type: integer
+    description: "Required if useParentBillingProfile is false."

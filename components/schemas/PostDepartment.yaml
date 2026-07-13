@@ -1,0 +1,19 @@
+type: object
+required:
+  - departmentCode
+  - name
+  - parentDepartmentId
+properties:
+  departmentCode:
+    type: string
+    description: "Unique code identifying the department. Can only be set on creation, cannot be updated afterwards."
+  name:
+    type: string
+  parentDepartmentId:
+    type: integer
+  useParentBillingProfile:
+    type: boolean
+    default: false
+  billingProfileId:
+    type: integer
+    description: "Required if useParentBillingProfile is false."

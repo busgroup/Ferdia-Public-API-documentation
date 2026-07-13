@@ -1,0 +1,137 @@
+/core/departments:
+  get:
+    summary: Returns a list of departments
+    description: Returns a list of departments based on the filters provided
+    tags:
+      - Core/Departments
+    parameters:
+      - $ref: "../components/parameters/domain.yaml"
+      - in: query
+        name: name
+        schema:
+          type: string
+        description: Name of the department
+      - in: query
+        name: department_code
+        schema:
+          type: string
+        description: Department code
+      - in: query
+        name: parent_department_code
+        schema:
+          type: string
+        description: Department code of the parent department
+    responses:
+      "200":
+        description: Successfully returned a list of departments
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "../components/schemas/Department.yaml"
+      "400":
+        $ref: "../components/responses/400.yaml"
+
+  post:
+    summary: Creates a new department
+    description: Creates a new department
+    tags:
+      - Core/Departments
+    parameters:
+      - $ref: "../components/parameters/domain.yaml"
+    requestBody:
+      description: Department data
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/PostDepartment.yaml"
+    responses:
+      "201":
+        description: Successfully created department
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                departmentId:
+                  type: integer
+      "400":
+        $ref: "../components/responses/400.yaml"
+
+/core/departments/{id}:
+  get:
+    summary: Returns a single department
+    description: Returns a single department identified by either its Id or Department Code
+    tags:
+      - Core/Departments
+    parameters:
+      - $ref: "../components/parameters/domain.yaml"
+      - name: id
+        in: path
+        description: Department Id or Department Code
+        required: true
+        schema:
+          type: string
+        example: "42"
+    responses:
+      "200":
+        description: Successfully returned a department
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/Department.yaml"
+      "400":
+        $ref: "../components/responses/400.yaml"
+      "404":
+        $ref: "../components/responses/404.yaml"
+
+  put:
+    summary: Updates an existing department
+    description: Updates an existing department
+    tags:
+      - Core/Departments
+    parameters:
+      - $ref: "../components/parameters/domain.yaml"
+      - name: id
+        in: path
+        description: Department Id
+        required: true
+        schema:
+          type: integer
+    requestBody:
+      description: Department data
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/PutDepartment.yaml"
+    responses:
+      "200":
+        description: Successfully updated department
+      "400":
+        $ref: "../components/responses/400.yaml"
+      "404":
+        $ref: "../components/responses/404.yaml"
+
+  delete:
+    summary: Deletes a department
+    description: Deletes a department
+    tags:
+      - Core/Departments
+    parameters:
+      - $ref: "../components/parameters/domain.yaml"
+      - name: id
+        in: path
+        description: Department Id
+        required: true
+        schema:
+          type: integer
+    responses:
+      "200":
+        description: Successfully deleted department
+      "400":
+        $ref: "../components/responses/400.yaml"
+      "404":
+        $ref: "../components/responses/404.yaml"

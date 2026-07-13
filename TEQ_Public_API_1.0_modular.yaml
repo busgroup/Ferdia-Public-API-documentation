@@ -98,6 +98,12 @@ paths:
   /core/settings/triptypes:
     $ref: './paths/core-settings.yaml#/~1core~1settings~1triptypes'
 
+  # Core/Departments
+  /core/departments:
+    $ref: './paths/core-departments.yaml#/~1core~1departments'
+  /core/departments/{id}:
+    $ref: './paths/core-departments.yaml#/~1core~1departments~1{id}'
+
 components:
   responses:    
     404_notFound:
@@ -191,7 +197,13 @@ components:
       $ref: './components/schemas/Employee.yaml'
     EmployeeCalendarEntry:
       $ref: './components/schemas/EmployeeCalendarEntry.yaml'
-    
+    Department:
+      $ref: './components/schemas/Department.yaml'
+    PostDepartment:
+      $ref: './components/schemas/PostDepartment.yaml'
+    PutDepartment:
+      $ref: './components/schemas/PutDepartment.yaml'
+
     # Other schemas
     PostPriceCalculate:
       $ref: './components/schemas/PostPriceCalculate.yaml'
