@@ -72,10 +72,14 @@
       "404":
         $ref: "../components/responses/404.yaml"
 
-/sales/orders/{id}/addtrip:
+/sales/orders/addtrip/{id}:
     post: 
-      summary: Adds a trip to an existing order
-      description: Adds a new trip to an existing order
+      summary: 🚧 [STAGING ONLY] Adds a trip to an existing order
+      description: | 
+        **⚠️ This endpoint is only available on the staging server and not yet available in production.**
+  
+        Adds a new trip to an existing order
+      x-stagingOnly: true
       tags: 
        - Sales/Orders
       parameters:
@@ -107,11 +111,25 @@
               schema:
                 type: object
                 properties:                                        
-                  gen_tid:
+                  message:
                     type: string
-                    description: "The trip ID in the format used in TEQ UI, e.g. BT-034150-S01"
-                    example: "BT-034150-S01-N001"      
+                    description: "Success message"
+                    example: "Trip successfully added to order"
+                  trips:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        gen_tid:
+                          type: string
+                          description: "The trip ID in the format used in TEQ UI, e.g. BT-034150-S01"
+                          example: "BT-034150-S01-N001"
+                        location:
+                          type: string
+                          description: "The location to get the created Trip in TEQ UI"
+                          example: "planning/trips/trip-details/20000/"
         "400":
           $ref: "../components/responses/400.yaml"
         "404":
           $ref: "../components/responses/404.yaml"
+
