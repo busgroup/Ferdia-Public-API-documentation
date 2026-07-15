@@ -79,3 +79,65 @@
         $ref: "../components/responses/400.yaml"
       "404":
         $ref: "../components/responses/404.yaml"
+
+/sales/orders/addtrip/{id}:
+    post: 
+      summary: 🚧 [STAGING ONLY] Adds a trip to an existing order
+      description: | 
+        **⚠️ This endpoint is only available on the staging server and not yet available in production.**
+  
+        Adds a new trip to an existing order
+      x-stagingOnly: true
+      tags: 
+       - Sales/Orders
+      parameters:
+        - $ref: "../components/parameters/domain.yaml"
+        - name: id
+          in: path
+          description: existing order Id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Request data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/PostTrip.yaml"
+      responses:
+        "201":
+          description: Trip successfuly added to order
+          headers:
+            Location:
+              description: Returns the Location to get the created Trip in TEQ UI. 
+              schema:
+                type: string
+                example: planning/trips/trip-details/20000/
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:                                        
+                  message:
+                    type: string
+                    description: "Success message"
+                    example: "Trip successfully added to order"
+                  trips:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        gen_tid:
+                          type: string
+                          description: "The trip ID in the format used in TEQ UI, e.g. BT-034150-S01"
+                          example: "BT-034150-S01-N001"
+                        location:
+                          type: string
+                          description: "The location to get the created Trip in TEQ UI"
+                          example: "planning/trips/trip-details/20000/"
+        "400":
+          $ref: "../components/responses/400.yaml"
+        "404":
+          $ref: "../components/responses/404.yaml"
+
