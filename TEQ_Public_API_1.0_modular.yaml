@@ -50,7 +50,13 @@ info:
     # TimeZone
     
     The API uses the timezone of the client of the request to calculate dates and times. The timezone should be included in the HTTP-header `TimeZone` in the format `Continent/City` (e.g. `Europe/Berlin`).
-    
+
+servers:
+  - url: https://api.ferdia.app/v1/publicapi/
+    description: Production server
+  - url: https://staging.api.ferdia.app/v1/publicapi
+    description: Staging server (includes preview endpoints not yet available in production)
+
 paths:
   # Operations/Trips
   /trips/trips:

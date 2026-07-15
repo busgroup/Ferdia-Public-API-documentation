@@ -10,6 +10,16 @@
     },
     "description": "# Introduction\n[comment]: <> (x-product-description-placeholder)\nWith the TEQ API you can integrate your system with the TEQ platform. The API is designed to be easy to use and to provide a seamless integration experience.\n\nThe TEQ API is built on HTTP and is RESTful.\nIt has predictable resource URLs and returns HTTP response codes to indicate errors.\nIt also accepts and returns JSON in the HTTP body.\nUse your favorite HTTP/REST library in your programming language when using this API.\nThis API reference documentation contains the most commonly integrated resources.\n# Authentication\nThe API uses OAuth2 for authentication. You will need to obtain an access token to use the API. The access token should be included in the Authorization header of each request.\nTo obtain your access credentials, please contact TEQ support on (support@ferdia.co).\n## OAuth 2.0 flow\nThe Authentication supports OAuth 2.0 Client Credentials flow\n## Authentication-endpoints:\nToken-endpoint: **https://auth.api.ferdia.app/oauth2/token**\n# Domain-header\nFor all API requests an HTTP-header `domain` must be included. This header should contain the domain/company name that the API-call should be directed to.  You will receive this domain name when you sign up for the TEQ API.\n# TimeZone\nThe API uses the timezone of the client of the request to calculate dates and times. The timezone should be included in the HTTP-header `TimeZone` in the format `Continent/City` (e.g. `Europe/Berlin`).\n"
   },
+  "servers": [
+    {
+      "url": "https://api.ferdia.app/v1/publicapi/",
+      "description": "Production server"
+    },
+    {
+      "url": "https://staging.api.ferdia.app/v1/publicapi",
+      "description": "Staging server (includes preview endpoints not yet available in production)"
+    }
+  ],
   "paths": {
     "/trips/trips": {
       "get": {

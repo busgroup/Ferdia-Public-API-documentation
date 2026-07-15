@@ -27,6 +27,11 @@ info:
     For all API requests an HTTP-header `domain` must be included. This header should contain the domain/company name that the API-call should be directed to.  You will receive this domain name when you sign up for the TEQ API.
     # TimeZone
     The API uses the timezone of the client of the request to calculate dates and times. The timezone should be included in the HTTP-header `TimeZone` in the format `Continent/City` (e.g. `Europe/Berlin`).
+servers:
+  - url: https://api.ferdia.app/v1/publicapi/
+    description: Production server
+  - url: https://staging.api.ferdia.app/v1/publicapi
+    description: Staging server (includes preview endpoints not yet available in production)
 paths:
   /trips/trips:
     get:
