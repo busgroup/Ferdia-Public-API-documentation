@@ -8,16 +8,16 @@ properties:
     type: string
     description: "The order number as displayed in the TEQ UI"
     example: "BT-034150-S01"
-  customerId:
-    type: string
-    description: "The ID of the customer this order belongs to"
-    example: "1000"
   status:
     type: string
     description: "The current status of the order"
-    example: "confirmed"
+    example: "sale"
+  customer:
+    $ref: "./OrderCustomer.yaml"
+  contactPerson:
+    $ref: "./ContactPerson.yaml"
   trips:
     type: array
     description: "All trips (order lines) on this order"
     items:
-      $ref: "./Trip.yaml"
+      $ref: "./OrderTrip.yaml"
