@@ -35,3 +35,6 @@ properties:
   busAvailableDuringStay:
     type: boolean
     default: false
+  product_id:
+    type: integer
+    format: int32
