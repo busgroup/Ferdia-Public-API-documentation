@@ -19,6 +19,10 @@ properties:
   departureTime:
     type: string
     pattern: '^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$'
+  arrivalTime:
+    type: string
+    pattern: '^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$'
+    description: "If not set the arrivalTime will be automatically calculated based on the journey, use this field to set a specific arrival time that will override the calculation"
   returnDate:
     type: string
     format: date
