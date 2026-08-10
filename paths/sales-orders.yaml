@@ -55,6 +55,35 @@
       "404":
         description: "The given customer does not exist"
 
+/sales/orders/{orderId}:
+  patch:
+    summary: Updates an existing Order
+    description: Updates fields on an existing Order
+    tags:
+      - Sales/Orders
+    parameters:
+      - $ref: "../components/parameters/domain.yaml"
+      - name: orderId
+        in: path
+        description: existing order Id
+        required: true
+        schema:
+          type: integer
+    requestBody:
+      description: Order data to update
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/PatchOrder.yaml"
+    responses:
+      "200":
+        description: Successfully updated order
+      "400":
+        $ref: "../components/responses/400.yaml"
+      "404":
+        $ref: "../components/responses/404.yaml"
+
 /sales/orders/status/{id}:
   get:
     description: Returns the status for a given order and the status of all trips related to this order
