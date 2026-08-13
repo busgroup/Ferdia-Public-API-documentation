@@ -8,20 +8,8 @@ properties:
   salesPersonId:
     type: integer
     description: The ID of the sales person for the order
-    example: 100
-  externalOrderReference:
-    type: string
-    description: The external order reference
-    example: "EXT-12345"
-  orderStatus:
-    type: string
-    description: "The status to set for the order"
-    enum:
-      - Draft
-      - Sent to customer
-      - Accepted by customer
-      - Active order
+    example: 100  
   trips:
     type: array
     items:
-      $ref: "./PostTrip.yaml"
+      $ref: "./EditOrderTrip.yaml"
