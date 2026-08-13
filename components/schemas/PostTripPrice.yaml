@@ -32,9 +32,9 @@ properties:
   pax:
     type: integer
     format: int32
+  productId:
+    type: integer
+    format: int32
   busAvailableDuringStay:
     type: boolean
     default: false
-  product_id:
-    type: integer
-    format: int32

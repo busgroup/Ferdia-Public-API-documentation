@@ -4,11 +4,46 @@ properties:
     format: decimal
     description: The total calculated price for the trip
     example: 1500.00
-  vehicleType:
-    type: string
-    description: The vehicle type used for the price calculation
-    example: Standard bus
-  priceBreakdown:
-    type: array
-    items:
-      $ref: "./PriceElement.yaml"
+  price_exVAT:
+    type: number
+    format: decimal
+    description: The total calculated price for the trip excluding VAT
+    example: 1250.00
+  vehicleTypeId:
+    type: integer
+    description: The vehicle type Id used for the price calculation
+    example: 1
+  trip:
+    type: object
+    properties:
+      totalPrice:
+        type: number
+        format: decimal
+        description: The total calculated price for the trip
+        example: 1500.00
+      price_exVAT:
+        type: number
+        format: decimal
+        description: The total calculated price for the trip excluding VAT
+        example: 1250.00
+      priceBreakdown:
+        type: array
+        items:
+          $ref: "./PriceElement.yaml"
+  returnTrip: 
+    type: object
+    properties:
+      totalPrice:
+        type: number
+        format: decimal
+        description: The total calculated price for the trip
+        example: 1500.00
+      price_exVAT:
+        type: number
+        format: decimal
+        description: The total calculated price for the trip excluding VAT
+        example: 1250.00
+      priceBreakdown:
+        type: array
+        items:
+          $ref: "./PriceElement.yaml"
