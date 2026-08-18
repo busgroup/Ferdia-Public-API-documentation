@@ -578,12 +578,6 @@ paths:
         - Sales/Orders
       parameters:
         - $ref: '#/components/parameters/domain'
-        - name: id
-          in: path
-          description: existing order Id
-          required: true
-          schema:
-            type: integer
       requestBody:
         description: Request data
         required: true
@@ -600,28 +594,24 @@ paths:
               schema:
                 type: string
                 example: planning/trips/trip-details/20000/
-          content:
-            application/json:
-              schema:
+          properties:
+            message:
+              type: string
+              description: Success message
+              example: Trip successfully added to order
+            trips:
+              type: array
+              items:
                 type: object
                 properties:
-                  message:
+                  gen_tid:
                     type: string
-                    description: Success message
-                    example: Trip successfully added to order
-                  trips:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        gen_tid:
-                          type: string
-                          description: The trip ID in the format used in TEQ UI, e.g. BT-034150-S01
-                          example: BT-034150-S01-N001
-                        location:
-                          type: string
-                          description: The location to get the created Trip in TEQ UI
-                          example: planning/trips/trip-details/20000/
+                    description: The trip ID in the format used in TEQ UI, e.g. BT-034150-S01
+                    example: BT-034150-S01-N001
+                  location:
+                    type: string
+                    description: The location to get the created Trip in TEQ UI
+                    example: planning/trips/trip-details/20000/
         '400':
           $ref: '#/components/responses/400'
         '404':
