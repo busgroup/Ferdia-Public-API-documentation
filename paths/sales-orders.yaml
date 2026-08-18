@@ -87,7 +87,7 @@
       tags:
         - Sales/Orders
       parameters:
-        - $ref: "#/components/parameters/domainParameter"
+        - $ref: "../components/parameters/domain.yaml"
         - name: id
           in: path
           description: existing order Id

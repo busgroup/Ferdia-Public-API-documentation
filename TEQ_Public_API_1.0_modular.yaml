@@ -91,6 +91,8 @@ paths:
     $ref: './paths/sales-orders.yaml#/~1sales~1orders~1{customerId}'
   /sales/orders/status/{id}:
     $ref: './paths/sales-orders.yaml#/~1sales~1orders~1status~1{id}'
+  /sales/orders/{id}/orderconfirmation:  
+    $ref: './paths/sales-orders.yaml#/~1sales~1orders~1{id}~1orderconfirmation'
   /sales/orders/addtrip/{id}:
     $ref: './paths/sales-orders.yaml#/~1sales~1orders~1addtrip~1{id}'
   
