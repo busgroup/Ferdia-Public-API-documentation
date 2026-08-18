@@ -50,7 +50,13 @@ info:
     # TimeZone
     
     The API uses the timezone of the client of the request to calculate dates and times. The timezone should be included in the HTTP-header `TimeZone` in the format `Continent/City` (e.g. `Europe/Berlin`).
-    
+
+servers:
+  - url: https://api.ferdia.app/v1/publicapi/
+    description: Production server
+  - url: https://staging.api.ferdia.app/v1/publicapi
+    description: Staging server (includes preview endpoints not yet available in production)
+
 paths:
   # Operations/Trips
   /trips/trips:
@@ -67,6 +73,12 @@ paths:
     $ref: './paths/sales-customers.yaml#/~1sales~1customers~1{id}'
   /sales/customers/{id}/fixedtripsinfo:
     $ref: './paths/sales-customers.yaml#/~1sales~1customers~1{id}~1fixedtripsinfo'
+
+  # Sales/Customer-categories
+  /sales/customer-categories:
+    $ref: './paths/sales-customers.yaml#/~1sales~1customer-categories'
+  /sales/customer-categories/{id}:
+    $ref: './paths/sales-customers.yaml#/~1sales~1customer-categories~1{id}'
   
   # Sales/Requests
   /sales/requests:
@@ -79,6 +91,8 @@ paths:
     $ref: './paths/sales-orders.yaml#/~1sales~1orders~1{customerId}'
   /sales/orders/status/{id}:
     $ref: './paths/sales-orders.yaml#/~1sales~1orders~1status~1{id}'
+  /sales/orders/addtrip/{id}:
+    $ref: './paths/sales-orders.yaml#/~1sales~1orders~1addtrip~1{id}'
   
   # Sales/Capacity
   /sales/capacity:
@@ -93,6 +107,10 @@ paths:
     $ref: './paths/core-employees.yaml#/~1core~1employees'
   /core/employees/calendar/{id}:
     $ref: './paths/core-employees.yaml#/~1core~1employees~1calendar~1{id}'
+  
+  # Core/Settings
+  /core/settings/triptypes:
+    $ref: './paths/core-settings.yaml#/~1core~1settings~1triptypes'
 
 components:
   responses:    
@@ -121,6 +139,10 @@ components:
       $ref: './components/schemas/NewContactPerson.yaml'
     CustomerCategory:
       $ref: './components/schemas/CustomerCategory.yaml'
+    PostCustomerCategory:
+      $ref: './components/schemas/PostCustomerCategory.yaml'
+    PutCustomerCategory:
+      $ref: './components/schemas/PutCustomerCategory.yaml'
     Customer:
       $ref: './components/schemas/Customer.yaml'
     PostCustomer:
@@ -128,7 +150,9 @@ components:
     PutCustomer:
       $ref: './components/schemas/PutCustomer.yaml'
     CustomerFixedTripInfo:
-      $ref: './components/schemas/CustomerFixedTripInfo.yaml'
+      $ref: './components/schemas/CustomerFixedTripInfo.yaml' 
+    CustomerList:
+      $ref: './components/schemas/CustomerList.yaml'      
     
     # Trip related schemas
     GeoLocation:

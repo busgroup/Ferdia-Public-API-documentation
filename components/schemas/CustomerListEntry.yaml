@@ -1,0 +1,24 @@
+properties:
+  id:
+    type: integer
+  number:
+    type: string
+  name:
+    type: string
+  email:
+    type: string
+    format: email
+  type:
+    $ref: "./CustomerType.yaml"
+  orgno:
+    type: string
+  category:
+    $ref: "./CustomerCategory.yaml"
+  addresses:
+    type: array
+    items:
+      $ref: "./Address.yaml"
+  contactPersons:
+    type: array
+    items:
+      $ref: "./ContactPerson.yaml"
