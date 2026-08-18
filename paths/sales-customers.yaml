@@ -135,12 +135,12 @@
       "404":
         $ref: "../components/responses/404.yaml"
 
-/sales/customers/categories:
+/sales/customer-categories:
   post:
     summary: Creates a new customer category
     description: Creates a new customer category
     tags:
-      - Sales/Customers
+      - Sales/Customer-categories
     parameters:
       - $ref: "../components/parameters/domain.yaml"
     requestBody:
@@ -167,7 +167,7 @@
     summary: Returns a list of customer categories
     description: Returns a list of customer categories based on the filters provided
     tags:
-      - Sales/Customers
+      - Sales/Customer-categories
     parameters:
       - $ref: "../components/parameters/domain.yaml"
       - in: query
@@ -190,12 +190,12 @@
       "400":
         $ref: "../components/responses/400.yaml"
 
-/sales/customers/categories/{id}:
+/sales/customer-categories/{id}:
   get:
     summary: Returns a customer category by ID
     description: Returns a customer category by ID
     tags:
-      - Sales/Customers
+      - Sales/Customer-categories
     parameters:
       - $ref: "../components/parameters/domain.yaml"
       - name: id
@@ -220,7 +220,7 @@
     summary: Updates an existing customer category
     description: Updates an existing customer category
     tags:
-      - Sales/Customers
+      - Sales/Customer-categories
     parameters:
       - $ref: "../components/parameters/domain.yaml"
       - name: id
