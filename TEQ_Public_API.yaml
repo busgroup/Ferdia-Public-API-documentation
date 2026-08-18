@@ -303,6 +303,111 @@ paths:
           $ref: '#/components/responses/400'
         '404':
           $ref: '#/components/responses/404'
+  /sales/customer-categories:
+    post:
+      summary: Creates a new customer category
+      description: Creates a new customer category
+      tags:
+        - Sales/Customer-categories
+      parameters:
+        - $ref: '#/components/parameters/domain'
+      requestBody:
+        description: Customer category data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostCustomerCategory'
+      responses:
+        '201':
+          description: Successfully created customer category
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+        '400':
+          $ref: '#/components/responses/400'
+    get:
+      summary: Returns a list of customer categories
+      description: Returns a list of customer categories based on the filters provided
+      tags:
+        - Sales/Customer-categories
+      parameters:
+        - $ref: '#/components/parameters/domain'
+        - in: query
+          name: name
+          schema:
+            type: string
+        - in: query
+          name: active
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Successfully returned a list of customer categories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CustomerCategory'
+        '400':
+          $ref: '#/components/responses/400'
+  /sales/customer-categories/{id}:
+    get:
+      summary: Returns a customer category by ID
+      description: Returns a customer category by ID
+      tags:
+        - Sales/Customer-categories
+      parameters:
+        - $ref: '#/components/parameters/domain'
+        - name: id
+          in: path
+          description: Customer category ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successfully returned customer category
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerCategory'
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: Updates an existing customer category
+      description: Updates an existing customer category
+      tags:
+        - Sales/Customer-categories
+      parameters:
+        - $ref: '#/components/parameters/domain'
+        - name: id
+          in: path
+          description: Customer category ID
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Customer category data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PutCustomerCategory'
+      responses:
+        '200':
+          description: Successfully updated customer category
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
   /sales/requests:
     post:
       summary: Create a new Request
@@ -822,6 +927,30 @@ components:
           type: boolean
         default:
           type: boolean
+    PostCustomerCategory:
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        active:
+          type: boolean
+        default:
+          type: boolean
+      required:
+        - name
+    PutCustomerCategory:
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        active:
+          type: boolean
+        default:
+          type: boolean
+      required:
+        - name
     Customer:
       properties:
         id:
