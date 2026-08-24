@@ -1,0 +1,19 @@
+type: object
+properties:
+  customerId:
+    type: string
+    description: "The unique internal customer ID"
+    example: "123"
+  customerName:
+    type: string
+    description: "The name of the customer"
+    example: "Company Name"
+  email:
+    type: string
+    format: email
+    description: "The email address of the customer"
+    example: "contact@company.com"
+  phone:
+    type: string
+    description: "The phone number of the customer"
+    example: "+4712345678"

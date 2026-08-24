@@ -1,3 +1,40 @@
+/sales/orders:
+  get:
+    summary: Get a single order with all order lines
+    description: >
+      Returns a single order including all trips and other order lines.
+      Exactly one of `orderId` or `orderNumber` must be provided.
+    tags:
+      - Sales/Orders
+    parameters:
+      - $ref: "../components/parameters/domain.yaml"
+      - $ref: "../components/parameters/timezone.yaml"
+      - name: orderId
+        in: query
+        description: Internal order ID. Mutually exclusive with `orderNumber`.
+        required: false
+        schema:
+          type: integer
+          example: 34290
+      - name: orderNumber
+        in: query
+        description: Order number as displayed in the TEQ UI (e.g. BT-034150-S01). Mutually exclusive with `orderId`.
+        required: false
+        schema:
+          type: string
+          example: "BT-034150-S01"
+    responses:
+      "200":
+        description: Successfully returned the order with all order lines
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/OrderDetail.yaml"
+      "400":
+        $ref: "../components/responses/400.yaml"
+      "404":
+        $ref: "../components/responses/404.yaml"
+
 /sales/orders/{customerId}:
   post:
     summary: Create a new Order for a given customer
