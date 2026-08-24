@@ -1,0 +1,28 @@
+/core/products:
+    get:
+      description: Returns a list of products
+      tags:
+        - Core/Products
+      parameters:
+        - $ref: "../components/parameters/domain.yaml"
+        - name: itemCode
+          in: query
+          description: The Item Code to search for          
+          schema:
+            type: integer
+        - name: description
+          in: query
+          description: The Item Description to search for
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successfully returned a list of products
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "../components/schemas/Product.yaml"
+        "400":
+          $ref: "../components/responses/400.yaml"
