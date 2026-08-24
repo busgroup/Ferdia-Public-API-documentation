@@ -114,6 +114,10 @@ paths:
   /core/settings/triptypes:
     $ref: './paths/core-settings.yaml#/~1core~1settings~1triptypes'
 
+  # Core/Products
+  /core/products:
+    $ref: './paths/core-products.yaml#/~1core~1products'
+
 components:
   responses:    
     404_notFound:
@@ -211,6 +215,8 @@ components:
       $ref: './components/schemas/Employee.yaml'
     EmployeeCalendarEntry:
       $ref: './components/schemas/EmployeeCalendarEntry.yaml'
+    Product:
+      $ref: './components/schemas/Product.yaml'
     
     # Other schemas
     PostPriceCalculate:
