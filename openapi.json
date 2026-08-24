@@ -932,9 +932,8 @@
     },
     "/sales/orders/addtrip/{id}": {
       "post": {
-        "summary": "🚧 [STAGING ONLY] Adds a trip to an existing order",
-        "description": "**⚠️ This endpoint is only available on the staging server and not yet available in production.**\n\nAdds a new trip to an existing order\n",
-        "x-stagingOnly": true,
+        "summary": "Adds a trip to an existing order",
+        "description": "Adds a new trip to an existing order      \n",
         "tags": [
           "Sales/Orders"
         ],
