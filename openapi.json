@@ -937,7 +937,7 @@
         }
       }
     },
-    "/sales/orders/orderconfirmation/{id}": {
+    "/sales/orders/orderConfirmation/{id}": {
       "get": {
         "summary": "Get the order confirmation for a given order",
         "description": "Returns the orderconfirmation for the order in PDF format",
