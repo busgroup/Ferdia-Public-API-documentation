@@ -1,0 +1,19 @@
+properties:
+  name:
+    type: string
+    description: The name of the price element
+    example: Base fare
+  rate:
+    type: number
+    format: decimal
+    description: The rate applied for this price element
+    example: 500.00
+  quantity:
+    type: number
+    description: The quantity this price element is calculated for
+    example: 2
+  price:
+    type: number
+    format: decimal
+    description: The total price for this price element (rate x quantity)
+    example: 1000.00

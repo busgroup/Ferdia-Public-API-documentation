@@ -12,6 +12,7 @@ TEQ_Public_API_1.0_modular.yaml          # Main entry point
 │   ├── sales-requests.yaml              # Sales/Requests endpoints
 │   ├── sales-orders.yaml                # Sales/Orders endpoints
 │   ├── sales-capacity.yaml              # Sales/Capacity endpoints
+│   ├── sales-price.yaml                 # Sales/Price endpoints
 │   ├── core-products.yaml               # Core/Products endpoints
 │   ├── core-vehicles.yaml               # Core/Vehicles endpoints
 │   └── core-employees.yaml              # Core/Employees endpoints
