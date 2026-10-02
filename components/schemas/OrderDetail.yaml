@@ -12,6 +12,14 @@ properties:
     type: string
     description: "The current status of the order"
     example: "sale"
+  salesPersonId:
+    type: integer
+    description: "The ID of the sales person for the order"
+    example: 100
+  departmentId:
+    type: integer
+    description: "The ID of the department the order belongs to"
+    example: 3
   customer:
     $ref: "./OrderCustomer.yaml"
   contactPerson:
