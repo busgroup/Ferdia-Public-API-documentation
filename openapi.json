@@ -2703,6 +2703,11 @@
             ],
             "default": "Active order"
           },
+          "departmentId": {
+            "type": "integer",
+            "description": "The ID of the department for the order",
+            "example": 1
+          },
           "trips": {
             "type": "array",
             "items": {
