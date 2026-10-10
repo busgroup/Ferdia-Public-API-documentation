@@ -30,28 +30,59 @@ components/
 
 ### 1. Choose (or create) the right paths file
 
-Path files are named `<group>-<resource>.yaml` and map to one API tag:
+Path files are named `<group>-<resource>.yaml`. The tag itself is just the **resource name** (no group prefix) - the group (Operations/Sales/Core) is conveyed by the sidebar's `x-tagGroups` nesting instead, so it doesn't need to be repeated in every tag name:
 
-| File | Tag |
-|---|---|
-| `paths/operations-trips.yaml` | `Operations/Trips` |
-| `paths/sales-customers.yaml` | `Sales/Customers` |
-| `paths/sales-requests.yaml` | `Sales/Requests` |
-| `paths/sales-orders.yaml` | `Sales/Orders` |
-| `paths/sales-capacity.yaml` | `Sales/Capacity` |
-| `paths/core-vehicles.yaml` | `Core/Vehicles` |
-| `paths/core-employees.yaml` | `Core/Employees` |
+| File | Tag | x-tagGroup |
+|---|---|---|
+| `paths/operations-trips.yaml` | `Trips` | Operations |
+| `paths/sales-customers.yaml` | `Customers`, `Customer-categories` | Sales |
+| `paths/sales-requests.yaml` | `Requests` | Sales |
+| `paths/sales-orders.yaml` | `Orders` | Sales |
+| `paths/sales-capacity.yaml` | `Capacity` | Sales |
+| `paths/sales-price.yaml` | `Price` | Sales |
+| `paths/core-vehicles.yaml` | `Vehicles` | Core |
+| `paths/core-employees.yaml` | `Employees` | Core |
+| `paths/core-settings.yaml` | `Settings` | Core |
+| `paths/core-products.yaml` | `Products` | Core |
 
 If the endpoint belongs to a new group, create a new file following the same naming pattern and add its tag to the table above.
+
+If this is a **brand-new tag** (not reused from an existing group), you must also register it in the root file:
+
+```yaml
+# TEQ_Public_API_1.0_modular.yaml
+tags:
+  - name: Resource
+    description: One or two sentences describing what this group of endpoints does.
+
+x-tagGroups:
+  - name: Group   # "Operations" / "Sales" / "Core"
+    tags:
+      - Resource
+      - ...       # every other tag under this same group
+```
+
+`tags[].description` is what renders as the intro text under each tag's heading in the docs; `x-tagGroups` nests tags under their `Operations`/`Sales`/`Core` parent in the sidebar. Every tag used anywhere in the spec must appear in exactly one `x-tagGroups` entry.
 
 ### 2. Write the path entry
 
 Every operation must include:
 
-- `tags` — exactly one tag from the table above (format: `Group/Resource`)
+- `tags` — exactly one tag from the table above (just the resource name, e.g. `Customers`, not prefixed with the group)
+- `security` — the OAuth2 scope required to call this endpoint (see below)
 - `summary` and `description`
 - `parameters` — always include the `domain` header ref **first**, then any path/query params
 - `responses` — always include at minimum `"400"` (and `"404"` for endpoints that fetch by ID)
+
+**Required scope.** Every operation must declare the scope it requires via `security`, matching what the backend actually enforces (`teq-package/teq/authentication/scope_permissions.py`):
+
+```yaml
+security:
+  - OAuth2:
+      - resource_read   # or resource_write - whatever the backend requires for this operation
+```
+
+If the endpoint needs a scope that doesn't exist yet in `components.securitySchemes.OAuth2.flows.clientCredentials.scopes` in the root file, add it there first with a one-line description. Redoc renders this as the "Authorizations" section on each operation, letting integrators see exactly which scope their API client needs.
 
 **Template for a GET-by-ID endpoint:**
 
@@ -61,7 +92,7 @@ Every operation must include:
     summary: Returns a single <resource>
     description: Returns a single <resource>
     tags:
-      - Group/Resource
+      - Resource
     parameters:
       - $ref: "../components/parameters/domain.yaml"
       - name: id
@@ -92,7 +123,7 @@ Every operation must include:
     summary: Returns a list of <resource>
     description: Returns a list of <resource> based on the filters provided
     tags:
-      - Group/Resource
+      - Resource
     parameters:
       - $ref: "../components/parameters/domain.yaml"
       # add query params here
@@ -117,7 +148,7 @@ Every operation must include:
     summary: Creates a new <resource>
     description: Creates a new <resource>
     tags:
-      - Group/Resource
+      - Resource
     parameters:
       - $ref: "../components/parameters/domain.yaml"
     requestBody:
@@ -211,9 +242,11 @@ The API uses **OAuth 2.0 Client Credentials** flow. Token endpoint: `https://aut
 
 - [ ] New path file created (if new group) and named `<group>-<resource>.yaml`
 - [ ] Tag matches exactly one entry from the tag table
+- [ ] `security` declares the correct OAuth2 scope, matching the backend's `scope_permissions.py`
 - [ ] `domain` header `$ref` is the first parameter on every operation
 - [ ] All response schemas `$ref` existing schema files
 - [ ] `400` response present on all operations; `404` present on by-ID operations
 - [ ] New path registered in root file under the correct comment group
 - [ ] New schemas registered in `components.schemas` in root file
+- [ ] New tags added to root `tags:` (with a description) and `x-tagGroups:` (under the right Operations/Sales/Core group)
 - [ ] No edits to `TEQ_Public_API.yaml`, `index.html`, or `openapi.json` (generated files)

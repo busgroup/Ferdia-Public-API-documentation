@@ -18,7 +18,7 @@ info:
     This API reference documentation contains the most commonly integrated resources.
     # Authentication
     The API uses OAuth2 for authentication. You will need to obtain an access token to use the API. The access token should be included in the Authorization header of each request.
-    To obtain your access credentials, please contact TEQ support on (support@ferdia.co).
+    You can create your own access credentials directly in the TEQ application: go to **Settings > Integrations > Public API Clients** and create a new client.
     ## OAuth 2.0 flow
     The Authentication supports OAuth 2.0 Client Credentials flow
     ## Authentication-endpoints:
@@ -32,13 +32,41 @@ servers:
     description: Production server
   - url: https://staging.api.ferdia.app/v1/publicapi
     description: Staging server (includes preview endpoints not yet available in production)
+security:
+  - OAuth2: []
+tags:
+  - name: Trips
+    description: Query live trip data - fetch trip lists, trip details, and the current status of trips on the road.
+  - name: Customers
+    description: Create, update, and look up customers, including their addresses, contact persons, and fixed-trip pricing info.
+  - name: Customer-categories
+    description: Manage the customer categories used to group and price customers.
+  - name: Requests
+    description: Submit new trip requests, either for an existing customer or together with new customer details.
+  - name: Orders
+    description: Create orders, add trips to existing orders, and track order and order-confirmation status.
+  - name: Capacity
+    description: Check available vehicle capacity for a given time range and department.
+  - name: Price
+    description: Calculate trip prices ahead of creating a request or order.
+  - name: Vehicles
+    description: Look up the vehicle fleet available in the TEQ platform.
+  - name: Employees
+    description: Look up employees and their calendar and availability entries.
+  - name: Settings
+    description: Retrieve platform-level configuration, such as the available trip types.
+  - name: Products
+    description: Look up additional products and items that can be billed on trips and orders.
 paths:
   /trips/trips:
     get:
       summary: Returns a list of trips
       description: Returns a list of trips based on the filters provided
       tags:
-        - Operations/Trips
+        - Trips
+      security:
+        - OAuth2:
+            - trips_read
       parameters:
         - $ref: '#/components/parameters/domain'
         - in: query
@@ -125,7 +153,10 @@ paths:
       summary: Returns a single trip
       description: Returns a single trip
       tags:
-        - Operations/Trips
+        - Trips
+      security:
+        - OAuth2:
+            - trips_read
       parameters:
         - $ref: '#/components/parameters/domain'
         - name: id
@@ -151,7 +182,10 @@ paths:
       summary: Gets the current status of a trip
       description: Gets the current status of a trip
       tags:
-        - Operations/Trips
+        - Trips
+      security:
+        - OAuth2:
+            - trips_read
       parameters:
         - $ref: '#/components/parameters/domain'
         - name: id
@@ -177,7 +211,10 @@ paths:
       summary: Creates a new customer
       description: Creates a new customer
       tags:
-        - Sales/Customers
+        - Customers
+      security:
+        - OAuth2:
+            - customers_write
       parameters:
         - $ref: '#/components/parameters/domain'
       requestBody:
@@ -209,7 +246,10 @@ paths:
       summary: Returns a list of customers
       description: Returns a list of customers based on the filters provided
       tags:
-        - Sales/Customers
+        - Customers
+      security:
+        - OAuth2:
+            - customers_read
       parameters:
         - $ref: '#/components/parameters/domain'
         - in: query
@@ -245,7 +285,10 @@ paths:
     put:
       description: Updates an existing customer
       tags:
-        - Sales/Customers
+        - Customers
+      security:
+        - OAuth2:
+            - customers_write
       parameters:
         - $ref: '#/components/parameters/domain'
         - name: id
@@ -273,7 +316,10 @@ paths:
       summary: Returns a list of fixed trips for a customer
       description: Returns a list of fixed trips for a customer based on the filters provided
       tags:
-        - Sales/Customers
+        - Customers
+      security:
+        - OAuth2:
+            - fixedtrips_read
       parameters:
         - $ref: '#/components/parameters/domain'
         - $ref: '#/components/parameters/timezone'
@@ -308,7 +354,10 @@ paths:
       summary: Creates a new customer category
       description: Creates a new customer category
       tags:
-        - Sales/Customer-categories
+        - Customer-categories
+      security:
+        - OAuth2:
+            - customers_write
       parameters:
         - $ref: '#/components/parameters/domain'
       requestBody:
@@ -334,7 +383,10 @@ paths:
       summary: Returns a list of customer categories
       description: Returns a list of customer categories based on the filters provided
       tags:
-        - Sales/Customer-categories
+        - Customer-categories
+      security:
+        - OAuth2:
+            - customers_read
       parameters:
         - $ref: '#/components/parameters/domain'
         - in: query
@@ -361,7 +413,10 @@ paths:
       summary: Returns a customer category by ID
       description: Returns a customer category by ID
       tags:
-        - Sales/Customer-categories
+        - Customer-categories
+      security:
+        - OAuth2:
+            - customers_read
       parameters:
         - $ref: '#/components/parameters/domain'
         - name: id
@@ -385,7 +440,10 @@ paths:
       summary: Updates an existing customer category
       description: Updates an existing customer category
       tags:
-        - Sales/Customer-categories
+        - Customer-categories
+      security:
+        - OAuth2:
+            - customers_write
       parameters:
         - $ref: '#/components/parameters/domain'
         - name: id
@@ -411,9 +469,12 @@ paths:
   /sales/requests:
     post:
       summary: Create a new Request
-      description: Creats a new Request in the system
+      description: Creates a new Request in the system
       tags:
-        - Sales/Requests
+        - Requests
+      security:
+        - OAuth2:
+            - requests_write
       parameters:
         - $ref: '#/components/parameters/domain'
         - $ref: '#/components/parameters/timezone'
@@ -449,7 +510,10 @@ paths:
       summary: Create a new Request for a given customer
       description: Create a new Request for a given customer
       tags:
-        - Sales/Requests
+        - Requests
+      security:
+        - OAuth2:
+            - requests_write
       parameters:
         - $ref: '#/components/parameters/domain'
         - $ref: '#/components/parameters/timezone'
@@ -492,7 +556,10 @@ paths:
       description: |
         Returns a single order including all trips and other order lines. Exactly one of `orderId` or `orderNumber` must be provided.
       tags:
-        - Sales/Orders
+        - Orders
+      security:
+        - OAuth2:
+            - orders_read
       parameters:
         - $ref: '#/components/parameters/domain'
         - $ref: '#/components/parameters/timezone'
@@ -524,9 +591,12 @@ paths:
   /sales/orders/{customerId}:
     post:
       summary: Create a new Order for a given customer
-      description: Creats a new Order in the system
+      description: Creates a new Order in the system
       tags:
-        - Sales/Orders
+        - Orders
+      security:
+        - OAuth2:
+            - orders_write
       parameters:
         - $ref: '#/components/parameters/domain'
         - $ref: '#/components/parameters/timezone'
@@ -581,7 +651,10 @@ paths:
     get:
       description: Returns the status for a given order and the status of all trips related to this order
       tags:
-        - Sales/Orders
+        - Orders
+      security:
+        - OAuth2:
+            - orders_read
       parameters:
         - $ref: '#/components/parameters/domain'
         - name: id
@@ -606,7 +679,10 @@ paths:
       summary: Get the order confirmation for a given order
       description: Returns the orderconfirmation for the order in PDF format
       tags:
-        - Sales/Orders
+        - Orders
+      security:
+        - OAuth2:
+            - orders_read
       parameters:
         - $ref: '#/components/parameters/domain'
         - name: id
@@ -637,7 +713,10 @@ paths:
       description: |
         Adds a new trip to an existing order      
       tags:
-        - Sales/Orders
+        - Orders
+      security:
+        - OAuth2:
+            - orders_write
       parameters:
         - $ref: '#/components/parameters/domain'
       requestBody:
@@ -682,7 +761,10 @@ paths:
     get:
       description: Returns the vehicle capacity for a given time
       tags:
-        - Sales/Capacity
+        - Capacity
+      security:
+        - OAuth2:
+            - requests_read
       parameters:
         - $ref: '#/components/parameters/domain'
         - name: startTime
@@ -728,7 +810,10 @@ paths:
       summary: Calculate the price for a trip
       description: Calculates the price for a trip based on the given trip details
       tags:
-        - Sales/Price
+        - Price
+      security:
+        - OAuth2:
+            - prices_read
       parameters:
         - $ref: '#/components/parameters/domain'
         - $ref: '#/components/parameters/timezone'
@@ -752,7 +837,10 @@ paths:
     get:
       description: Returns a list of vehicles
       tags:
-        - Core/Vehicles
+        - Vehicles
+      security:
+        - OAuth2:
+            - vehicles_read
       parameters:
         - $ref: '#/components/parameters/domain'
       responses:
@@ -768,9 +856,12 @@ paths:
           $ref: '#/components/responses/400'
   /core/employees:
     get:
-      description: Returns returns a list of employees
+      description: Returns a list of employees
       tags:
-        - Core/Employees
+        - Employees
+      security:
+        - OAuth2:
+            - employees_read
       parameters:
         - $ref: '#/components/parameters/domain'
         - in: query
@@ -798,7 +889,10 @@ paths:
     get:
       description: Returns calendar entries for an employee
       tags:
-        - Core/Employees
+        - Employees
+      security:
+        - OAuth2:
+            - employees_read
       parameters:
         - $ref: '#/components/parameters/domain'
         - $ref: '#/components/parameters/timezone'
@@ -837,7 +931,10 @@ paths:
     get:
       description: Returns a list of trip types
       tags:
-        - Core/Settings
+        - Settings
+      security:
+        - OAuth2:
+            - triptypes_read
       parameters:
         - $ref: '#/components/parameters/domain'
       responses:
@@ -855,7 +952,10 @@ paths:
     get:
       description: Returns a list of products
       tags:
-        - Core/Products
+        - Products
+      security:
+        - OAuth2:
+            - products_read
       parameters:
         - $ref: '#/components/parameters/domain'
         - name: itemCode
@@ -880,6 +980,28 @@ paths:
         '400':
           $ref: '#/components/responses/400'
 components:
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      description: |
+        OAuth 2.0 Client Credentials flow. The scopes listed below are granted to your client in **Settings > Integrations > Public API Clients**; each endpoint requires one specific scope, shown under its "Authorizations" section.
+      flows:
+        clientCredentials:
+          tokenUrl: https://auth.api.ferdia.app/oauth2/token
+          scopes:
+            vehicles_read: Read access to vehicles
+            employees_read: Read access to employees and their calendar entries
+            triptypes_read: Read access to trip type settings
+            products_read: Read access to products
+            requests_read: Read access to sales capacity
+            requests_write: Create sales requests
+            orders_read: Read access to orders and order status
+            orders_write: Create orders and add trips to existing orders
+            prices_read: Calculate trip prices
+            customers_read: Read access to customers and customer categories
+            customers_write: Create and update customers and customer categories
+            fixedtrips_read: Read access to a customer's fixed trips info
+            trips_read: Read access to trips and trip status
   responses:
     '400':
       description: Invalid request
@@ -1287,7 +1409,7 @@ components:
           example: 59.9133301
         long:
           type: number
-          description: The longfitude of the location
+          description: The longitude of the location
           example: 10.7389701
     Location:
       properties:
@@ -1609,7 +1731,7 @@ components:
           default: false
         tripTypeId:
           type: integer
-          description: The id of the triptrip (GET /core/settings/triptype) to use for the trip
+          description: The id of the trip type (GET /core/settings/triptype) to use for the trip
           example: 1
         flightno:
           type: string
@@ -1625,7 +1747,7 @@ components:
           description: The license plate of the vehicle to use for the trip, only relevant if a specific vehicle is requested
         pointOfContact:
           type: integer
-          description: Use an exsiting point of contact for the customer for this trip
+          description: Use an existing point of contact for the customer for this trip
         newPointOfContact:
           type: object
           description: Add a new point of contact to the customer for this trip
@@ -1658,11 +1780,11 @@ components:
           type: number
           format: decimal
           example: 1000
-          description: The price of the trip (inc. VAT), only relevant if the trip is already priced and the TEQ price-calcuator shoul be bypassed.
+          description: The price of the trip (inc. VAT), only relevant if the trip is already priced and the TEQ price-calculator should be bypassed.
         prepaid:
           type: boolean
           default: false
-          description: If the trip is prepayed
+          description: If the trip is prepaid
         addToPlanning:
           type: boolean
           default: false
@@ -2118,7 +2240,7 @@ components:
           example: 3.65
         weight:
           type: number
-          description: The wight of the vehicle
+          description: The weight of the vehicle
           example: 19500
         availableInBookabus:
           type: boolean
@@ -2152,7 +2274,7 @@ components:
           example: JD
         language:
           type: string
-          description: The laguage of the employee
+          description: The language of the employee
           example: en_US
         phone:
           type: string
@@ -2446,3 +2568,21 @@ components:
           description: All trips (order lines) on this order
           items:
             $ref: '#/components/schemas/OrderTrip'
+x-tagGroups:
+  - name: Operations
+    tags:
+      - Trips
+  - name: Sales
+    tags:
+      - Customers
+      - Customer-categories
+      - Requests
+      - Orders
+      - Capacity
+      - Price
+  - name: Core
+    tags:
+      - Vehicles
+      - Employees
+      - Settings
+      - Products

@@ -72,7 +72,7 @@ properties:
     example: 3.65
   weight: 
     type: number 
-    description: The wight of the vehicle
+    description: The weight of the vehicle
     example: 19500
   availableInBookabus:
     type: boolean
