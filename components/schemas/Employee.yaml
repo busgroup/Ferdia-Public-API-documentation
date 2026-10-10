@@ -21,7 +21,7 @@ properties:
     example: JD
   language:
     type: string
-    description: The laguage of the employee
+    description: The language of the employee
     example: "en_US"
   phone:
     type: string

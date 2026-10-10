@@ -3,7 +3,10 @@
     summary: Calculate the price for a trip
     description: Calculates the price for a trip based on the given trip details
     tags:
-      - Sales/Price
+      - Price
+    security:
+      - OAuth2:
+          - prices_read
     parameters:
       - $ref: "../components/parameters/domain.yaml"
       - $ref: "../components/parameters/timezone.yaml"
