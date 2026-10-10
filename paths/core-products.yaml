@@ -2,7 +2,10 @@
     get:
       description: Returns a list of products
       tags:
-        - Core/Products
+        - Products
+      security:
+        - OAuth2:
+            - products_read
       parameters:
         - $ref: "../components/parameters/domain.yaml"
         - name: itemCode

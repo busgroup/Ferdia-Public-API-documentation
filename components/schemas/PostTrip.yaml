@@ -49,7 +49,7 @@ properties:
     default: false 
   tripTypeId:
     type: integer
-    description: The id of the triptrip (GET /core/settings/triptype) to use for the trip
+    description: The id of the trip type (GET /core/settings/triptype) to use for the trip
     example: 1
   flightno:
     type: string
@@ -65,7 +65,7 @@ properties:
     description: "The license plate of the vehicle to use for the trip, only relevant if a specific vehicle is requested"
   pointOfContact:
     type: integer
-    description: "Use an exsiting point of contact for the customer for this trip"
+    description: "Use an existing point of contact for the customer for this trip"
   newPointOfContact:
     type: object
     description: "Add a new point of contact to the customer for this trip"          
@@ -98,11 +98,11 @@ properties:
     type: number
     format: decimal
     example: 1000.00
-    description: "The price of the trip (inc. VAT), only relevant if the trip is already priced and the TEQ price-calcuator shoul be bypassed."
+    description: "The price of the trip (inc. VAT), only relevant if the trip is already priced and the TEQ price-calculator should be bypassed."
   prepaid:
     type: boolean
     default: false
-    description: "If the trip is prepayed"
+    description: "If the trip is prepaid"
   addToPlanning:
     type: boolean
     default: false

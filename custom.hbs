@@ -4,36 +4,194 @@
     <meta charset="utf8" />
     <title>{{title}}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
       body {
         margin: 0;
         padding: 0;
-        font-family: 'Roboto', sans-serif;
+        font-family: 'Poppins', sans-serif;
       }
     </style>
     {{{redocHead}}}
     <style>
       :root {
-        --primary-color: #000000;
-        --text-color: #333333;
-        --background-color: #f0f0f0;
+        --ferdia-dark: #0E2A1E;
+        --ferdia-dark-alt: #153926;
+        --ferdia-accent: #8BC63F;
+        --ferdia-accent-dark: #6FA82E;
+        --ferdia-bg: #F5F3ED;
+        --ferdia-surface: #FFFFFF;
+        --ferdia-text: #1F2A24;
+        --ferdia-text-muted: #5C6660;
+        --ferdia-border: #E1DED3;
+        --ferdia-radius: 10px;
+
+        /* kept for backward compatibility with any external overrides */
+        --primary-color: var(--ferdia-dark);
+        --text-color: var(--ferdia-text);
+        --background-color: var(--ferdia-bg);
       }
+
       body {
         color: var(--text-color);
         background-color: var(--background-color);
       }
-      .menu-content {
-        background-color: #f5f5f5;
+
+      a {
+        color: var(--ferdia-dark-alt);
       }
-      .redoc-wrap .menu-content .menu-item-title {
-        color: var(--primary-color);
+      a:hover {
+        color: var(--ferdia-accent-dark);
       }
+
+      /* ---------- Sidebar / navigation ---------- */
+      .redoc-wrap .menu-content {
+        background-color: var(--ferdia-dark) !important;
+        border-right: none;
+      }
+
+      /* Logo container is always the first child of the sidebar */
+      .menu-content > div:first-child {
+        background-color: transparent !important;
+        padding: 28px 20px 18px;
+      }
+      .menu-content img {
+        background-color: var(--ferdia-surface);
+        border-radius: var(--ferdia-radius);
+        padding: 10px 16px;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.28);
+      }
+
+      .menu-content [role="search"] {
+        margin: 0 16px 10px;
+      }
+      .menu-content input.search-input {
+        background-color: rgba(255, 255, 255, 0.08) !important;
+        color: #ffffff !important;
+        border: 1px solid rgba(255, 255, 255, 0.16) !important;
+        border-radius: var(--ferdia-radius) !important;
+      }
+      .menu-content input.search-input::placeholder {
+        color: rgba(255, 255, 255, 0.55);
+      }
+      .menu-content svg.search-icon {
+        fill: rgba(255, 255, 255, 0.55) !important;
+      }
+
+      .menu-content label {
+        background-color: transparent !important;
+        color: rgba(255, 255, 255, 0.82) !important;
+        border-radius: 6px;
+        transition: background-color 0.15s ease, color 0.15s ease;
+      }
+      .menu-content li[role="menuitem"] > label:hover,
+      .menu-content li[role="menuitem"][aria-expanded="true"] > label {
+        background-color: rgba(139, 198, 63, 0.14) !important;
+        color: var(--ferdia-accent) !important;
+      }
+      .menu-content li[aria-current="true"] > label,
+      .menu-content li[aria-selected="true"] > label {
+        background-color: rgba(139, 198, 63, 0.2) !important;
+        color: var(--ferdia-accent) !important;
+      }
+      .menu-content label span {
+        color: inherit !important;
+      }
+      .menu-content label:hover span,
+      .menu-content li[role="menuitem"][aria-expanded="true"] > label span {
+        color: inherit !important;
+      }
+      .menu-content label svg polygon,
+      .menu-content label svg path {
+        fill: currentColor !important;
+      }
+      .menu-content svg {
+        fill: currentColor;
+      }
+
+      /* Search results render as a floating light panel over the dark sidebar,
+         so the labels inside it need dark text, not the sidebar's light text. */
+      .menu-content ul[data-role="search:results"] {
+        background-color: var(--ferdia-surface) !important;
+        border-radius: var(--ferdia-radius);
+        margin: 0 12px 8px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+        overflow: hidden;
+      }
+      .menu-content ul[data-role="search:results"] label {
+        color: var(--ferdia-text) !important;
+      }
+      .menu-content ul[data-role="search:results"] li[role="menuitem"] > label:hover {
+        background-color: rgba(139, 198, 63, 0.14) !important;
+        color: var(--ferdia-dark) !important;
+      }
+      .menu-content [role="search"] i {
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      .menu-content ::-webkit-scrollbar {
+        width: 8px;
+      }
+      .menu-content ::-webkit-scrollbar-thumb {
+        background-color: rgba(255, 255, 255, 0.22);
+        border-radius: 4px;
+      }
+
+      /* ---------- Header / intro ---------- */
       .api-info h1 {
-        color: var(--primary-color);
+        color: var(--ferdia-dark);
+        font-weight: 700;
       }
+
       .redoc-wrap .api-content {
-        background-color: #ffffff;
+        background-color: var(--ferdia-surface);
+      }
+
+      h2, h3 {
+        color: var(--ferdia-dark);
+      }
+
+      /* ---------- HTTP method badges ---------- */
+      .http-verb {
+        border-radius: 6px !important;
+        font-weight: 600 !important;
+      }
+      .http-verb.get {
+        background-color: var(--ferdia-dark-alt) !important;
+      }
+      .http-verb.post {
+        background-color: var(--ferdia-accent) !important;
+        color: var(--ferdia-dark) !important;
+      }
+      .http-verb.put {
+        background-color: #D08A1D !important;
+      }
+      .http-verb.delete {
+        background-color: #B3261E !important;
+      }
+
+      /* ---------- Request / response samples ---------- */
+      .react-tabs__tab-list {
+        background-color: var(--ferdia-dark-alt);
+        border-radius: var(--ferdia-radius) var(--ferdia-radius) 0 0;
+      }
+      .react-tabs__tab-panel {
+        background-color: var(--ferdia-dark) !important;
+        border-radius: 0 0 var(--ferdia-radius) var(--ferdia-radius);
+      }
+      .react-tabs__tab--selected {
+        color: var(--ferdia-accent) !important;
+        border-bottom: 2px solid var(--ferdia-accent) !important;
+      }
+      .redoc-json {
+        font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+      }
+
+      /* ---------- Buttons ---------- */
+      button {
+        border-radius: 6px;
       }
     </style>
   </head>

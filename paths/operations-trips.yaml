@@ -3,7 +3,10 @@
     summary: Returns a list of trips
     description: Returns a list of trips based on the filters provided
     tags:
-      - Operations/Trips
+      - Trips
+    security:
+      - OAuth2:
+          - trips_read
     parameters:
       - $ref: "../components/parameters/domain.yaml"
       - in: query
@@ -92,7 +95,10 @@
     summary: Returns a single trip
     description: Returns a single trip
     tags:
-      - Operations/Trips
+      - Trips
+    security:
+      - OAuth2:
+          - trips_read
     parameters:
       - $ref: "../components/parameters/domain.yaml"
       - name: id
@@ -120,7 +126,10 @@
     summary: Gets the current status of a trip
     description: Gets the current status of a trip
     tags:
-      - Operations/Trips
+      - Trips
+    security:
+      - OAuth2:
+          - trips_read
     parameters:
       - $ref: "../components/parameters/domain.yaml"
       - name: id
