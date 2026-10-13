@@ -649,6 +649,7 @@ paths:
           description: The given customer does not exist
   /sales/orders/status/{id}:
     get:
+      summary: Get the status for a given order
       description: Returns the status for a given order and the status of all trips related to this order
       tags:
         - Orders
@@ -728,7 +729,7 @@ paths:
               $ref: '#/components/schemas/PostTrip'
       responses:
         '201':
-          description: Trip successfuly added to order
+          description: Trip successfully added to order
           headers:
             Location:
               description: Returns the Location to get the created Trip in TEQ UI.
@@ -1392,11 +1393,11 @@ components:
         next:
           type: string
           description: URL to get next page of results
-          example: http://api.ferdia.app/publicapi/sales/customers?page=3
+          example: https://api.ferdia.app/publicapi/sales/customers?page=3
         previous:
           type: string
           description: URL to get previous page of results
-          example: http://api.ferdia.app/publicapi/sales/customers?page=1
+          example: https://api.ferdia.app/publicapi/sales/customers?page=1
         results:
           type: array
           items:
@@ -1617,11 +1618,11 @@ components:
         next:
           type: string
           description: URL to get next page of results
-          example: https://api.ferdia.no/trips/trips?page=2
+          example: https://api.ferdia.app/trips/trips?page=2
         previous:
           type: string
           description: URL to get previous page of results
-          example: https://api.ferdia.no/trips/trips?page=1
+          example: https://api.ferdia.app/trips/trips?page=1
         results:
           type: array
           items:
@@ -1947,23 +1948,26 @@ components:
         order_id:
           type: string
           description: The unique internal order ID
-          example: '34290'
+          example: '3714'
         status:
           type: string
           description: The status of the order
+          example: active order
         trips:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderStatusTrip'
-    OrderStatusTrip:
-      properties:
-        trip_id:
           type: object
-          properties:
-            status:
-              type: string
-              description: The status of the trip
-          description: The trip ID
+          description: A map of trip references to their status
+          additionalProperties:
+            $ref: '#/components/schemas/OrderStatusTrip'
+          example:
+            BS-002960-S01-N001:
+              status: planning
+    OrderStatusTrip:
+      type: object
+      properties:
+        status:
+          type: string
+          description: The status of the trip
+          example: planning
     SalesCapacity:
       type: object
       properties:

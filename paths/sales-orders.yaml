@@ -100,6 +100,7 @@
 
 /sales/orders/status/{id}:
   get:
+    summary: Get the status for a given order
     description: Returns the status for a given order and the status of all trips related to this order
     tags:
       - Orders
@@ -181,7 +182,7 @@
               $ref: "../components/schemas/PostTrip.yaml"
       responses:
         "201":
-          description: Trip successfuly added to order
+          description: Trip successfully added to order
           headers:
             Location:
               description: Returns the Location to get the created Trip in TEQ UI. 
