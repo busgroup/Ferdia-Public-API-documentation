@@ -76,12 +76,18 @@ git push -u origin FER-123
 ```powershell
 gh pr create `
   --title "FER-123: <short description>" `
-  --body "Closes FER-123`n`n## Changes`n- <bullet points>" `
+  --body "Closes FER-123`n`n## Changes`n- <bullet points>`n`n## Changelog`n- <one or two user-facing lines, or 'None'>" `
   --base main `
   --head FER-123
 ```
 
 PR title format: `FER-123: <short description>` — same pattern as the commit message.
+
+The PR description **must** include a `## Changelog` section (see `.github/PULL_REQUEST_TEMPLATE.md`)
+with one or two short, user-facing lines describing the change — or `None` if it has no
+public-facing impact. A CI check (`changelog-check`) fails the PR if this is missing. On
+merge, a bot automatically appends that text to `components/changelog.yaml`, which powers
+the "Changelog" section of the docs — do not edit that file by hand.
 
 ---
 
