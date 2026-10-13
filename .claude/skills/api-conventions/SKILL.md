@@ -238,6 +238,21 @@ The API uses **OAuth 2.0 Client Credentials** flow. Token endpoint: `https://aut
 
 ---
 
+## Changelog
+
+`components/changelog.yaml` powers the "Changelog" section of the docs (an `x-traitTag`
+tag registered in the root file, rendered with no operations, just its markdown
+`description`).
+
+**Don't hand-edit this file.** It's updated automatically by CI from the PR's `## Changelog`
+section when a PR merges into `main` (see `.github/workflows/update-changelog.yml`). Instead:
+
+- Fill in the `## Changelog` section of your PR description with one or two short,
+  user-facing lines describing the change (or write `None` if it has no public-facing impact).
+- A `changelog-check` CI job fails the PR if that section is missing or empty.
+- On merge, a bot commit appends your lines under that day's `## YYYY-MM-DD` heading
+  (reusing the heading if another PR already merged the same day).
+
 ## Checklist before committing
 
 - [ ] New path file created (if new group) and named `<group>-<resource>.yaml`
@@ -250,3 +265,5 @@ The API uses **OAuth 2.0 Client Credentials** flow. Token endpoint: `https://aut
 - [ ] New schemas registered in `components.schemas` in root file
 - [ ] New tags added to root `tags:` (with a description) and `x-tagGroups:` (under the right Operations/Sales/Core group)
 - [ ] No edits to `TEQ_Public_API.yaml`, `index.html`, or `openapi.json` (generated files)
+- [ ] No manual edits to `components/changelog.yaml` — it's updated automatically by CI
+- [ ] PR description's `## Changelog` section is filled in (or explicitly `None`)
