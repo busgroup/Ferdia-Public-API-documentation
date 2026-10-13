@@ -23,11 +23,12 @@ TEQ_Public_API_1.0_modular.yaml          # Main entry point
     ├── responses/                        # Reusable responses
     │   ├── 400.yaml
     │   └── 404.yaml
-    └── schemas/                          # Data models
-        ├── Customer.yaml
-        ├── Trip.yaml
-        ├── Order.yaml
-        └── ... (all other schemas)
+    ├── schemas/                          # Data models
+    │   ├── Customer.yaml
+    │   ├── Trip.yaml
+    │   ├── Order.yaml
+    │   └── ... (all other schemas)
+    └── changelog.yaml                     # Changelog content, rendered as a trait tag in the docs
 ```
 
 ## Usage

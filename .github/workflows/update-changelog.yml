@@ -1,0 +1,34 @@
+name: Update changelog
+
+on:
+  pull_request:
+    types: [closed]
+
+permissions:
+  contents: write
+
+jobs:
+  update-changelog:
+    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Append changelog entry for merged PR
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: node .github/scripts/update-changelog.js
+
+      - name: Commit and push changelog update
+        run: |
+          if git diff --quiet -- components/changelog.yaml; then
+            echo "No changelog changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add components/changelog.yaml
+          git commit -m "chore: update changelog for #${{ github.event.pull_request.number }}"
+          git push origin main
