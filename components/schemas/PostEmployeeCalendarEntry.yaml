@@ -1,0 +1,35 @@
+type: object
+required:
+  - categoryId
+  - startDateTime
+  - endDateTime
+properties:
+  externalReference:
+    type: string
+    description: |
+      Your own identifier for the entry, unique per tenant. Sending the same `externalReference` again
+      updates the existing entry instead of creating a new one, which makes it safe to retry requests.
+    example: duty-2026-01-01-0042
+  categoryId:
+    type: integer
+    description: Id of the calendar category. Use `GET /core/employees/calendar/categories` to look up valid ids.
+    example: 12
+  startDateTime:
+    type: string
+    format: date-time
+    description: Start date and time. Interpreted in the time zone given by the `TimeZone` header.
+    example: 2026-01-01T09:00:00
+  endDateTime:
+    type: string
+    format: date-time
+    description: End date and time. Interpreted in the time zone given by the `TimeZone` header.
+    example: 2026-01-01T11:00:00
+  wholeDay:
+    type: boolean
+    description: Indicates if this is an all-day event
+    default: false
+    example: false
+  comments:
+    type: string
+    description: Additional notes or comments
+    example: ""

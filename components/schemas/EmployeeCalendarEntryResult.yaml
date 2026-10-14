@@ -1,0 +1,35 @@
+type: object
+properties:
+  index:
+    type: integer
+    description: Position of the entry in the request, starting at 0
+    example: 0
+  status:
+    type: string
+    enum:
+      - created
+      - updated
+      - rejected
+    description: What happened to the entry
+    example: created
+  id:
+    type: string
+    description: Id of the calendar entry (not set when rejected)
+    example: "98765"
+  externalReference:
+    type: string
+    description: The `externalReference` sent with the entry, if any
+    example: duty-2026-01-01-0042
+  warnings:
+    type: array
+    description: Non-blocking issues, for example that the entry overlaps a trip assigned to the employee
+    items:
+      type: string
+    example:
+      - Entry overlaps trip TT-00001-N001
+  errors:
+    type: array
+    description: Reasons the entry was rejected, for example overlap with an existing absence or a locked entry
+    items:
+      type: string
+    example: []

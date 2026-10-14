@@ -1,0 +1,20 @@
+type: object
+properties:
+  categoryId:
+    type: integer
+    description: Id of the calendar category. Use this as `categoryId` when writing calendar entries.
+    example: 12
+  name:
+    type: string
+    description: Name of the category
+    example: Sick leave
+  type:
+    type: string
+    enum:
+      - absence
+      - availability
+      - activity
+    description: |
+      The kind of entries the category produces. The type decides which rules apply when writing entries:
+      overlapping entries are rejected for `absence` and `availability`, but allowed for `activity`.
+    example: absence

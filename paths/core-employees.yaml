@@ -72,3 +72,246 @@
         $ref: "../components/responses/400.yaml"
       "404":
         $ref: "../components/responses/404.yaml"
+
+/core/employees/calendar/categories:
+  get:
+    summary: 🚧 [STAGING ONLY] Returns calendar categories
+    description: |
+      **⚠️ This endpoint is only available on the staging server and not yet available in production.**
+
+      Returns the calendar categories available to the tenant. Use the `categoryId` to map your own entry types when writing employee calendar entries.
+    x-stagingOnly: true
+    tags:
+      - Employees
+    security:
+      - OAuth2:
+          - employees_read
+    parameters:
+      - $ref: "../components/parameters/domain.yaml"
+    responses:
+      "200":
+        description: Successfully returned calendar categories
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "../components/schemas/EmployeeCalendarCategory.yaml"
+      "400":
+        $ref: "../components/responses/400.yaml"
+
+/core/employees/calendar/{id}/entries:
+  post:
+    summary: 🚧 [STAGING ONLY] Creates or updates calendar entries for an employee
+    description: |
+      **⚠️ This endpoint is only available on the staging server and not yet available in production.**
+
+      Creates calendar entries (absence, availability or activities) for an employee in bulk. Each entry is processed individually and reported in the response, so one rejected entry does not stop the others.
+
+      - Entries with an `externalReference` that already exists are updated instead of duplicated.
+      - Overlapping entries are rejected for absence and availability categories, but allowed for activity categories.
+      - An entry that overlaps a trip assigned to the employee is still created, and a warning is returned.
+      - Entries that are locked, treated or paid cannot be changed and are rejected.
+      - The employee and categories must belong to the tenant given in the `domain` header.
+    x-stagingOnly: true
+    tags:
+      - Employees
+    security:
+      - OAuth2:
+          - employees_write
+    parameters:
+      - $ref: "../components/parameters/domain.yaml"
+      - $ref: "../components/parameters/timezone.yaml"
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        description: The ID of the employee
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/PostEmployeeCalendarEntries.yaml"
+    responses:
+      "207":
+        description: Each entry was processed. Check `status` on every result.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "../components/schemas/EmployeeCalendarEntryResult.yaml"
+      "400":
+        $ref: "../components/responses/400.yaml"
+      "403":
+        description: The API client does not have the `employees_write` scope
+      "404":
+        $ref: "../components/responses/404.yaml"
+
+/core/employees/calendar/{id}/entries/{entryId}:
+  patch:
+    summary: 🚧 [STAGING ONLY] Updates a calendar entry
+    description: |
+      **⚠️ This endpoint is only available on the staging server and not yet available in production.**
+
+      Updates a calendar entry by its Ferdia id. Only the properties you send are changed. The same rules as when creating entries apply. Locked, treated or paid entries cannot be changed.
+    x-stagingOnly: true
+    tags:
+      - Employees
+    security:
+      - OAuth2:
+          - employees_write
+    parameters:
+      - $ref: "../components/parameters/domain.yaml"
+      - $ref: "../components/parameters/timezone.yaml"
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        description: The ID of the employee
+      - in: path
+        name: entryId
+        required: true
+        schema:
+          type: string
+        description: The ID of the calendar entry
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/PatchEmployeeCalendarEntry.yaml"
+    responses:
+      "200":
+        description: Successfully updated the calendar entry
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/EmployeeCalendarEntryResult.yaml"
+      "400":
+        $ref: "../components/responses/400.yaml"
+      "403":
+        description: The API client does not have the `employees_write` scope
+      "404":
+        $ref: "../components/responses/404.yaml"
+  delete:
+    summary: 🚧 [STAGING ONLY] Deletes a calendar entry
+    description: |
+      **⚠️ This endpoint is only available on the staging server and not yet available in production.**
+
+      Deletes a calendar entry by its Ferdia id. The entry is soft deleted and no longer returned. Locked, treated or paid entries cannot be deleted.
+    x-stagingOnly: true
+    tags:
+      - Employees
+    security:
+      - OAuth2:
+          - employees_write
+    parameters:
+      - $ref: "../components/parameters/domain.yaml"
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        description: The ID of the employee
+      - in: path
+        name: entryId
+        required: true
+        schema:
+          type: string
+        description: The ID of the calendar entry
+    responses:
+      "204":
+        description: Successfully deleted the calendar entry
+      "400":
+        $ref: "../components/responses/400.yaml"
+      "403":
+        description: The API client does not have the `employees_write` scope
+      "404":
+        $ref: "../components/responses/404.yaml"
+
+/core/employees/calendar/{id}/entries/external/{externalReference}:
+  patch:
+    summary: 🚧 [STAGING ONLY] Updates a calendar entry by external reference
+    description: |
+      **⚠️ This endpoint is only available on the staging server and not yet available in production.**
+
+      Same as updating by Ferdia id, but addresses the entry by the `externalReference` you supplied when creating it.
+    x-stagingOnly: true
+    tags:
+      - Employees
+    security:
+      - OAuth2:
+          - employees_write
+    parameters:
+      - $ref: "../components/parameters/domain.yaml"
+      - $ref: "../components/parameters/timezone.yaml"
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        description: The ID of the employee
+      - in: path
+        name: externalReference
+        required: true
+        schema:
+          type: string
+        description: Your own identifier for the calendar entry
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/PatchEmployeeCalendarEntry.yaml"
+    responses:
+      "200":
+        description: Successfully updated the calendar entry
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/EmployeeCalendarEntryResult.yaml"
+      "400":
+        $ref: "../components/responses/400.yaml"
+      "403":
+        description: The API client does not have the `employees_write` scope
+      "404":
+        $ref: "../components/responses/404.yaml"
+  delete:
+    summary: 🚧 [STAGING ONLY] Deletes a calendar entry by external reference
+    description: |
+      **⚠️ This endpoint is only available on the staging server and not yet available in production.**
+
+      Same as deleting by Ferdia id, but addresses the entry by the `externalReference` you supplied when creating it.
+    x-stagingOnly: true
+    tags:
+      - Employees
+    security:
+      - OAuth2:
+          - employees_write
+    parameters:
+      - $ref: "../components/parameters/domain.yaml"
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        description: The ID of the employee
+      - in: path
+        name: externalReference
+        required: true
+        schema:
+          type: string
+        description: Your own identifier for the calendar entry
+    responses:
+      "204":
+        description: Successfully deleted the calendar entry
+      "400":
+        $ref: "../components/responses/400.yaml"
+      "403":
+        description: The API client does not have the `employees_write` scope
+      "404":
+        $ref: "../components/responses/404.yaml"

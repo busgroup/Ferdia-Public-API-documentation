@@ -75,7 +75,7 @@ tags:
   - name: Vehicles
     description: Look up the vehicle fleet available in the TEQ platform.
   - name: Employees
-    description: Look up employees and their calendar and availability entries.
+    description: Look up employees and read or write their calendar entries (absence, availability and activities).
   - name: Settings
     description: Retrieve platform-level configuration, such as the available trip types.
   - name: Products
@@ -165,6 +165,14 @@ paths:
     $ref: './paths/core-employees.yaml#/~1core~1employees'
   /core/employees/calendar/{id}:
     $ref: './paths/core-employees.yaml#/~1core~1employees~1calendar~1{id}'
+  /core/employees/calendar/categories:
+    $ref: './paths/core-employees.yaml#/~1core~1employees~1calendar~1categories'
+  /core/employees/calendar/{id}/entries:
+    $ref: './paths/core-employees.yaml#/~1core~1employees~1calendar~1{id}~1entries'
+  /core/employees/calendar/{id}/entries/{entryId}:
+    $ref: './paths/core-employees.yaml#/~1core~1employees~1calendar~1{id}~1entries~1{entryId}'
+  /core/employees/calendar/{id}/entries/external/{externalReference}:
+    $ref: './paths/core-employees.yaml#/~1core~1employees~1calendar~1{id}~1entries~1external~1{externalReference}'
   
   # Core/Settings
   /core/settings/triptypes:
@@ -191,6 +199,7 @@ components:
           scopes:
             vehicles_read: Read access to vehicles
             employees_read: Read access to employees and their calendar entries
+            employees_write: Create, update and delete employee calendar entries
             triptypes_read: Read access to trip type settings
             products_read: Read access to products
             requests_read: Read access to sales capacity
@@ -307,6 +316,16 @@ components:
       $ref: './components/schemas/Employee.yaml'
     EmployeeCalendarEntry:
       $ref: './components/schemas/EmployeeCalendarEntry.yaml'
+    EmployeeCalendarCategory:
+      $ref: './components/schemas/EmployeeCalendarCategory.yaml'
+    PostEmployeeCalendarEntry:
+      $ref: './components/schemas/PostEmployeeCalendarEntry.yaml'
+    PostEmployeeCalendarEntries:
+      $ref: './components/schemas/PostEmployeeCalendarEntries.yaml'
+    PatchEmployeeCalendarEntry:
+      $ref: './components/schemas/PatchEmployeeCalendarEntry.yaml'
+    EmployeeCalendarEntryResult:
+      $ref: './components/schemas/EmployeeCalendarEntryResult.yaml'
     Product:
       $ref: './components/schemas/Product.yaml'
     

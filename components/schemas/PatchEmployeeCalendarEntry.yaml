@@ -1,0 +1,25 @@
+type: object
+description: Only the properties you send are changed.
+properties:
+  categoryId:
+    type: integer
+    description: Id of the calendar category
+    example: 12
+  startDateTime:
+    type: string
+    format: date-time
+    description: Start date and time. Interpreted in the time zone given by the `TimeZone` header.
+    example: 2026-01-01T09:00:00
+  endDateTime:
+    type: string
+    format: date-time
+    description: End date and time. Interpreted in the time zone given by the `TimeZone` header.
+    example: 2026-01-01T11:00:00
+  wholeDay:
+    type: boolean
+    description: Indicates if this is an all-day event
+    example: false
+  comments:
+    type: string
+    description: Additional notes or comments
+    example: ""
