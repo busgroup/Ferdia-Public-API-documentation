@@ -1,5 +1,6 @@
 description: |
   ## 2026-10-16
+  - Add support setting arrival time on trips in New Order (POST /sales/orders/{id})
   - Adds CRUD endpoints for garages (list with name/departmentId filters, get by id, create, update, delete) plus an archive action, and extends the Garage schema with description, includeInNearestGarageLookup, geofence_radius, department_id and archived fields.
   - Added CRUD functionality for Departments
 
