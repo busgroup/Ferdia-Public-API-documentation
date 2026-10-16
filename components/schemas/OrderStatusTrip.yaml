@@ -1,8 +1,6 @@
+type: object
 properties:
-  trip_id:
-    type: object
-    properties:
-      status:
-        type: string
-        description: "The status of the trip"        
-    description: "The trip ID"
+  status:
+    type: string
+    description: "The status of the trip"
+    example: "planning"

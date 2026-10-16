@@ -3,7 +3,10 @@
     summary: Creates a new customer
     description: Creates a new customer
     tags:
-      - Sales/Customers
+      - Customers
+    security:
+      - OAuth2:
+          - customers_write
     parameters:
       - $ref: "../components/parameters/domain.yaml"
     requestBody:
@@ -36,7 +39,10 @@
     summary: Returns a list of customers
     description: Returns a list of customers based on the filters provided
     tags:
-      - Sales/Customers
+      - Customers
+    security:
+      - OAuth2:
+          - customers_read
     parameters:
       - $ref: "../components/parameters/domain.yaml"
       - in: query
@@ -73,7 +79,10 @@
   put:
     description: Updates an existing customer
     tags:
-      - Sales/Customers
+      - Customers
+    security:
+      - OAuth2:
+          - customers_write
     parameters:
       - $ref: "../components/parameters/domain.yaml"
       - name: id
@@ -102,7 +111,10 @@
     summary: Returns a list of fixed trips for a customer
     description: Returns a list of fixed trips for a customer based on the filters provided
     tags:
-      - Sales/Customers
+      - Customers
+    security:
+      - OAuth2:
+          - fixedtrips_read
     parameters:
       - $ref: "../components/parameters/domain.yaml"
       - $ref: "../components/parameters/timezone.yaml"
@@ -128,6 +140,127 @@
               type: array
               items:
                 $ref: "../components/schemas/CustomerFixedTripInfo.yaml"
+      "400":
+        $ref: "../components/responses/400.yaml"
+      "404":
+        $ref: "../components/responses/404.yaml"
+
+/sales/customer-categories:
+  post:
+    summary: Creates a new customer category
+    description: Creates a new customer category
+    tags:
+      - Customer-categories
+    security:
+      - OAuth2:
+          - customers_write
+    parameters:
+      - $ref: "../components/parameters/domain.yaml"
+    requestBody:
+      description: Customer category data
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/PostCustomerCategory.yaml"
+    responses:
+      "201":
+        description: Successfully created customer category
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+      "400":
+        $ref: "../components/responses/400.yaml"
+
+  get:
+    summary: Returns a list of customer categories
+    description: Returns a list of customer categories based on the filters provided
+    tags:
+      - Customer-categories
+    security:
+      - OAuth2:
+          - customers_read
+    parameters:
+      - $ref: "../components/parameters/domain.yaml"
+      - in: query
+        name: name
+        schema:
+          type: string
+      - in: query
+        name: active
+        schema:
+          type: boolean
+    responses:
+      "200":
+        description: Successfully returned a list of customer categories
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "../components/schemas/CustomerCategory.yaml"
+      "400":
+        $ref: "../components/responses/400.yaml"
+
+/sales/customer-categories/{id}:
+  get:
+    summary: Returns a customer category by ID
+    description: Returns a customer category by ID
+    tags:
+      - Customer-categories
+    security:
+      - OAuth2:
+          - customers_read
+    parameters:
+      - $ref: "../components/parameters/domain.yaml"
+      - name: id
+        in: path
+        description: Customer category ID
+        required: true
+        schema:
+          type: integer
+    responses:
+      "200":
+        description: Successfully returned customer category
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/CustomerCategory.yaml"
+      "400":
+        $ref: "../components/responses/400.yaml"
+      "404":
+        $ref: "../components/responses/404.yaml"
+
+  put:
+    summary: Updates an existing customer category
+    description: Updates an existing customer category
+    tags:
+      - Customer-categories
+    security:
+      - OAuth2:
+          - customers_write
+    parameters:
+      - $ref: "../components/parameters/domain.yaml"
+      - name: id
+        in: path
+        description: Customer category ID
+        required: true
+        schema:
+          type: integer
+    requestBody:
+      description: Customer category data
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/PutCustomerCategory.yaml"
+    responses:
+      "200":
+        description: Successfully updated customer category
       "400":
         $ref: "../components/responses/400.yaml"
       "404":

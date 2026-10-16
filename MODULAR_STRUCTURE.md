@@ -12,6 +12,7 @@ TEQ_Public_API_1.0_modular.yaml          # Main entry point
 │   ├── sales-requests.yaml              # Sales/Requests endpoints
 │   ├── sales-orders.yaml                # Sales/Orders endpoints
 │   ├── sales-capacity.yaml              # Sales/Capacity endpoints
+│   ├── sales-price.yaml                 # Sales/Price endpoints
 │   ├── core-products.yaml               # Core/Products endpoints
 │   ├── core-vehicles.yaml               # Core/Vehicles endpoints
 │   └── core-employees.yaml              # Core/Employees endpoints
@@ -22,11 +23,12 @@ TEQ_Public_API_1.0_modular.yaml          # Main entry point
     ├── responses/                        # Reusable responses
     │   ├── 400.yaml
     │   └── 404.yaml
-    └── schemas/                          # Data models
-        ├── Customer.yaml
-        ├── Trip.yaml
-        ├── Order.yaml
-        └── ... (all other schemas)
+    ├── schemas/                          # Data models
+    │   ├── Customer.yaml
+    │   ├── Trip.yaml
+    │   ├── Order.yaml
+    │   └── ... (all other schemas)
+    └── changelog.yaml                     # Changelog content, rendered as a trait tag in the docs
 ```
 
 ## Usage
