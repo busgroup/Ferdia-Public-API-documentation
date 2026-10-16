@@ -65,6 +65,7 @@ tags:
     x-traitTag: true
     description: |
       ## 2026-10-16
+      - Added functionality to change an existing order (PATCH /sales/order/{orderId})
       - Add support setting arrival time on trips in New Order (POST /sales/orders/{id})
       - Adds CRUD endpoints for garages (list with name/departmentId filters, get by id, create, update, delete) plus an archive action, and extends the Garage schema with description, includeInNearestGarageLookup, geofence_radius, department_id and archived fields.
       - Added CRUD functionality for Departments
@@ -696,7 +697,10 @@ paths:
       summary: Updates an existing Order
       description: Updates fields on an existing Order
       tags:
-        - Sales/Orders
+        - Orders
+      security:
+        - OAuth2:
+            - orders_write
       parameters:
         - $ref: '#/components/parameters/domain'
         - name: orderId

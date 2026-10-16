@@ -103,7 +103,10 @@
     summary: Updates an existing Order
     description: Updates fields on an existing Order
     tags:
-      - Sales/Orders
+      - Orders
+    security:
+      - OAuth2:
+          - orders_write
     parameters:
       - $ref: "../components/parameters/domain.yaml"
       - name: orderId

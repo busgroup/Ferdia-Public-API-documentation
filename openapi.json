@@ -81,7 +81,7 @@
     {
       "name": "Changelog",
       "x-traitTag": true,
-      "description": "## 2026-10-16\n- Add support setting arrival time on trips in New Order (POST /sales/orders/{id})\n- Adds CRUD endpoints for garages (list with name/departmentId filters, get by id, create, update, delete) plus an archive action, and extends the Garage schema with description, includeInNearestGarageLookup, geofence_radius, department_id and archived fields.\n- Added CRUD functionality for Departments\n\n## 2026-10-13\n- Added a Changelog section to the API documentation.\n\n## 2026-10-10\n- Updated the documentation site layout to match Ferdia branding, fixed typos, and documented OAuth2 scopes for each endpoint.\n- Added SEO metadata (robots.txt, sitemap.xml, canonical/meta tags) so developer.ferdia.co is indexable by search engines.\n\n## 2026-10-03\n- Added `departmentId` to the `POST /sales/orders` request payload.\n\n## 2026-09-24\n- Added `POST /sales/price/calculateTripPrice` endpoint to calculate a trip price ahead of creating a request or order.\n\n## 2026-08-27\n- Renamed the order confirmation endpoint to `GET /sales/orders/orderConfirmation/{id}` for naming consistency.\n\n## 2026-08-24\n- Added `GET /core/products` endpoint to list products.\n- Added `GET /sales/orders` endpoint to list orders, including new `OrderDetail`, `OrderCustomer`, `OrderTrip`, and `AdditionalItem` schemas.\n- Promoted `POST /sales/orders/addtrip/{id}` from staging-only to production.\n\n## 2026-08-18\n- Added customer category management: `POST`/`GET /sales/customer-categories` and `GET`/`PUT /sales/customer-categories/{id}`.\n- Added `GET /sales/orders/orderconfirmation/{id}` endpoint to retrieve the order confirmation PDF.\n\n## 2026-07-15\n- Added `POST /sales/orders/addtrip/{id}` endpoint (staging only) to add a trip to an existing order.\n\n## 2026-07-02\n- Added `GET /core/settings/triptypes` endpoint to list trip types.\n- Added `boarding` and `disembarkation` fields to the trip payload.\n- Restructured order/trip payloads: order-level fields (status, contact person, sales person, external reference) moved from the trip payload to the order payload; added `status` and `createdRows` to the order-creation response.\n"
+      "description": "## 2026-10-16\n- Added functionality to change an existing order (PATCH /sales/order/{orderId})\n- Add support setting arrival time on trips in New Order (POST /sales/orders/{id})\n- Adds CRUD endpoints for garages (list with name/departmentId filters, get by id, create, update, delete) plus an archive action, and extends the Garage schema with description, includeInNearestGarageLookup, geofence_radius, department_id and archived fields.\n- Added CRUD functionality for Departments\n\n## 2026-10-13\n- Added a Changelog section to the API documentation.\n\n## 2026-10-10\n- Updated the documentation site layout to match Ferdia branding, fixed typos, and documented OAuth2 scopes for each endpoint.\n- Added SEO metadata (robots.txt, sitemap.xml, canonical/meta tags) so developer.ferdia.co is indexable by search engines.\n\n## 2026-10-03\n- Added `departmentId` to the `POST /sales/orders` request payload.\n\n## 2026-09-24\n- Added `POST /sales/price/calculateTripPrice` endpoint to calculate a trip price ahead of creating a request or order.\n\n## 2026-08-27\n- Renamed the order confirmation endpoint to `GET /sales/orders/orderConfirmation/{id}` for naming consistency.\n\n## 2026-08-24\n- Added `GET /core/products` endpoint to list products.\n- Added `GET /sales/orders` endpoint to list orders, including new `OrderDetail`, `OrderCustomer`, `OrderTrip`, and `AdditionalItem` schemas.\n- Promoted `POST /sales/orders/addtrip/{id}` from staging-only to production.\n\n## 2026-08-18\n- Added customer category management: `POST`/`GET /sales/customer-categories` and `GET`/`PUT /sales/customer-categories/{id}`.\n- Added `GET /sales/orders/orderconfirmation/{id}` endpoint to retrieve the order confirmation PDF.\n\n## 2026-07-15\n- Added `POST /sales/orders/addtrip/{id}` endpoint (staging only) to add a trip to an existing order.\n\n## 2026-07-02\n- Added `GET /core/settings/triptypes` endpoint to list trip types.\n- Added `boarding` and `disembarkation` fields to the trip payload.\n- Restructured order/trip payloads: order-level fields (status, contact person, sales person, external reference) moved from the trip payload to the order payload; added `status` and `createdRows` to the order-creation response.\n"
     }
   ],
   "paths": {
@@ -1071,7 +1071,14 @@
         "summary": "Updates an existing Order",
         "description": "Updates fields on an existing Order",
         "tags": [
-          "Sales/Orders"
+          "Orders"
+        ],
+        "security": [
+          {
+            "OAuth2": [
+              "orders_write"
+            ]
+          }
         ],
         "parameters": [
           {
