@@ -59,10 +59,13 @@ tags:
     description: Look up additional products and items that can be billed on trips and orders.
   - name: Departments
     description: Manage departments and their hierarchy.
+  - name: Garages
+    description: Manage garages and their locations.
   - name: Changelog
     x-traitTag: true
     description: |
       ## 2026-10-16
+      - Adds CRUD endpoints for garages (list with name/departmentId filters, get by id, create, update, delete) plus an archive action, and extends the Garage schema with description, includeInNearestGarageLookup, geofence_radius, department_id and archived fields.
       - Added CRUD functionality for Departments
 
       ## 2026-10-13
@@ -994,7 +997,10 @@ paths:
       summary: Returns a list of garages
       description: Returns a list of garages based on the filters provided
       tags:
-        - Core/Garages
+        - Garages
+      security:
+        - OAuth2:
+            - garages_write
       parameters:
         - $ref: '#/components/parameters/domain'
         - in: query
@@ -1024,7 +1030,10 @@ paths:
       summary: Creates a new garage
       description: Creates a new garage
       tags:
-        - Core/Garages
+        - Garages
+      security:
+        - OAuth2:
+            - garages_write
       parameters:
         - $ref: '#/components/parameters/domain'
       requestBody:
@@ -1051,7 +1060,10 @@ paths:
       summary: Returns a single garage
       description: Returns a single garage
       tags:
-        - Core/Garages
+        - Garages
+      security:
+        - OAuth2:
+            - garages_write
       parameters:
         - $ref: '#/components/parameters/domain'
         - name: id
@@ -1076,7 +1088,10 @@ paths:
       summary: Updates an existing garage
       description: Updates an existing garage
       tags:
-        - Core/Garages
+        - Garages
+      security:
+        - OAuth2:
+            - garages_write
       parameters:
         - $ref: '#/components/parameters/domain'
         - name: id
@@ -1104,7 +1119,10 @@ paths:
       summary: Deletes a garage
       description: Deletes a garage
       tags:
-        - Core/Garages
+        - Garages
+      security:
+        - OAuth2:
+            - garages_write
       parameters:
         - $ref: '#/components/parameters/domain'
         - name: id
@@ -1126,7 +1144,10 @@ paths:
       summary: Archives a garage
       description: Archives a garage
       tags:
-        - Core/Garages
+        - Garages
+      security:
+        - OAuth2:
+            - garages_write
       parameters:
         - $ref: '#/components/parameters/domain'
         - name: id
@@ -3072,6 +3093,7 @@ x-tagGroups:
       - Settings
       - Products
       - Departments
+      - Garages
   - name: Changelog
     tags:
       - Changelog

@@ -75,9 +75,13 @@
       "description": "Manage departments and their hierarchy."
     },
     {
+      "name": "Garages",
+      "description": "Manage garages and their locations."
+    },
+    {
       "name": "Changelog",
       "x-traitTag": true,
-      "description": "## 2026-10-16\n- Added CRUD functionality for Departments\n\n## 2026-10-13\n- Added a Changelog section to the API documentation.\n\n## 2026-10-10\n- Updated the documentation site layout to match Ferdia branding, fixed typos, and documented OAuth2 scopes for each endpoint.\n- Added SEO metadata (robots.txt, sitemap.xml, canonical/meta tags) so developer.ferdia.co is indexable by search engines.\n\n## 2026-10-03\n- Added `departmentId` to the `POST /sales/orders` request payload.\n\n## 2026-09-24\n- Added `POST /sales/price/calculateTripPrice` endpoint to calculate a trip price ahead of creating a request or order.\n\n## 2026-08-27\n- Renamed the order confirmation endpoint to `GET /sales/orders/orderConfirmation/{id}` for naming consistency.\n\n## 2026-08-24\n- Added `GET /core/products` endpoint to list products.\n- Added `GET /sales/orders` endpoint to list orders, including new `OrderDetail`, `OrderCustomer`, `OrderTrip`, and `AdditionalItem` schemas.\n- Promoted `POST /sales/orders/addtrip/{id}` from staging-only to production.\n\n## 2026-08-18\n- Added customer category management: `POST`/`GET /sales/customer-categories` and `GET`/`PUT /sales/customer-categories/{id}`.\n- Added `GET /sales/orders/orderconfirmation/{id}` endpoint to retrieve the order confirmation PDF.\n\n## 2026-07-15\n- Added `POST /sales/orders/addtrip/{id}` endpoint (staging only) to add a trip to an existing order.\n\n## 2026-07-02\n- Added `GET /core/settings/triptypes` endpoint to list trip types.\n- Added `boarding` and `disembarkation` fields to the trip payload.\n- Restructured order/trip payloads: order-level fields (status, contact person, sales person, external reference) moved from the trip payload to the order payload; added `status` and `createdRows` to the order-creation response.\n"
+      "description": "## 2026-10-16\n- Adds CRUD endpoints for garages (list with name/departmentId filters, get by id, create, update, delete) plus an archive action, and extends the Garage schema with description, includeInNearestGarageLookup, geofence_radius, department_id and archived fields.\n- Added CRUD functionality for Departments\n\n## 2026-10-13\n- Added a Changelog section to the API documentation.\n\n## 2026-10-10\n- Updated the documentation site layout to match Ferdia branding, fixed typos, and documented OAuth2 scopes for each endpoint.\n- Added SEO metadata (robots.txt, sitemap.xml, canonical/meta tags) so developer.ferdia.co is indexable by search engines.\n\n## 2026-10-03\n- Added `departmentId` to the `POST /sales/orders` request payload.\n\n## 2026-09-24\n- Added `POST /sales/price/calculateTripPrice` endpoint to calculate a trip price ahead of creating a request or order.\n\n## 2026-08-27\n- Renamed the order confirmation endpoint to `GET /sales/orders/orderConfirmation/{id}` for naming consistency.\n\n## 2026-08-24\n- Added `GET /core/products` endpoint to list products.\n- Added `GET /sales/orders` endpoint to list orders, including new `OrderDetail`, `OrderCustomer`, `OrderTrip`, and `AdditionalItem` schemas.\n- Promoted `POST /sales/orders/addtrip/{id}` from staging-only to production.\n\n## 2026-08-18\n- Added customer category management: `POST`/`GET /sales/customer-categories` and `GET`/`PUT /sales/customer-categories/{id}`.\n- Added `GET /sales/orders/orderconfirmation/{id}` endpoint to retrieve the order confirmation PDF.\n\n## 2026-07-15\n- Added `POST /sales/orders/addtrip/{id}` endpoint (staging only) to add a trip to an existing order.\n\n## 2026-07-02\n- Added `GET /core/settings/triptypes` endpoint to list trip types.\n- Added `boarding` and `disembarkation` fields to the trip payload.\n- Restructured order/trip payloads: order-level fields (status, contact person, sales person, external reference) moved from the trip payload to the order payload; added `status` and `createdRows` to the order-creation response.\n"
     }
   ],
   "paths": {
@@ -1577,7 +1581,14 @@
         "summary": "Returns a list of garages",
         "description": "Returns a list of garages based on the filters provided",
         "tags": [
-          "Core/Garages"
+          "Garages"
+        ],
+        "security": [
+          {
+            "OAuth2": [
+              "garages_write"
+            ]
+          }
         ],
         "parameters": [
           {
@@ -1625,7 +1636,14 @@
         "summary": "Creates a new garage",
         "description": "Creates a new garage",
         "tags": [
-          "Core/Garages"
+          "Garages"
+        ],
+        "security": [
+          {
+            "OAuth2": [
+              "garages_write"
+            ]
+          }
         ],
         "parameters": [
           {
@@ -1670,7 +1688,14 @@
         "summary": "Returns a single garage",
         "description": "Returns a single garage",
         "tags": [
-          "Core/Garages"
+          "Garages"
+        ],
+        "security": [
+          {
+            "OAuth2": [
+              "garages_write"
+            ]
+          }
         ],
         "parameters": [
           {
@@ -1710,7 +1735,14 @@
         "summary": "Updates an existing garage",
         "description": "Updates an existing garage",
         "tags": [
-          "Core/Garages"
+          "Garages"
+        ],
+        "security": [
+          {
+            "OAuth2": [
+              "garages_write"
+            ]
+          }
         ],
         "parameters": [
           {
@@ -1754,7 +1786,14 @@
         "summary": "Deletes a garage",
         "description": "Deletes a garage",
         "tags": [
-          "Core/Garages"
+          "Garages"
+        ],
+        "security": [
+          {
+            "OAuth2": [
+              "garages_write"
+            ]
+          }
         ],
         "parameters": [
           {
@@ -1789,7 +1828,14 @@
         "summary": "Archives a garage",
         "description": "Archives a garage",
         "tags": [
-          "Core/Garages"
+          "Garages"
+        ],
+        "security": [
+          {
+            "OAuth2": [
+              "garages_write"
+            ]
+          }
         ],
         "parameters": [
           {
@@ -4523,7 +4569,8 @@
         "Employees",
         "Settings",
         "Products",
-        "Departments"
+        "Departments",
+        "Garages"
       ]
     },
     {

@@ -3,7 +3,10 @@
     summary: Returns a list of garages
     description: Returns a list of garages based on the filters provided
     tags:
-      - Core/Garages
+        - Garages
+    security:
+        - OAuth2:
+            - garages_write
     parameters:
       - $ref: "../components/parameters/domain.yaml"
       - in: query
@@ -34,7 +37,10 @@
     summary: Creates a new garage
     description: Creates a new garage
     tags:
-      - Core/Garages
+        - Garages
+    security:
+        - OAuth2:
+            - garages_write
     parameters:
       - $ref: "../components/parameters/domain.yaml"
     requestBody:
@@ -62,7 +68,10 @@
     summary: Returns a single garage
     description: Returns a single garage
     tags:
-      - Core/Garages
+        - Garages
+    security:
+        - OAuth2:
+            - garages_write
     parameters:
       - $ref: "../components/parameters/domain.yaml"
       - name: id
@@ -88,7 +97,10 @@
     summary: Updates an existing garage
     description: Updates an existing garage
     tags:
-      - Core/Garages
+        - Garages
+    security:
+        - OAuth2:
+            - garages_write
     parameters:
       - $ref: "../components/parameters/domain.yaml"
       - name: id
@@ -117,7 +129,10 @@
     summary: Deletes a garage
     description: Deletes a garage
     tags:
-      - Core/Garages
+        - Garages
+    security:
+        - OAuth2:
+            - garages_write
     parameters:
       - $ref: "../components/parameters/domain.yaml"
       - name: id
@@ -140,7 +155,10 @@
     summary: Archives a garage
     description: Archives a garage
     tags:
-      - Core/Garages
+        - Garages
+    security:
+        - OAuth2:
+            - garages_write
     parameters:
       - $ref: "../components/parameters/domain.yaml"
       - name: id
