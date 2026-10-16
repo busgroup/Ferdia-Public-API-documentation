@@ -80,6 +80,8 @@ tags:
     description: Retrieve platform-level configuration, such as the available trip types.
   - name: Products
     description: Look up additional products and items that can be billed on trips and orders.
+  - name: Departments
+    description: Manage departments and their hierarchy.
   - name: Changelog
     x-traitTag: true
     description:
@@ -103,6 +105,7 @@ x-tagGroups:
       - Employees
       - Settings
       - Products
+      - Departments
   - name: Changelog
     tags:
       - Changelog
