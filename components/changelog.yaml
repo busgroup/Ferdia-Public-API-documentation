@@ -1,4 +1,7 @@
 description: |
+  ## 2026-10-16
+  - Added CRUD functionality for Departments
+
   ## 2026-10-13
   - Added a Changelog section to the API documentation.
 
