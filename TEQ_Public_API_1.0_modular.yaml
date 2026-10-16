@@ -147,6 +147,8 @@ paths:
     $ref: './paths/sales-orders.yaml#/~1sales~1orders'
   /sales/orders/{customerId}:
     $ref: './paths/sales-orders.yaml#/~1sales~1orders~1{customerId}'
+  /sales/orders/{orderId}:
+    $ref: './paths/sales-orders.yaml#/~1sales~1orders~1{orderId}'
   /sales/orders/status/{id}:
     $ref: './paths/sales-orders.yaml#/~1sales~1orders~1status~1{id}'
   /sales/orders/orderConfirmation/{id}:  
@@ -305,6 +307,8 @@ components:
       $ref: './components/schemas/Order.yaml'
     PostOrder:
       $ref: './components/schemas/PostOrder.yaml'
+    PatchOrder:
+      $ref: './components/schemas/PatchOrder.yaml'
     OrderStatus:
       $ref: './components/schemas/OrderStatus.yaml'
     OrderStatusTrip:
