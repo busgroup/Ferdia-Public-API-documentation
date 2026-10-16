@@ -73,7 +73,7 @@
     {
       "name": "Changelog",
       "x-traitTag": true,
-      "description": "## 2026-10-10\n- Updated the documentation site layout to match Ferdia branding, fixed typos, and documented OAuth2 scopes for each endpoint.\n- Added SEO metadata (robots.txt, sitemap.xml, canonical/meta tags) so developer.ferdia.co is indexable by search engines.\n\n## 2026-10-03\n- Added `departmentId` to the `POST /sales/orders` request payload.\n\n## 2026-09-24\n- Added `POST /sales/price/calculateTripPrice` endpoint to calculate a trip price ahead of creating a request or order.\n\n## 2026-08-27\n- Renamed the order confirmation endpoint to `GET /sales/orders/orderConfirmation/{id}` for naming consistency.\n\n## 2026-08-24\n- Added `GET /core/products` endpoint to list products.\n- Added `GET /sales/orders` endpoint to list orders, including new `OrderDetail`, `OrderCustomer`, `OrderTrip`, and `AdditionalItem` schemas.\n- Promoted `POST /sales/orders/addtrip/{id}` from staging-only to production.\n\n## 2026-08-18\n- Added customer category management: `POST`/`GET /sales/customer-categories` and `GET`/`PUT /sales/customer-categories/{id}`.\n- Added `GET /sales/orders/orderconfirmation/{id}` endpoint to retrieve the order confirmation PDF.\n\n## 2026-07-15\n- Added `POST /sales/orders/addtrip/{id}` endpoint (staging only) to add a trip to an existing order.\n\n## 2026-07-02\n- Added `GET /core/settings/triptypes` endpoint to list trip types.\n- Added `boarding` and `disembarkation` fields to the trip payload.\n- Restructured order/trip payloads: order-level fields (status, contact person, sales person, external reference) moved from the trip payload to the order payload; added `status` and `createdRows` to the order-creation response.\n"
+      "description": "## 2026-10-13\n- Added a Changelog section to the API documentation.\n\n## 2026-10-10\n- Updated the documentation site layout to match Ferdia branding, fixed typos, and documented OAuth2 scopes for each endpoint.\n- Added SEO metadata (robots.txt, sitemap.xml, canonical/meta tags) so developer.ferdia.co is indexable by search engines.\n\n## 2026-10-03\n- Added `departmentId` to the `POST /sales/orders` request payload.\n\n## 2026-09-24\n- Added `POST /sales/price/calculateTripPrice` endpoint to calculate a trip price ahead of creating a request or order.\n\n## 2026-08-27\n- Renamed the order confirmation endpoint to `GET /sales/orders/orderConfirmation/{id}` for naming consistency.\n\n## 2026-08-24\n- Added `GET /core/products` endpoint to list products.\n- Added `GET /sales/orders` endpoint to list orders, including new `OrderDetail`, `OrderCustomer`, `OrderTrip`, and `AdditionalItem` schemas.\n- Promoted `POST /sales/orders/addtrip/{id}` from staging-only to production.\n\n## 2026-08-18\n- Added customer category management: `POST`/`GET /sales/customer-categories` and `GET`/`PUT /sales/customer-categories/{id}`.\n- Added `GET /sales/orders/orderconfirmation/{id}` endpoint to retrieve the order confirmation PDF.\n\n## 2026-07-15\n- Added `POST /sales/orders/addtrip/{id}` endpoint (staging only) to add a trip to an existing order.\n\n## 2026-07-02\n- Added `GET /core/settings/triptypes` endpoint to list trip types.\n- Added `boarding` and `disembarkation` fields to the trip payload.\n- Restructured order/trip payloads: order-level fields (status, contact person, sales person, external reference) moved from the trip payload to the order payload; added `status` and `createdRows` to the order-creation response.\n"
     }
   ],
   "paths": {
@@ -1564,6 +1564,235 @@
           },
           "400": {
             "$ref": "#/components/responses/400"
+          }
+        }
+      }
+    },
+    "/core/departments": {
+      "get": {
+        "summary": "Returns a list of departments",
+        "description": "Returns a list of departments based on the filters provided",
+        "tags": [
+          "Core/Departments"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/domain"
+          },
+          {
+            "in": "query",
+            "name": "name",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Name of the department"
+          },
+          {
+            "in": "query",
+            "name": "department_code",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Department code"
+          },
+          {
+            "in": "query",
+            "name": "parent_department_code",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Department code of the parent department"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully returned a list of departments",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Department"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          }
+        }
+      },
+      "post": {
+        "summary": "Creates a new department",
+        "description": "Creates a new department",
+        "tags": [
+          "Core/Departments"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/domain"
+          }
+        ],
+        "requestBody": {
+          "description": "Department data",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostDepartment"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully created department",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "departmentId": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          }
+        }
+      }
+    },
+    "/core/departments/{id}": {
+      "get": {
+        "summary": "Returns a single department",
+        "description": "Returns a single department identified by either its Id or Department Code",
+        "tags": [
+          "Core/Departments"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/domain"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Department Id or Department Code, depending on the value of identifierType",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "42"
+          },
+          {
+            "name": "identifierType",
+            "in": "query",
+            "description": "Specifies whether the id path parameter should be interpreted as a Department Id or a Department Code",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "id",
+                "departmentcode"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully returned a department",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Department"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      },
+      "put": {
+        "summary": "Updates an existing department",
+        "description": "Updates an existing department",
+        "tags": [
+          "Core/Departments"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/domain"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Department Id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Department data",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PutDepartment"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully updated department"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletes a department",
+        "description": "Deletes a department",
+        "tags": [
+          "Core/Departments"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/domain"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Department Id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully deleted department"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
           }
         }
       }
@@ -3508,6 +3737,79 @@
             "type": "string",
             "description": "License plate of the vehicle (if assigned to trip)",
             "example": "AB11245"
+          }
+        }
+      },
+      "Department": {
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "departmentCode": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "parentDepartmentId": {
+            "type": "integer"
+          },
+          "useParentBillingProfile": {
+            "type": "boolean"
+          },
+          "billingProfileId": {
+            "type": "integer"
+          }
+        }
+      },
+      "PostDepartment": {
+        "type": "object",
+        "required": [
+          "departmentCode",
+          "name",
+          "parentDepartmentId"
+        ],
+        "properties": {
+          "departmentCode": {
+            "type": "string",
+            "description": "Unique code identifying the department. Can only be set on creation, cannot be updated afterwards."
+          },
+          "name": {
+            "type": "string"
+          },
+          "parentDepartmentId": {
+            "type": "integer"
+          },
+          "useParentBillingProfile": {
+            "type": "boolean",
+            "default": false
+          },
+          "billingProfileId": {
+            "type": "integer",
+            "description": "Required if useParentBillingProfile is false."
+          }
+        }
+      },
+      "PutDepartment": {
+        "type": "object",
+        "required": [
+          "name",
+          "parentDepartmentId"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "parentDepartmentId": {
+            "type": "integer"
+          },
+          "useParentBillingProfile": {
+            "type": "boolean",
+            "default": false
+          },
+          "billingProfileId": {
+            "type": "integer",
+            "description": "Required if useParentBillingProfile is false."
           }
         }
       },

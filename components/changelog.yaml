@@ -1,4 +1,7 @@
 description: |
+  ## 2026-10-13
+  - Added a Changelog section to the API documentation.
+
   ## 2026-10-10
   - Updated the documentation site layout to match Ferdia branding, fixed typos, and documented OAuth2 scopes for each endpoint.
   - Added SEO metadata (robots.txt, sitemap.xml, canonical/meta tags) so developer.ferdia.co is indexable by search engines.
