@@ -1,8 +1,11 @@
 /core/employees:
   get:
-    description: Returns returns a list of employees
+    description: Returns a list of employees
     tags:
-      - Core/Employees
+      - Employees
+    security:
+      - OAuth2:
+          - employees_read
     parameters:
       - $ref: "../components/parameters/domain.yaml"
       - in: query
@@ -31,7 +34,10 @@
   get:
     description: Returns calendar entries for an employee
     tags:
-      - Core/Employees
+      - Employees
+    security:
+      - OAuth2:
+          - employees_read
     parameters:
       - $ref: "../components/parameters/domain.yaml"
       - $ref: "../components/parameters/timezone.yaml"

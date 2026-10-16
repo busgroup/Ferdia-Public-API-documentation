@@ -32,7 +32,7 @@ info:
     The API uses OAuth2 for authentication. You will need to obtain an access token to use the API.
     The access token should be included in the Authorization header of each request.
 
-    To obtain your access credentials, please contact TEQ support on (support@ferdia.co).
+    You can create your own access credentials directly in the TEQ application: go to **Settings > Integrations > Public API Clients** and create a new client.
 
     ## OAuth 2.0 flow
 
@@ -50,7 +50,66 @@ info:
     # TimeZone
     
     The API uses the timezone of the client of the request to calculate dates and times. The timezone should be included in the HTTP-header `TimeZone` in the format `Continent/City` (e.g. `Europe/Berlin`).
-    
+
+servers:
+  - url: https://api.ferdia.app/v1/publicapi/
+    description: Production server
+  - url: https://staging.api.ferdia.app/v1/publicapi
+    description: Staging server (includes preview endpoints not yet available in production)
+
+tags:
+  - name: Trips
+    description: Query live trip data - fetch trip lists, trip details, and the current status of trips on the road.
+  - name: Customers
+    description: Create, update, and look up customers, including their addresses, contact persons, and fixed-trip pricing info.
+  - name: Customer-categories
+    description: Manage the customer categories used to group and price customers.
+  - name: Requests
+    description: Submit new trip requests, either for an existing customer or together with new customer details.
+  - name: Orders
+    description: Create orders, add trips to existing orders, and track order and order-confirmation status.
+  - name: Capacity
+    description: Check available vehicle capacity for a given time range and department.
+  - name: Price
+    description: Calculate trip prices ahead of creating a request or order.
+  - name: Vehicles
+    description: Look up the vehicle fleet available in the TEQ platform.
+  - name: Employees
+    description: Look up employees and their calendar and availability entries.
+  - name: Settings
+    description: Retrieve platform-level configuration, such as the available trip types.
+  - name: Products
+    description: Look up additional products and items that can be billed on trips and orders.
+  - name: Departments
+    description: Manage departments and their hierarchy.
+  - name: Changelog
+    x-traitTag: true
+    description:
+      $ref: './components/changelog.yaml#/description'
+
+x-tagGroups:
+  - name: Operations
+    tags:
+      - Trips
+  - name: Sales
+    tags:
+      - Customers
+      - Customer-categories
+      - Requests
+      - Orders
+      - Capacity
+      - Price
+  - name: Core
+    tags:
+      - Vehicles
+      - Employees
+      - Settings
+      - Products
+      - Departments
+  - name: Changelog
+    tags:
+      - Changelog
+
 paths:
   # Operations/Trips
   /trips/trips:
@@ -67,6 +126,12 @@ paths:
     $ref: './paths/sales-customers.yaml#/~1sales~1customers~1{id}'
   /sales/customers/{id}/fixedtripsinfo:
     $ref: './paths/sales-customers.yaml#/~1sales~1customers~1{id}~1fixedtripsinfo'
+
+  # Sales/Customer-categories
+  /sales/customer-categories:
+    $ref: './paths/sales-customers.yaml#/~1sales~1customer-categories'
+  /sales/customer-categories/{id}:
+    $ref: './paths/sales-customers.yaml#/~1sales~1customer-categories~1{id}'
   
   # Sales/Requests
   /sales/requests:
@@ -75,15 +140,25 @@ paths:
     $ref: './paths/sales-requests.yaml#/~1sales~1requests~1{customerId}'
   
   # Sales/Orders
+  /sales/orders:
+    $ref: './paths/sales-orders.yaml#/~1sales~1orders'
   /sales/orders/{customerId}:
     $ref: './paths/sales-orders.yaml#/~1sales~1orders~1{customerId}'
   /sales/orders/status/{id}:
     $ref: './paths/sales-orders.yaml#/~1sales~1orders~1status~1{id}'
+  /sales/orders/orderConfirmation/{id}:  
+    $ref: './paths/sales-orders.yaml#/~1sales~1orders~1orderConfirmation~1{id}'
+  /sales/orders/addtrip/{id}:
+    $ref: './paths/sales-orders.yaml#/~1sales~1orders~1addtrip~1{id}'
   
   # Sales/Capacity
   /sales/capacity:
     $ref: './paths/sales-capacity.yaml#/~1sales~1capacity'
-  
+
+  # Sales/Price
+  /sales/price/calculateTripPrice:
+    $ref: './paths/sales-price.yaml#/~1sales~1price~1calculateTripPrice'
+
   # Core/Vehicles
   /core/vehicles:
     $ref: './paths/core-vehicles.yaml#/~1core~1vehicles'
@@ -105,8 +180,44 @@ paths:
     $ref: './paths/core-garages.yaml#/~1core~1garages~1{id}'
   /core/garages/{id}/archive:
     $ref: './paths/core-garages.yaml#/~1core~1garages~1{id}~1archive'
+  # Core/Departments
+  /core/departments:
+    $ref: './paths/core-departments.yaml#/~1core~1departments'
+  /core/departments/{id}:
+    $ref: './paths/core-departments.yaml#/~1core~1departments~1{id}'
+  # Core/Products
+  /core/products:
+    $ref: './paths/core-products.yaml#/~1core~1products'
+
+security:
+  - OAuth2: []
 
 components:
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      description: >
+        OAuth 2.0 Client Credentials flow. The scopes listed below are
+        granted to your client in **Settings > Integrations > Public API Clients**;
+        each endpoint requires one specific scope, shown under its "Authorizations" section.
+      flows:
+        clientCredentials:
+          tokenUrl: https://auth.api.ferdia.app/oauth2/token
+          scopes:
+            vehicles_read: Read access to vehicles
+            employees_read: Read access to employees and their calendar entries
+            triptypes_read: Read access to trip type settings
+            products_read: Read access to products
+            requests_read: Read access to sales capacity
+            requests_write: Create sales requests
+            orders_read: Read access to orders and order status
+            orders_write: Create orders and add trips to existing orders
+            prices_read: Calculate trip prices
+            customers_read: Read access to customers and customer categories
+            customers_write: Create and update customers and customer categories
+            fixedtrips_read: Read access to a customer's fixed trips info
+            trips_read: Read access to trips and trip status
+
   responses:    
     404_notFound:
       $ref: './components/responses/404.yaml'
@@ -133,6 +244,10 @@ components:
       $ref: './components/schemas/NewContactPerson.yaml'
     CustomerCategory:
       $ref: './components/schemas/CustomerCategory.yaml'
+    PostCustomerCategory:
+      $ref: './components/schemas/PostCustomerCategory.yaml'
+    PutCustomerCategory:
+      $ref: './components/schemas/PutCustomerCategory.yaml'
     Customer:
       $ref: './components/schemas/Customer.yaml'
     PostCustomer:
@@ -195,7 +310,15 @@ components:
     # Sales/Capacity
     SalesCapacity:
       $ref: './components/schemas/SalesCapacity.yaml'
-    
+
+    # Sales/Price
+    PostTripPrice:
+      $ref: './components/schemas/PostTripPrice.yaml'
+    TripPrice:
+      $ref: './components/schemas/TripPrice.yaml'
+    PriceElement:
+      $ref: './components/schemas/PriceElement.yaml'
+
     # Core schemas
     Vehicle:
       $ref: './components/schemas/Vehicle.yaml'
@@ -203,6 +326,15 @@ components:
       $ref: './components/schemas/Employee.yaml'
     EmployeeCalendarEntry:
       $ref: './components/schemas/EmployeeCalendarEntry.yaml'
+    Department:
+      $ref: './components/schemas/Department.yaml'
+    PostDepartment:
+      $ref: './components/schemas/PostDepartment.yaml'
+    PutDepartment:
+      $ref: './components/schemas/PutDepartment.yaml'
+
+    Product:
+      $ref: './components/schemas/Product.yaml'
     
     # Other schemas
     PostPriceCalculate:

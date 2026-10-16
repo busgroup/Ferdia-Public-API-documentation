@@ -1,9 +1,12 @@
 /:
   post:
     summary: Create a new Request
-    description: Creats a new Request in the system
+    description: Creates a new Request in the system
     tags:
-      - Sales/Requests
+      - Requests
+    security:
+      - OAuth2:
+          - requests_write
     parameters:
       - $ref: "../components/parameters/domain.yaml"
       - $ref: "../components/parameters/timezone.yaml"
@@ -40,7 +43,10 @@
     summary: Create a new Request for a given customer
     description: Create a new Request for a given customer
     tags:
-      - Sales/Requests
+      - Requests
+    security:
+      - OAuth2:
+          - requests_write
     parameters:
       - $ref: "../components/parameters/domain.yaml"
       - $ref: "../components/parameters/timezone.yaml"

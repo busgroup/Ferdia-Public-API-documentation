@@ -2,7 +2,10 @@
   get:
     description: Returns the vehicle capacity for a given time
     tags:
-      - Sales/Capacity
+      - Capacity
+    security:
+      - OAuth2:
+          - requests_read
     parameters:
       - $ref: "../components/parameters/domain.yaml"
       - name: startTime

@@ -1,9 +1,52 @@
+/sales/orders:
+  get:
+    summary: Get a single order with all order lines
+    description: >
+      Returns a single order including all trips and other order lines.
+      Exactly one of `orderId` or `orderNumber` must be provided.
+    tags:
+      - Orders
+    security:
+      - OAuth2:
+          - orders_read
+    parameters:
+      - $ref: "../components/parameters/domain.yaml"
+      - $ref: "../components/parameters/timezone.yaml"
+      - name: orderId
+        in: query
+        description: Internal order ID. Mutually exclusive with `orderNumber`.
+        required: false
+        schema:
+          type: integer
+          example: 34290
+      - name: orderNumber
+        in: query
+        description: Order number as displayed in the TEQ UI (e.g. BT-034150-S01). Mutually exclusive with `orderId`.
+        required: false
+        schema:
+          type: string
+          example: "BT-034150-S01"
+    responses:
+      "200":
+        description: Successfully returned the order with all order lines
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/OrderDetail.yaml"
+      "400":
+        $ref: "../components/responses/400.yaml"
+      "404":
+        $ref: "../components/responses/404.yaml"
+
 /sales/orders/{customerId}:
   post:
     summary: Create a new Order for a given customer
-    description: Creats a new Order in the system
+    description: Creates a new Order in the system
     tags:
-      - Sales/Orders
+      - Orders
+    security:
+      - OAuth2:
+          - orders_write
     parameters:
       - $ref: "../components/parameters/domain.yaml"
       - $ref: "../components/parameters/timezone.yaml"
@@ -57,9 +100,13 @@
 
 /sales/orders/status/{id}:
   get:
+    summary: Get the status for a given order
     description: Returns the status for a given order and the status of all trips related to this order
     tags:
-      - Sales/Orders
+      - Orders
+    security:
+      - OAuth2:
+          - orders_read
     parameters:
       - $ref: "../components/parameters/domain.yaml"
       - name: id
@@ -79,3 +126,89 @@
         $ref: "../components/responses/400.yaml"
       "404":
         $ref: "../components/responses/404.yaml"
+
+/sales/orders/orderConfirmation/{id}:
+    get :
+      summary: Get the order confirmation for a given order
+      description: Returns the orderconfirmation for the order in PDF format
+      tags:
+        - Orders
+      security:
+        - OAuth2:
+            - orders_read
+      parameters:
+        - $ref: "../components/parameters/domain.yaml"
+        - name: id
+          in: path
+          description: existing order Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "201":
+          description: Order confirmation PDF
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pdf:
+                    type: string
+                    format: byte
+                    description: "Base64 encoded PDF document containing the order confirmation"
+        "400":
+          $ref: "../components/responses/400.yaml"
+        "404":
+          $ref: "../components/responses/404.yaml"
+
+/sales/orders/addtrip/{id}:
+    post: 
+      summary: Adds a trip to an existing order
+      description: |         
+        Adds a new trip to an existing order      
+      tags: 
+       - Orders
+      security:
+        - OAuth2:
+            - orders_write
+      parameters:
+        - $ref: "../components/parameters/domain.yaml"        
+      requestBody:
+        description: Request data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/PostTrip.yaml"
+      responses:
+        "201":
+          description: Trip successfully added to order
+          headers:
+            Location:
+              description: Returns the Location to get the created Trip in TEQ UI. 
+              schema:
+                type: string
+                example: planning/trips/trip-details/20000/
+          properties:                                        
+            message:
+              type: string
+              description: "Success message"
+              example: "Trip successfully added to order"
+            trips:
+              type: array
+              items:
+                type: object
+                properties:
+                  gen_tid:
+                    type: string
+                    description: "The trip ID in the format used in TEQ UI, e.g. BT-034150-S01"
+                    example: "BT-034150-S01-N001"
+                  location:
+                    type: string
+                    description: "The location to get the created Trip in TEQ UI"
+                    example: "planning/trips/trip-details/20000/"
+        "400":
+          $ref: "../components/responses/400.yaml"
+        "404":
+          $ref: "../components/responses/404.yaml"
+

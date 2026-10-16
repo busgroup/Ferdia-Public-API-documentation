@@ -1,0 +1,48 @@
+type: object
+properties:
+  tripID:
+    type: string
+    description: "The id of the trip"
+    example: "BT-123456-T01"
+  tripType:
+    type: string
+    description: "The type of trip"
+    example: "Single"
+  status:
+    type: string
+    description: "The status of the trip"
+    example: "confirmed"
+  pax:
+    type: integer
+    description: "The number of passengers for the trip"
+    example: 25
+  travelFrom:
+    type: string
+    description: "The departure location of the trip"
+    example: "Oslo Airport"
+  travelTo:
+    type: string
+    description: "The destination location of the trip"
+    example: "Oslo City Center"
+  departureDateTime:
+    type: string
+    format: date-time
+    description: "The departure date and time of the trip"
+    example: "2026-07-22T14:30:00"
+  price:
+    type: number
+    format: decimal
+    description: "The price of the trip (excl. additional items)"
+    example: 1500.00
+  priceTotal:
+    type: number
+    format: decimal
+    description: "The total price of the trip, including additional items"
+    example: 1875.00
+  pointOfContact:
+    $ref: "./ContactPerson.yaml"
+  additionalItems:
+    type: array
+    description: "Additional items charged on this trip"
+    items:
+      $ref: "./AdditionalItem.yaml"

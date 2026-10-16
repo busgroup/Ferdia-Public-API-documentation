@@ -1,0 +1,13 @@
+properties:
+  id:
+    type: integer
+  departmentCode:
+    type: string
+  name:
+    type: string
+  parentDepartmentId:
+    type: integer
+  useParentBillingProfile:
+    type: boolean
+  billingProfileId:
+    type: integer

@@ -40,3 +40,36 @@ The main entry point is `TEQ_Public_API_1.0_modular.yaml`. It `$ref`s:
 - **Auth**: OAuth 2.0 Client Credentials flow.
 - **Required headers on every request**: `domain` (tenant identifier) and `TimeZone`.
 - API tags follow `Operations/`, `Sales/`, and `Core/` prefixes.
+
+## Staging-only endpoints
+
+Some endpoints may be available only on the staging server and not yet ready for production. To mark an endpoint as staging-only:
+
+1. **Prefix the summary** with `🚧 [STAGING ONLY]`
+2. **Start the description** with the warning: `**⚠️ This endpoint is only available on the staging server and not yet available in production.**`
+3. **Add the property** `x-stagingOnly: true` to the path operation
+
+### Example
+
+```yaml
+/sales/orders/addtrip/{id}:
+  post: 
+    summary: 🚧 [STAGING ONLY] Adds a trip to an existing order
+    description: | 
+      **⚠️ This endpoint is only available on the staging server and not yet available in production.**
+
+      Adds a new trip to an existing order
+    x-stagingOnly: true
+    tags: 
+      - Sales/Orders
+    parameters:
+      # ... rest of the endpoint definition
+```
+
+### Moving from staging to production
+
+When an endpoint is ready to move from staging to production:
+
+1. Remove the `🚧 [STAGING ONLY]` prefix from the summary
+2. Remove the staging warning from the description
+3. Remove the `x-stagingOnly: true` property

@@ -2,7 +2,10 @@
   get:
     description: Returns a list of vehicles
     tags:
-      - Core/Vehicles
+      - Vehicles
+    security:
+      - OAuth2:
+          - vehicles_read
     parameters:
       - $ref: "../components/parameters/domain.yaml"        
     responses:

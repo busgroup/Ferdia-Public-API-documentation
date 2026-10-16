@@ -1,0 +1,36 @@
+description: |
+  ## 2026-10-16
+  - Added CRUD functionality for Departments
+
+  ## 2026-10-13
+  - Added a Changelog section to the API documentation.
+
+  ## 2026-10-10
+  - Updated the documentation site layout to match Ferdia branding, fixed typos, and documented OAuth2 scopes for each endpoint.
+  - Added SEO metadata (robots.txt, sitemap.xml, canonical/meta tags) so developer.ferdia.co is indexable by search engines.
+
+  ## 2026-10-03
+  - Added `departmentId` to the `POST /sales/orders` request payload.
+
+  ## 2026-09-24
+  - Added `POST /sales/price/calculateTripPrice` endpoint to calculate a trip price ahead of creating a request or order.
+
+  ## 2026-08-27
+  - Renamed the order confirmation endpoint to `GET /sales/orders/orderConfirmation/{id}` for naming consistency.
+
+  ## 2026-08-24
+  - Added `GET /core/products` endpoint to list products.
+  - Added `GET /sales/orders` endpoint to list orders, including new `OrderDetail`, `OrderCustomer`, `OrderTrip`, and `AdditionalItem` schemas.
+  - Promoted `POST /sales/orders/addtrip/{id}` from staging-only to production.
+
+  ## 2026-08-18
+  - Added customer category management: `POST`/`GET /sales/customer-categories` and `GET`/`PUT /sales/customer-categories/{id}`.
+  - Added `GET /sales/orders/orderconfirmation/{id}` endpoint to retrieve the order confirmation PDF.
+
+  ## 2026-07-15
+  - Added `POST /sales/orders/addtrip/{id}` endpoint (staging only) to add a trip to an existing order.
+
+  ## 2026-07-02
+  - Added `GET /core/settings/triptypes` endpoint to list trip types.
+  - Added `boarding` and `disembarkation` fields to the trip payload.
+  - Restructured order/trip payloads: order-level fields (status, contact person, sales person, external reference) moved from the trip payload to the order payload; added `status` and `createdRows` to the order-creation response.
