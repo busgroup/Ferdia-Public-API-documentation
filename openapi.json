@@ -71,9 +71,13 @@
       "description": "Look up additional products and items that can be billed on trips and orders."
     },
     {
+      "name": "Departments",
+      "description": "Manage departments and their hierarchy."
+    },
+    {
       "name": "Changelog",
       "x-traitTag": true,
-      "description": "## 2026-10-13\n- Added a Changelog section to the API documentation.\n\n## 2026-10-10\n- Updated the documentation site layout to match Ferdia branding, fixed typos, and documented OAuth2 scopes for each endpoint.\n- Added SEO metadata (robots.txt, sitemap.xml, canonical/meta tags) so developer.ferdia.co is indexable by search engines.\n\n## 2026-10-03\n- Added `departmentId` to the `POST /sales/orders` request payload.\n\n## 2026-09-24\n- Added `POST /sales/price/calculateTripPrice` endpoint to calculate a trip price ahead of creating a request or order.\n\n## 2026-08-27\n- Renamed the order confirmation endpoint to `GET /sales/orders/orderConfirmation/{id}` for naming consistency.\n\n## 2026-08-24\n- Added `GET /core/products` endpoint to list products.\n- Added `GET /sales/orders` endpoint to list orders, including new `OrderDetail`, `OrderCustomer`, `OrderTrip`, and `AdditionalItem` schemas.\n- Promoted `POST /sales/orders/addtrip/{id}` from staging-only to production.\n\n## 2026-08-18\n- Added customer category management: `POST`/`GET /sales/customer-categories` and `GET`/`PUT /sales/customer-categories/{id}`.\n- Added `GET /sales/orders/orderconfirmation/{id}` endpoint to retrieve the order confirmation PDF.\n\n## 2026-07-15\n- Added `POST /sales/orders/addtrip/{id}` endpoint (staging only) to add a trip to an existing order.\n\n## 2026-07-02\n- Added `GET /core/settings/triptypes` endpoint to list trip types.\n- Added `boarding` and `disembarkation` fields to the trip payload.\n- Restructured order/trip payloads: order-level fields (status, contact person, sales person, external reference) moved from the trip payload to the order payload; added `status` and `createdRows` to the order-creation response.\n"
+      "description": "## 2026-10-16\n- Added CRUD functionality for Departments\n\n## 2026-10-13\n- Added a Changelog section to the API documentation.\n\n## 2026-10-10\n- Updated the documentation site layout to match Ferdia branding, fixed typos, and documented OAuth2 scopes for each endpoint.\n- Added SEO metadata (robots.txt, sitemap.xml, canonical/meta tags) so developer.ferdia.co is indexable by search engines.\n\n## 2026-10-03\n- Added `departmentId` to the `POST /sales/orders` request payload.\n\n## 2026-09-24\n- Added `POST /sales/price/calculateTripPrice` endpoint to calculate a trip price ahead of creating a request or order.\n\n## 2026-08-27\n- Renamed the order confirmation endpoint to `GET /sales/orders/orderConfirmation/{id}` for naming consistency.\n\n## 2026-08-24\n- Added `GET /core/products` endpoint to list products.\n- Added `GET /sales/orders` endpoint to list orders, including new `OrderDetail`, `OrderCustomer`, `OrderTrip`, and `AdditionalItem` schemas.\n- Promoted `POST /sales/orders/addtrip/{id}` from staging-only to production.\n\n## 2026-08-18\n- Added customer category management: `POST`/`GET /sales/customer-categories` and `GET`/`PUT /sales/customer-categories/{id}`.\n- Added `GET /sales/orders/orderconfirmation/{id}` endpoint to retrieve the order confirmation PDF.\n\n## 2026-07-15\n- Added `POST /sales/orders/addtrip/{id}` endpoint (staging only) to add a trip to an existing order.\n\n## 2026-07-02\n- Added `GET /core/settings/triptypes` endpoint to list trip types.\n- Added `boarding` and `disembarkation` fields to the trip payload.\n- Restructured order/trip payloads: order-level fields (status, contact person, sales person, external reference) moved from the trip payload to the order payload; added `status` and `createdRows` to the order-creation response.\n"
     }
   ],
   "paths": {
@@ -1573,7 +1577,14 @@
         "summary": "Returns a list of departments",
         "description": "Returns a list of departments based on the filters provided",
         "tags": [
-          "Core/Departments"
+          "Departments"
+        ],
+        "security": [
+          {
+            "OAuth2": [
+              "departments_write"
+            ]
+          }
         ],
         "parameters": [
           {
@@ -1627,7 +1638,14 @@
         "summary": "Creates a new department",
         "description": "Creates a new department",
         "tags": [
-          "Core/Departments"
+          "Departments"
+        ],
+        "security": [
+          {
+            "OAuth2": [
+              "departments_write"
+            ]
+          }
         ],
         "parameters": [
           {
@@ -1672,7 +1690,14 @@
         "summary": "Returns a single department",
         "description": "Returns a single department identified by either its Id or Department Code",
         "tags": [
-          "Core/Departments"
+          "Departments"
+        ],
+        "security": [
+          {
+            "OAuth2": [
+              "departments_write"
+            ]
+          }
         ],
         "parameters": [
           {
@@ -1725,7 +1750,14 @@
         "summary": "Updates an existing department",
         "description": "Updates an existing department",
         "tags": [
-          "Core/Departments"
+          "Departments"
+        ],
+        "security": [
+          {
+            "OAuth2": [
+              "departments_write"
+            ]
+          }
         ],
         "parameters": [
           {
@@ -1768,7 +1800,14 @@
         "summary": "Deletes a department",
         "description": "Deletes a department",
         "tags": [
-          "Core/Departments"
+          "Departments"
+        ],
+        "security": [
+          {
+            "OAuth2": [
+              "departments_write"
+            ]
+          }
         ],
         "parameters": [
           {
@@ -4133,7 +4172,8 @@
         "Vehicles",
         "Employees",
         "Settings",
-        "Products"
+        "Products",
+        "Departments"
       ]
     },
     {

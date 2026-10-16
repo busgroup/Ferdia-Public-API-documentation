@@ -3,7 +3,10 @@
     summary: Returns a list of departments
     description: Returns a list of departments based on the filters provided
     tags:
-      - Core/Departments
+        - Departments
+    security:
+        - OAuth2:
+            - departments_write
     parameters:
       - $ref: "../components/parameters/domain.yaml"
       - in: query
@@ -37,7 +40,10 @@
     summary: Creates a new department
     description: Creates a new department
     tags:
-      - Core/Departments
+        - Departments
+    security:
+        - OAuth2:
+            - departments_write
     parameters:
       - $ref: "../components/parameters/domain.yaml"
     requestBody:
@@ -65,7 +71,10 @@
     summary: Returns a single department
     description: Returns a single department identified by either its Id or Department Code
     tags:
-      - Core/Departments
+        - Departments
+    security:
+        - OAuth2:
+            - departments_write
     parameters:
       - $ref: "../components/parameters/domain.yaml"
       - name: id
@@ -100,7 +109,10 @@
     summary: Updates an existing department
     description: Updates an existing department
     tags:
-      - Core/Departments
+        - Departments
+    security:
+        - OAuth2:
+            - departments_write
     parameters:
       - $ref: "../components/parameters/domain.yaml"
       - name: id
@@ -128,7 +140,10 @@
     summary: Deletes a department
     description: Deletes a department
     tags:
-      - Core/Departments
+        - Departments
+    security:
+        - OAuth2:
+            - departments_write
     parameters:
       - $ref: "../components/parameters/domain.yaml"
       - name: id
