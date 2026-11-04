@@ -1,6 +1,6 @@
 in: header
-name: TimeZone  
-description: The timezone of the client of the request
+name: Time-Zone  
+description: The time-zone of the client of the request
 required: false
 schema:
   type: string
