@@ -1,6 +1,6 @@
 type: object
 properties:
-  categoryId:
+  id:
     type: integer
     description: Id of the calendar category. Use this as `categoryId` when writing calendar entries.
     example: 12
@@ -18,3 +18,13 @@ properties:
       The kind of entries the category produces. The type decides which rules apply when writing entries:
       overlapping entries are rejected for `absence` and `availability`, but allowed for `activity`.
     example: absence
+  color:
+    type: string    
+    description: |
+      The color used to display this category
+    example: #60d935
+  isPayable:
+    type: boolean    
+    description: |
+      Whether this category represents a payable absence
+    example: true

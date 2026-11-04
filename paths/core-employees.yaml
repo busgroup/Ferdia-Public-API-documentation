@@ -135,7 +135,7 @@
           schema:
             $ref: "../components/schemas/PostEmployeeCalendarEntries.yaml"
     responses:
-      "207":
+      "200":
         description: Each entry was processed. Check `status` on every result.
         content:
           application/json:

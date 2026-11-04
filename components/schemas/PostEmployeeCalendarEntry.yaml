@@ -23,12 +23,7 @@ properties:
     type: string
     format: date-time
     description: End date and time. Interpreted in the time zone given by the `TimeZone` header.
-    example: 2026-01-01T11:00:00
-  wholeDay:
-    type: boolean
-    description: Indicates if this is an all-day event
-    default: false
-    example: false
+    example: 2026-01-01T11:00:00  
   comments:
     type: string
     description: Additional notes or comments
