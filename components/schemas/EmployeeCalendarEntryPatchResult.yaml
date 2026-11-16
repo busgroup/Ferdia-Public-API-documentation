@@ -1,0 +1,42 @@
+type: object
+properties:
+  id:
+    type: integer
+    description: Total number of entries processed
+    example: 25
+  externalReference:
+    type: string
+    description: External Reference
+    example: "T-1"
+  categoryId:
+    type: integer
+    description: CategoryId
+    example: 3
+  type:
+    type: string
+    description: Type
+    example: "absence"
+  startDateTime:
+    type: string  
+    description: Start time
+    example: "2026-11-02 08:00:00"
+  endDateTime:
+    type: stirng
+    description: End time
+    example: "2026-11-02 16:00:00"  
+  wholeDay:
+    type: boolean 
+    description: Is entry full day
+    example: false
+  approvalStatus:
+    type: string
+    description: Approval status
+    example: "Pending"
+  comment:
+    type: string
+    description: Comment
+    example: "Comment"
+  warnings:
+    type: array
+    description: Number of entries failed
+    example: []

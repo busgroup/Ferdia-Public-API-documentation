@@ -1,4 +1,7 @@
 description: |
+  ## 2026-11-04
+  - Updated the Time-Zone header documentation.
+
   ## 2026-10-16
   - Added functionality to change an existing order (PATCH /sales/order/{orderId})
   - Add support setting arrival time on trips in New Order (POST /sales/orders/{id})

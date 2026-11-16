@@ -60,7 +60,7 @@
     },
     {
       "name": "Employees",
-      "description": "Look up employees and their calendar and availability entries."
+      "description": "Look up employees and read or write their calendar entries (absence, availability and activities)."
     },
     {
       "name": "Settings",
@@ -81,7 +81,7 @@
     {
       "name": "Changelog",
       "x-traitTag": true,
-      "description": "## 2026-10-16\n- Added functionality to change an existing order (PATCH /sales/order/{orderId})\n- Add support setting arrival time on trips in New Order (POST /sales/orders/{id})\n- Adds CRUD endpoints for garages (list with name/departmentId filters, get by id, create, update, delete) plus an archive action, and extends the Garage schema with description, includeInNearestGarageLookup, geofence_radius, department_id and archived fields.\n- Added CRUD functionality for Departments\n\n## 2026-10-13\n- Added a Changelog section to the API documentation.\n\n## 2026-10-10\n- Updated the documentation site layout to match Ferdia branding, fixed typos, and documented OAuth2 scopes for each endpoint.\n- Added SEO metadata (robots.txt, sitemap.xml, canonical/meta tags) so developer.ferdia.co is indexable by search engines.\n\n## 2026-10-03\n- Added `departmentId` to the `POST /sales/orders` request payload.\n\n## 2026-09-24\n- Added `POST /sales/price/calculateTripPrice` endpoint to calculate a trip price ahead of creating a request or order.\n\n## 2026-08-27\n- Renamed the order confirmation endpoint to `GET /sales/orders/orderConfirmation/{id}` for naming consistency.\n\n## 2026-08-24\n- Added `GET /core/products` endpoint to list products.\n- Added `GET /sales/orders` endpoint to list orders, including new `OrderDetail`, `OrderCustomer`, `OrderTrip`, and `AdditionalItem` schemas.\n- Promoted `POST /sales/orders/addtrip/{id}` from staging-only to production.\n\n## 2026-08-18\n- Added customer category management: `POST`/`GET /sales/customer-categories` and `GET`/`PUT /sales/customer-categories/{id}`.\n- Added `GET /sales/orders/orderconfirmation/{id}` endpoint to retrieve the order confirmation PDF.\n\n## 2026-07-15\n- Added `POST /sales/orders/addtrip/{id}` endpoint (staging only) to add a trip to an existing order.\n\n## 2026-07-02\n- Added `GET /core/settings/triptypes` endpoint to list trip types.\n- Added `boarding` and `disembarkation` fields to the trip payload.\n- Restructured order/trip payloads: order-level fields (status, contact person, sales person, external reference) moved from the trip payload to the order payload; added `status` and `createdRows` to the order-creation response.\n"
+      "description": "## 2026-11-04\n- Updated the Time-Zone header documentation.\n\n## 2026-10-16\n- Added functionality to change an existing order (PATCH /sales/order/{orderId})\n- Add support setting arrival time on trips in New Order (POST /sales/orders/{id})\n- Adds CRUD endpoints for garages (list with name/departmentId filters, get by id, create, update, delete) plus an archive action, and extends the Garage schema with description, includeInNearestGarageLookup, geofence_radius, department_id and archived fields.\n- Added CRUD functionality for Departments\n\n## 2026-10-13\n- Added a Changelog section to the API documentation.\n\n## 2026-10-10\n- Updated the documentation site layout to match Ferdia branding, fixed typos, and documented OAuth2 scopes for each endpoint.\n- Added SEO metadata (robots.txt, sitemap.xml, canonical/meta tags) so developer.ferdia.co is indexable by search engines.\n\n## 2026-10-03\n- Added `departmentId` to the `POST /sales/orders` request payload.\n\n## 2026-09-24\n- Added `POST /sales/price/calculateTripPrice` endpoint to calculate a trip price ahead of creating a request or order.\n\n## 2026-08-27\n- Renamed the order confirmation endpoint to `GET /sales/orders/orderConfirmation/{id}` for naming consistency.\n\n## 2026-08-24\n- Added `GET /core/products` endpoint to list products.\n- Added `GET /sales/orders` endpoint to list orders, including new `OrderDetail`, `OrderCustomer`, `OrderTrip`, and `AdditionalItem` schemas.\n- Promoted `POST /sales/orders/addtrip/{id}` from staging-only to production.\n\n## 2026-08-18\n- Added customer category management: `POST`/`GET /sales/customer-categories` and `GET`/`PUT /sales/customer-categories/{id}`.\n- Added `GET /sales/orders/orderconfirmation/{id}` endpoint to retrieve the order confirmation PDF.\n\n## 2026-07-15\n- Added `POST /sales/orders/addtrip/{id}` endpoint (staging only) to add a trip to an existing order.\n\n## 2026-07-02\n- Added `GET /core/settings/triptypes` endpoint to list trip types.\n- Added `boarding` and `disembarkation` fields to the trip payload.\n- Restructured order/trip payloads: order-level fields (status, contact person, sales person, external reference) moved from the trip payload to the order payload; added `status` and `createdRows` to the order-creation response.\n"
     }
   ],
   "paths": {
@@ -1590,6 +1590,360 @@
         }
       }
     },
+    "/core/employees/calendar/categories": {
+      "get": {
+        "summary": "Returns calendar categories",
+        "description": "Returns the calendar categories available to the tenant. Use the `categoryId` to map your own entry types when writing employee calendar entries.    \n",
+        "tags": [
+          "Employees"
+        ],
+        "security": [
+          {
+            "OAuth2": [
+              "employees_read"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/domain"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully returned calendar categories",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EmployeeCalendarCategory"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          }
+        }
+      }
+    },
+    "/core/employees/calendar/{id}/entries": {
+      "post": {
+        "summary": "Creates or updates calendar entries for an employee",
+        "description": "Creates calendar entries (absence, availability or activities) for an employee in bulk. Each entry is processed individually and reported in the response, so one rejected entry does not stop the others.\n\n- Entries with an `externalReference` that already exists are updated instead of duplicated.\n- Overlapping entries are rejected for absence and availability categories, but allowed for activity categories.\n- An entry that overlaps a trip assigned to the employee is still created, and a warning is returned.\n- Entries that are locked, treated or paid cannot be changed and are rejected.\n- The employee and categories must belong to the tenant given in the `domain` header.\n",
+        "tags": [
+          "Employees"
+        ],
+        "security": [
+          {
+            "OAuth2": [
+              "employees_write"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/domain"
+          },
+          {
+            "$ref": "#/components/parameters/timezone"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the employee"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostEmployeeCalendarEntries"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Each entry was processed. Check `status` on every result.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EmployeeCalendarEntryResult"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "403": {
+            "description": "The API client does not have the `employees_write` scope"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
+    "/core/employees/calendar/{id}/entries/{entryId}": {
+      "patch": {
+        "summary": "Updates a calendar entry",
+        "description": "Updates a calendar entry by its Ferdia id. Only the properties you send are changed. The same rules as when creating entries apply. Locked, treated or paid entries cannot be changed.\n",
+        "tags": [
+          "Employees"
+        ],
+        "security": [
+          {
+            "OAuth2": [
+              "employees_write"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/domain"
+          },
+          {
+            "$ref": "#/components/parameters/timezone"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the employee"
+          },
+          {
+            "in": "path",
+            "name": "entryId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the calendar entry"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchEmployeeCalendarEntry"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully updated the calendar entry",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmployeeCalendarEntryPatchResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "403": {
+            "description": "The API client does not have the `employees_write` scope"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletes a calendar entry",
+        "description": "Deletes a calendar entry by its Ferdia id. The entry is soft deleted and no longer returned. Locked, treated or paid entries cannot be deleted.\n",
+        "tags": [
+          "Employees"
+        ],
+        "security": [
+          {
+            "OAuth2": [
+              "employees_write"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/domain"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the employee"
+          },
+          {
+            "in": "path",
+            "name": "entryId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the calendar entry"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successfully deleted the calendar entry"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "403": {
+            "description": "The API client does not have the `employees_write` scope"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
+    "/core/employees/calendar/{id}/entries/external/{externalReference}": {
+      "patch": {
+        "summary": "Updates a calendar entry by external reference",
+        "description": "Same as updating by Ferdia id, but addresses the entry by the `externalReference` you supplied when creating it.\n",
+        "tags": [
+          "Employees"
+        ],
+        "security": [
+          {
+            "OAuth2": [
+              "employees_write"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/domain"
+          },
+          {
+            "$ref": "#/components/parameters/timezone"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the employee"
+          },
+          {
+            "in": "path",
+            "name": "externalReference",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Your own identifier for the calendar entry"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchEmployeeCalendarEntry"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully updated the calendar entry",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmployeeCalendarEntryPatchResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "403": {
+            "description": "The API client does not have the `employees_write` scope"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletes a calendar entry by external reference",
+        "description": "Same as deleting by Ferdia id, but addresses the entry by the `externalReference` you supplied when creating it.\n",
+        "tags": [
+          "Employees"
+        ],
+        "security": [
+          {
+            "OAuth2": [
+              "employees_write"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/domain"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the employee"
+          },
+          {
+            "in": "path",
+            "name": "externalReference",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Your own identifier for the calendar entry"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successfully deleted the calendar entry"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "403": {
+            "description": "The API client does not have the `employees_write` scope"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
     "/core/settings/triptypes": {
       "get": {
         "description": "Returns a list of trip types",
@@ -2247,6 +2601,7 @@
             "scopes": {
               "vehicles_read": "Read access to vehicles",
               "employees_read": "Read access to employees and their calendar entries",
+              "employees_write": "Create, update and delete employee calendar entries",
               "triptypes_read": "Read access to trip type settings",
               "products_read": "Read access to products",
               "requests_read": "Read access to sales capacity",
@@ -4206,6 +4561,26 @@
             "type": "string",
             "description": "Title or description of the calendar entry category"
           },
+          "categoryId": {
+            "type": "integer",
+            "description": "🚧 Staging only. Id of the calendar category, see `GET /core/employees/calendar/categories`.",
+            "example": 12
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "absence",
+              "availability",
+              "activity"
+            ],
+            "description": "🚧 Staging only. The kind of entry, as defined by its category.",
+            "example": "absence"
+          },
+          "externalReference": {
+            "type": "string",
+            "description": "🚧 Staging only. Your own identifier, if the entry was written through the API.",
+            "example": "duty-2026-01-01-0042"
+          },
           "startDateTime": {
             "type": "string",
             "format": "date-time",
@@ -4252,6 +4627,158 @@
             "type": "string",
             "description": "License plate of the vehicle (if assigned to trip)",
             "example": "AB11245"
+          }
+        }
+      },
+      "EmployeeCalendarCategory": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id of the calendar category. Use this as `categoryId` when writing calendar entries.",
+            "example": 12
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the category",
+            "example": "Sick leave"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "absence",
+              "availability",
+              "activity"
+            ],
+            "description": "The kind of entries the category produces. The type decides which rules apply when writing entries:\noverlapping entries are rejected for `absence` and `availability`, but allowed for `activity`.\n",
+            "example": "absence"
+          },
+          "color": {
+            "type": "string",
+            "description": "The color used to display this category\n",
+            "example": null
+          },
+          "isPayable": {
+            "type": "boolean",
+            "description": "Whether this category represents a payable absence\n",
+            "example": true
+          }
+        }
+      },
+      "PostEmployeeCalendarEntry": {
+        "type": "object",
+        "required": [
+          "categoryId",
+          "startDateTime",
+          "endDateTime"
+        ],
+        "properties": {
+          "externalReference": {
+            "type": "string",
+            "description": "Your own identifier for the entry, unique per tenant. Sending the same `externalReference` again\nupdates the existing entry instead of creating a new one, which makes it safe to retry requests.\n",
+            "example": "duty-2026-01-01-0042"
+          },
+          "categoryId": {
+            "type": "integer",
+            "description": "Id of the calendar category. Use `GET /core/employees/calendar/categories` to look up valid ids.",
+            "example": 12
+          },
+          "startDateTime": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Start date and time. Interpreted in the time zone given by the `TimeZone` header.",
+            "example": "2026-01-01T09:00:00"
+          },
+          "endDateTime": {
+            "type": "string",
+            "format": "date-time",
+            "description": "End date and time. Interpreted in the time zone given by the `TimeZone` header.",
+            "example": "2026-01-01T11:00:00"
+          },
+          "comments": {
+            "type": "string",
+            "description": "Additional notes or comments",
+            "example": ""
+          }
+        }
+      },
+      "PostEmployeeCalendarEntries": {
+        "type": "object",
+        "required": [
+          "entries"
+        ],
+        "properties": {
+          "entries": {
+            "type": "array",
+            "description": "Calendar entries to create or update. Each entry is processed and reported on individually.",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/components/schemas/PostEmployeeCalendarEntry"
+            }
+          }
+        }
+      },
+      "PatchEmployeeCalendarEntry": {
+        "type": "object",
+        "description": "Only the properties you send are changed.",
+        "properties": {
+          "categoryId": {
+            "type": "integer",
+            "description": "Id of the calendar category",
+            "example": 12
+          },
+          "startDateTime": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Start date and time. Interpreted in the time zone given by the `TimeZone` header.",
+            "example": "2026-01-01T09:00:00"
+          },
+          "endDateTime": {
+            "type": "string",
+            "format": "date-time",
+            "description": "End date and time. Interpreted in the time zone given by the `TimeZone` header.",
+            "example": "2026-01-01T11:00:00"
+          },
+          "wholeDay": {
+            "type": "boolean",
+            "description": "Indicates if this is an all-day event",
+            "example": false
+          },
+          "comments": {
+            "type": "string",
+            "description": "Additional notes or comments",
+            "example": ""
+          }
+        }
+      },
+      "EmployeeCalendarEntryResult": {
+        "type": "object",
+        "properties": {
+          "summary": {
+            "type": "object",
+            "properties": {
+              "total": {
+                "type": "integer",
+                "description": "Total number of entries processed",
+                "example": 1
+              },
+              "created": {
+                "type": "integer",
+                "description": "Number of entries created",
+                "example": 1
+              },
+              "failed": {
+                "type": "integer",
+                "description": "Number of entries failed",
+                "example": 0
+              }
+            }
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EmployeeCalendarEntryResultItem"
+            }
           }
         }
       },
@@ -4783,6 +5310,103 @@
                 "format": "date-time"
               }
             }
+          }
+        }
+      },
+      "EmployeeCalendarEntryResultItem": {
+        "type": "object",
+        "properties": {
+          "index": {
+            "type": "integer",
+            "description": "Position of the entry in the request, starting at 0",
+            "example": 0
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "created",
+              "failed"
+            ],
+            "description": "What happened to the entry",
+            "example": "created"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the calendar entry (not set when rejected)",
+            "example": "98765"
+          },
+          "externalReference": {
+            "type": "string",
+            "description": "The `externalReference` sent with the entry, if any",
+            "example": "duty-2026-01-01-0042"
+          },
+          "type": {
+            "type": "string",
+            "description": "The type of entry created",
+            "example": "absence"
+          },
+          "warnings": {
+            "type": "array",
+            "description": "Warnings",
+            "items": {
+              "type": "string"
+            },
+            "example": []
+          }
+        }
+      },
+      "EmployeeCalendarEntryPatchResult": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Total number of entries processed",
+            "example": 25
+          },
+          "externalReference": {
+            "type": "string",
+            "description": "External Reference",
+            "example": "T-1"
+          },
+          "categoryId": {
+            "type": "integer",
+            "description": "CategoryId",
+            "example": 3
+          },
+          "type": {
+            "type": "string",
+            "description": "Type",
+            "example": "absence"
+          },
+          "startDateTime": {
+            "type": "string",
+            "description": "Start time",
+            "example": "2026-11-02 08:00:00"
+          },
+          "endDateTime": {
+            "type": "stirng",
+            "description": "End time",
+            "example": "2026-11-02 16:00:00"
+          },
+          "wholeDay": {
+            "type": "boolean",
+            "description": "Is entry full day",
+            "example": false
+          },
+          "approvalStatus": {
+            "type": "string",
+            "description": "Approval status",
+            "example": "Pending"
+          },
+          "comment": {
+            "type": "string",
+            "description": "Comment",
+            "example": "Comment"
+          },
+          "warnings": {
+            "type": "array",
+            "description": "Number of entries failed",
+            "example": []
           }
         }
       }
