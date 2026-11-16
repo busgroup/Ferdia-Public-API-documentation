@@ -1,0 +1,22 @@
+type: object
+properties:
+  summary:
+    type: object
+    properties:
+      total:
+        type: integer
+        description: Total number of entries processed
+        example: 1
+      created:
+        type: integer
+        description: Number of entries created
+        example: 1
+      failed:
+        type: integer
+        description: Number of entries failed
+        example: 0
+  results:
+    type: array
+    items:
+      $ref: "./EmployeeCalendarEntryResultItem.yaml"
+  
