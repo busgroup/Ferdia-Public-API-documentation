@@ -1,7 +1,31 @@
 properties:
   id:
-    type: string
+    type: integer
+    description: The internal Id of the garage
+    example: 1
   name:
     type: string
+    description: The name of the garage
+    example: Main Depot
   location:
     $ref: "./Location.yaml"
+  description:
+    type: string
+    description: A free-text description of the garage
+    example: Main garage for the north region
+  includeInNearestGarageLookup:
+    type: boolean
+    description: Whether this garage should be considered when looking up the nearest garage
+    example: true
+  geofence_radius:
+    type: integer
+    description: The radius in meters of the geofence around the garage location
+    example: 200
+  department_id:
+    type: integer
+    description: The Id of the department the garage belongs to
+    example: 1
+  archived:
+    type: boolean
+    description: Whether the garage has been archived
+    example: false
