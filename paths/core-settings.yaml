@@ -2,7 +2,10 @@
   get:
     description: Returns a list of trip types
     tags:
-      - Core/Settings
+      - Settings
+    security:
+      - OAuth2:
+          - triptypes_read
     parameters:
       - $ref: "../components/parameters/domain.yaml"        
     responses:

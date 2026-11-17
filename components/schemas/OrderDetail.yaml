@@ -1,0 +1,23 @@
+type: object
+properties:
+  orderId:
+    type: string
+    description: "The unique internal order ID"
+    example: "34290"
+  orderNumber:
+    type: string
+    description: "The order number as displayed in the TEQ UI"
+    example: "BT-034150-S01"
+  status:
+    type: string
+    description: "The current status of the order"
+    example: "sale"
+  customer:
+    $ref: "./OrderCustomer.yaml"
+  contactPerson:
+    $ref: "./ContactPerson.yaml"
+  trips:
+    type: array
+    description: "All trips (order lines) on this order"
+    items:
+      $ref: "./OrderTrip.yaml"

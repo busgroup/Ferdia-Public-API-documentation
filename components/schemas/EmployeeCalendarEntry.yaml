@@ -15,6 +15,22 @@ properties:
   category:
     type: string
     description: Title or description of the calendar entry category
+  categoryId:
+    type: integer
+    description: "🚧 Staging only. Id of the calendar category, see `GET /core/employees/calendar/categories`."
+    example: 12
+  type:
+    type: string
+    enum:
+      - absence
+      - availability
+      - activity
+    description: "🚧 Staging only. The kind of entry, as defined by its category."
+    example: absence
+  externalReference:
+    type: string
+    description: "🚧 Staging only. Your own identifier, if the entry was written through the API."
+    example: duty-2026-01-01-0042
   startDateTime:
     type: string
     format: date-time

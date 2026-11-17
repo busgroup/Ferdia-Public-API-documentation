@@ -3,7 +3,10 @@
     summary: Creates a new customer
     description: Creates a new customer
     tags:
-      - Sales/Customers
+      - Customers
+    security:
+      - OAuth2:
+          - customers_write
     parameters:
       - $ref: "../components/parameters/domain.yaml"
     requestBody:
@@ -36,7 +39,10 @@
     summary: Returns a list of customers
     description: Returns a list of customers based on the filters provided
     tags:
-      - Sales/Customers
+      - Customers
+    security:
+      - OAuth2:
+          - customers_read
     parameters:
       - $ref: "../components/parameters/domain.yaml"
       - in: query
@@ -73,7 +79,10 @@
   put:
     description: Updates an existing customer
     tags:
-      - Sales/Customers
+      - Customers
+    security:
+      - OAuth2:
+          - customers_write
     parameters:
       - $ref: "../components/parameters/domain.yaml"
       - name: id
@@ -102,7 +111,10 @@
     summary: Returns a list of fixed trips for a customer
     description: Returns a list of fixed trips for a customer based on the filters provided
     tags:
-      - Sales/Customers
+      - Customers
+    security:
+      - OAuth2:
+          - fixedtrips_read
     parameters:
       - $ref: "../components/parameters/domain.yaml"
       - $ref: "../components/parameters/timezone.yaml"
@@ -138,7 +150,10 @@
     summary: Creates a new customer category
     description: Creates a new customer category
     tags:
-      - Sales/Customer-categories
+      - Customer-categories
+    security:
+      - OAuth2:
+          - customers_write
     parameters:
       - $ref: "../components/parameters/domain.yaml"
     requestBody:
@@ -165,7 +180,10 @@
     summary: Returns a list of customer categories
     description: Returns a list of customer categories based on the filters provided
     tags:
-      - Sales/Customer-categories
+      - Customer-categories
+    security:
+      - OAuth2:
+          - customers_read
     parameters:
       - $ref: "../components/parameters/domain.yaml"
       - in: query
@@ -193,7 +211,10 @@
     summary: Returns a customer category by ID
     description: Returns a customer category by ID
     tags:
-      - Sales/Customer-categories
+      - Customer-categories
+    security:
+      - OAuth2:
+          - customers_read
     parameters:
       - $ref: "../components/parameters/domain.yaml"
       - name: id
@@ -218,7 +239,10 @@
     summary: Updates an existing customer category
     description: Updates an existing customer category
     tags:
-      - Sales/Customer-categories
+      - Customer-categories
+    security:
+      - OAuth2:
+          - customers_write
     parameters:
       - $ref: "../components/parameters/domain.yaml"
       - name: id

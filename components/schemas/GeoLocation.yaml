@@ -5,5 +5,5 @@ properties:
     example: 59.9133301
   long:
     type: number
-    description: The longfitude of the location
+    description: The longitude of the location
     example: 10.7389701

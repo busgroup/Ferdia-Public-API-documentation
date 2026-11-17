@@ -6,11 +6,11 @@ properties:
   next:
     type: string
     description: URL to get next page of results
-    example: "http://api.ferdia.app/publicapi/sales/customers?page=3"
+    example: "https://api.ferdia.app/publicapi/sales/customers?page=3"
   previous:
     type: string
     description: URL to get previous page of results
-    example: "http://api.ferdia.app/publicapi/sales/customers?page=1"
+    example: "https://api.ferdia.app/publicapi/sales/customers?page=1"
   results:
     type: array
     items:

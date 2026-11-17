@@ -1,0 +1,32 @@
+type: object
+properties:
+  index:
+      type: integer
+      description: Position of the entry in the request, starting at 0
+      example: 0
+  status:
+    type: string
+    enum:
+      - created
+      - failed
+    description: What happened to the entry
+    example: created
+  id:
+    type: string
+    description: Id of the calendar entry (not set when rejected)
+    example: "98765"
+  externalReference:
+    type: string
+    description: The `externalReference` sent with the entry, if any
+    example: duty-2026-01-01-0042
+  type:
+    type: string
+    description: The type of entry created    
+    example:
+      absence
+  warnings:
+    type: array
+    description: Warnings
+    items:
+      type: string
+    example: []

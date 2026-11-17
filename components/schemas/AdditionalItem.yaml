@@ -1,0 +1,29 @@
+type: object
+properties:
+  itemCode:
+    type: string
+    description: "The item code of the additional item"
+    example: "TOLL-001"
+  itemName:
+    type: string
+    description: "The name of the additional item"
+    example: "Toll Fee"
+  description:
+    type: string
+    description: "A description of the additional item"
+    example: "Highway toll"
+  quantity:
+    type: number
+    format: decimal
+    description: "The quantity of the additional item"
+    example: 1.0
+  amount:
+    type: number
+    format: decimal
+    description: "The amount charged for the additional item (excl. VAT)"
+    example: 50.00
+  vatCost:
+    type: number
+    format: decimal
+    description: "The VAT cost for the additional item"
+    example: 12.50
