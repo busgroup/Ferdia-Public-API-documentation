@@ -668,6 +668,9 @@ tags:
   - name: Changelog
     x-traitTag: true
     description: |
+      ## 2026-11-16
+      - Added functionality to work with employee calendar events.
+
       ## 2026-11-04
       - Updated the Time-Zone header documentation.
 
@@ -1299,7 +1302,7 @@ paths:
           $ref: '#/components/responses/400'
         '404':
           description: The given customer does not exist
-  /sales/orders/{orderId}:
+  /sales/orders/update/{orderId}:
     patch:
       summary: Updates an existing Order
       description: Updates fields on an existing Order
