@@ -55,7 +55,7 @@
       "404":
         description: "The given customer does not exist"
 
-/sales/orders/{orderId}:
+/sales/orders/update/{orderId}:
   patch:
     summary: Updates an existing Order
     description: Updates fields on an existing Order
