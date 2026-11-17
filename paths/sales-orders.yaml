@@ -111,7 +111,7 @@
         "404":
           $ref: "../components/responses/404.yaml"
 
-/sales/orders/addtrip/{id}:
+/sales/orders/addTrip/{id}:
     post: 
       summary: Adds a trip to an existing order
       description: |         
