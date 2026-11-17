@@ -668,6 +668,9 @@ tags:
   - name: Changelog
     x-traitTag: true
     description: |
+      ## 2026-11-17
+      - Fixed path for PATCH order
+
       ## 2026-11-16
       - Added functionality to work with employee calendar events.
 
@@ -1361,40 +1364,7 @@ paths:
           $ref: '#/components/responses/400'
         '404':
           $ref: '#/components/responses/404'
-  /sales/orders/orderConfirmation/{id}:
-    get:
-      summary: Get the order confirmation for a given order
-      description: Returns the orderconfirmation for the order in PDF format
-      tags:
-        - Orders
-      security:
-        - OAuth2:
-            - orders_read
-      parameters:
-        - $ref: '#/components/parameters/domain'
-        - name: id
-          in: path
-          description: existing order Id
-          required: true
-          schema:
-            type: integer
-      responses:
-        '201':
-          description: Order confirmation PDF
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  pdf:
-                    type: string
-                    format: byte
-                    description: Base64 encoded PDF document containing the order confirmation
-        '400':
-          $ref: '#/components/responses/400'
-        '404':
-          $ref: '#/components/responses/404'
-  /sales/orders/addtrip/{id}:
+  /sales/orders/addTrip/{id}:
     post:
       summary: Adds a trip to an existing order
       description: |
@@ -1440,6 +1410,39 @@ paths:
                     type: string
                     description: The location to get the created Trip in TEQ UI
                     example: planning/trips/trip-details/20000/
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+  /sales/orders/orderConfirmation/{id}:
+    get:
+      summary: Get the order confirmation for a given order
+      description: Returns the orderconfirmation for the order in PDF format
+      tags:
+        - Orders
+      security:
+        - OAuth2:
+            - orders_read
+      parameters:
+        - $ref: '#/components/parameters/domain'
+        - name: id
+          in: path
+          description: existing order Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '201':
+          description: Order confirmation PDF
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pdf:
+                    type: string
+                    format: byte
+                    description: Base64 encoded PDF document containing the order confirmation
         '400':
           $ref: '#/components/responses/400'
         '404':
